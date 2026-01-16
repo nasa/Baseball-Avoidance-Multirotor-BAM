@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<p><a href="../README.html#api-documentation">Back to main</a></p>
+<h3 id="aero-propulsive-modeling">Aero-Propulsive Modeling</h3>
+<p>The BAM simulation contains two aero-propulsive models, referred to
+as the polynomial and simple models, which are of two different fidelity
+levels. The polynomial model was derived solely from flight data of a
+quad-rotor vehicle (see next paragraph for more details) and should be
+considered the higher fidelity model. The simple model is a composite
+model based on a quadratic thrust model (derived from manufacturer
+propeller thrust data) and a simplified drag model (based on generic
+quadrotor frontal area). In the BAM simulation, the polynomial model is
+intended for primary usage. Two aero-propulsive models are provided with
+BAM to enable users to design a controller algorithm with a “known”
+model (i.e., simple model) and then fly with the actual or truth model
+(i.e., polynomial model). This dual aero-propulsive model capability is
+desirable to aid users in assessing their controller/algorithms
+robustness to modeling errors. BAM users who want to utilize the simple
+model in the BAM simulation can do so, but not through the standard
+userStruct.variant process. Instead, a <a href="#manual-setup">Manual
+Setup</a> of the BAM simulation is required to use the simple model
+within BAM.</p>
+<h4 id="polynomial-aero-propulsive-model">Polynomial Aero-Propulsive
+Model</h4>
+<p>The BAM simulation primarily utilizes the polynomial aero-propulsive
+model. This model was generated from flight data of the <a
+href="https://ntrs.nasa.gov/citations/20240000223">IMPACT</a> quadrotor
+vehicle performing a variety of system identification maneuvers (e.g.,
+doublets, multisines). The flight data was analyzed and model
+identification was performed using <a
+href="https://software.nasa.gov/software/LAR-16100-1">SIDPAC</a>.
+Specifically, the SIDPAC equation error method was used to generate a
+hover polynomial response surface model. Due to the limited flight
+envelope of the quad-rotor, this single polynomial model sufficiently
+describes a substantial portion of the flight envelope (i.e, no blending
+between multiple response surface models was required.)</p>
+<p>The polynomial model is used in the BAM simulation in two ways.
+First, it was used to generate trim tables for use in the simulation
+setup process (see <a href="../Trim/README.html">BAM Trim Process</a>).
+The polynomial trim table was generated using the m-script
+<code>/Trim/Gen_Trim_Map_Poly.m</code> which generated the trim table
+<code>Poly_T_map.mat</code>. This resulting trim table file (i.e.,
+<code>Poly_T_Map.mat</code>) is ONLY used during the BAM setup process
+to prescribe vehicle initial conditions and not used during BAM
+simulation execution. The second way the polynomial model is used in the
+simulation is as a MATLAB function (m-script) that computes the
+aero-propulsive forces and moments during simulation execution which are
+necessary in the vehicle dynamics modeling. The MATLAB function (that
+contains the polynomial model) used during simulation is:
+<code>IMPACT_AeroProp_RSE_V1_10Jun25_180239.m</code>. (Note: the simple
+aero-propulsive model was similarly used to generate a trim table with
+the associated files <code>/Trim/Gen_Trim_Map.m</code> and
+<code>T_map.mat</code> and could also be used as inputs to the vehicle
+dynamics modeling.)</p>
+<p>The polynomial (left) and simple (right) models are shown in the
+figure below</p>
+<center>
+<img src=".graphics/Poly_Aero_Model.png" style="display:inline-block;" />
+<img src=".graphics/Nom_Aero_Model.png" style="display:inline-block;" />
+</center>
+<p>The polynomial model uses the following inputs and outputs: - Inputs:
+body frame velocity
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>t</mi><mi>/</mi><mi>s</mi><mi>e</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">ft/sec</annotation></semantics></math>),
+body rates <code>p,q,r</code>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>d</mi><mi>/</mi><mi>s</mi><mi>e</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">rad/sec</annotation></semantics></math>),
+rotor speed
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>d</mi><mi>/</mi><mi>s</mi><mi>e</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">rad/sec</annotation></semantics></math>)
+, rotor accelerations
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>d</mi><mi>/</mi><mi>s</mi><mi>e</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">rad/sec^2</annotation></semantics></math>)</p>
+<ul>
+<li>Outputs: (body frame) <code>X, Y &amp; Z</code> forces
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>b</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">lbf</annotation></semantics></math>),
+and <code>L, M &amp; N</code> moments
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>t</mi><mo>⋅</mo><mi>l</mi><mi>b</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">ft \cdot lbf</annotation></semantics></math>)</li>
+</ul>
+<p>It is expected that some users (e.g., machine learning community) may
+desire to have analytic solutions to the derivatives of the
+aero-propulsive model (i.e.,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">dx</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">du</annotation></semantics></math>).
+For this reason, optional analytic derivative outputs are available to
+the user. The polynomial model has the additional input of an analytic
+derivative flag which specifies whether or not to output the derivative
+information. The outputs of the analytic derivatives are not used in the
+BAM simulation (no bus structure was implemented), but the functionality
+exists for users if desired.</p>
+<h4 id="simple-aero-propulsive-model">Simple Aero-Propulsive Model</h4>
+As mentioned previously, the simple aero-propulsive model is provided
+with BAM primarily to enable users to utilize different models in
+controller/algorithm design and controller/algorithm execution. The
+simple model is a composite model that contains a simple quadratic rotor
+propulsion model (rotor model subsystem) and a simple aerodynamic drag
+model (aerodynamic drag subsystem). Both components are shown in the
+graphic below. From this graphic, it is easy to see the outputs of the
+simple propulsive model are the forces
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>b</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">lbf</annotation></semantics></math>)
+and moments
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>t</mi><mo>⋅</mo><mi>l</mi><mi>b</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">ft \cdot lbf</annotation></semantics></math>)
+for the rotor and aerodynamic forces only.<br />
+
+<center>
+<img src=".graphics/Nom_AP_Model.png" width="600" height="350"/>
+</center>
+The details of the rotor propulsion subsystem are shown in the graphic
+below. This graphic shows that the inputs to the simple rotor model are
+body angular rates <code>p, q, and r</code>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>d</mi><mi>/</mi><mi>s</mi><mi>e</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">rad/sec</annotation></semantics></math>),
+body frame velocity including wind
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>t</mi><mi>/</mi><mi>s</mi><mi>e</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">ft/sec</annotation></semantics></math>),
+rotor speed
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>p</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">rpm</annotation></semantics></math>)
+commands, atmospheric density, and some vehicle parameters (e.g., rotor
+modeling coefficients). Within this propulsion model subsystem the
+m-function <code>compute_multirotor_FM.m</code> is called to provide the
+propulsion forces and moments for the given inputs.
+<center>
+<img src=".graphics/Rotor_Model.png" width="600" height="350"/>
+</center>
+Similarly, the quadratic drag subsystem model (<code>Quad_Drag.m</code>)
+of the simple aero-propulsive model is shown below. Here the inputs
+consist of total velocity, atmospheric density, and other vehicle
+parameters (frontal area approximation parameters, coefficient of drag).
+The outputs of this quadratic drag model are aerodynamic forces only.
+<center>
+<img src=".graphics/Aero_Model.png" width="600" height="350"/>
+</center>
+<p>ECHO is off. The combination of the propulsion and aerodynamic models
+described above constitute the simple aero-propulsive model in BAM.</p>
+<h4 id="manual-setup">Manual Setup</h4>
+<p>In order to manually change the BAM simulation to use the simple
+model, the following four steps are required:</p>
+<ol type="1">
+<li>Change the aero-propulsive subsystem reference model from
+<code>Poly_AeroProp</code> to <code>Nom_AeroProp</code> (see graphic
+below).
+<center>
+<img src=".graphics/Block_Params.png" width="600" height="350"/>
+</center></li>
+<li>Navigate to the <code>BAM Controller/Thrust to RPM MDL</code>
+Simulink block and the uncomment and connect the simple aero-propulsive
+model output as shown below:
+<center>
+<img src=".graphics/Thrust2RPM1.png" style="display:inline-block;" width="450" height="400" />
+<img src=".graphics/Thrust2RPM2.png" style="display:inline-block;" width="450" height="400"  />
+</center></li>
+<li>Modify the <code>/setup/SimIn/setupIC.m</code> script (which sets
+the vehicle ICs) to use the simple aero-propulsive model trim table by
+providing the function <code>setupInitialConditionTable</code> function
+the argument <code>./Trim/T_map.mat</code> (see below):
+<center>
+<img src=".graphics/SetIC.png" width="600" height="350"/>
+</center></li>
+<li>Change the vehicle model parameters
+<code>SimIn.prop.ParamsNom</code> in the
+<code>/AeroProp/IMPACT_props2.m</code> file to use the simple
+aero-propulsive model instead of the polynomial parameters (see below):
+<center>
+<img src=".graphics/ImpactProp2.png" width="600" height="350"/>
+</center></li>
+</ol>
+<p>Once this manual setup is complete, then rerun the
+<code>setup.m</code> script and the BAM simulation will now use the
+simple aero-propulsive model. Reverse the procedure to switch back to
+the polynomial model.</p>
+<p><a href="../README.html#api-documentation">Back to main</a></p>
+</body>
+</html>

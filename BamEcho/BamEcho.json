@@ -1,0 +1,21 @@
+{
+  "LogLevel": 1,
+  "ImageCapture": true,
+  "VideoExport": true,
+  "IgnoreBaseball": false,
+  "CleanupFrames": false,
+  "CompressFrames": true,
+  "DefaultTag": "Echo",
+  "VideoProcessing": {
+    "InputFramerate": 24,
+    "OutputFrameRate": 24,
+    "QualityFactor": 5
+  },
+  "CameraViews": [
+    {
+      "Target": "Drone",
+      "Camera": "front_center",
+      "Type": [ "Scene", "DepthVis" ]
+    }
+  ]
+}

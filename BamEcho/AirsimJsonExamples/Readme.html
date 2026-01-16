@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Readme_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="bamecho-airsim-json-examples">BamEcho: Airsim JSON Examples</h1>
+<h2 id="overview">Overview</h2>
+<p>The files contained in this folder demonstrate some sample
+configurations for Airsim as it is loaded up in an Unreal Environment.
+The user will need to either leverage one of these examples or create
+their own that will need to be readily available for Airsim when it is
+run.</p>
+<p>The JSON file can be made available to the Unreal Environment in a
+few ways:</p>
+<ol type="1">
+<li><p>Place the file under ‘&lt;%UserProfile%&gt;/Documents/Airsim/’.
+Airsim will naturally look here when starting up under Windows. For the
+default location on other platforms, see the Airsim Documentation on
+Settings:
+https://microsoft.github.io/AirSim/settings/#where-are-settings-stored</p></li>
+<li><p>Place the file in the same directory as the binary for the Airsim
+Unreal Environment.</p></li>
+<li><p>Place the file in the same directory where the Airsim Unreal
+Environment will be started up. Specifically, if a command or script
+will launch the application in a different working directory than where
+it actually resides; put the file there.</p></li>
+<li><p>Pass the path to a specific JSON file in as a command line
+argument for the Unreal Environment application. For example:
+’AirSimEnvironment.exe
+-settings=“&lt;%PathToSettings%&gt;.json”</p></li>
+</ol>
+<h2 id="notes">Notes</h2>
+<p>The Airsim settings file placed in directories as “default” locations
+for Airsim to find will need to be named <em>settings.json</em>. Files
+name otherwise, like the examples here, will not be found otherwise.</p>
+<p>The Airsim documentation goes into more depth on the topic of
+settings that can be configured, but for Echo’s purposes it might be
+useful to focus on the following</p>
+<ul>
+<li><p><em>CameraDefaults / CameraSettings</em> - The subgroupings in
+this section will set the image resolution that Echo will receive when
+capturing. Note also that the settings still use the index value for the
+camera versus the name. (See Airsim Doc for indexing cross referencing,
+https://microsoft.github.io/AirSim/camera_views/)</p></li>
+<li><p><em>DefaultSensors</em> - This lets the user activate whatever
+instruments are available. This can be critical depending on the
+CameraViews that Echo is trying to capture. For example, to get any of
+the depth camera views to work, the “<em>Distance</em>” sensor needs to
+be enabled. See the Airsim documentation for more information.</p></li>
+<li><p><em>PhysicsEngineName</em> - This needs to be set to
+“<em>ExternalPhysicsEngine</em>” to prevent Echo’s trajectory
+transmission from fighting with Unreal’s internal physics, which can
+produce some dizzying animations.</p></li>
+<li><p><em>Vehicles</em> - This sets the instantiation information for
+the Airsim environment’s actors. Echo needs at least one multirotor
+vehicle named “Drone” to work.</p></li>
+</ul>
+</body>
+</html>

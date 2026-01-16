@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<p><a href="../README.html#api-documentation">Back to main</a></p>
+<h1 id="bam-example-files">BAM Example Files</h1>
+<p>This folder contains a collection of example scenario scripts for the
+Baseball Avoidance Multirotor (BAM) simulation. The files:
+<code>example_template.m</code>,
+<code>example_customTrajectory.m</code>, <code>example_circle.m</code>,
+and <code>example_landing.m</code> are intended to familiarize users
+with the process of setting up and running the BAM simulation but also
+to demonstrate methods for using user-generated trajectory
+configurations. The script <code>example_modifyIC.m</code> demonstrates
+how users can perturb the multirotor initial conditions after the setup
+process but prior to running BAM. The
+<code>example_collision_avoidance.m</code> script shows users how to run
+select collision scenarios from the <code>ChallengeProblem</code>
+folder. Specifically, this file shows users how to publish own-ship and
+baseball pose information via ROS2 for one of the near-collision
+challenge problem scenarios. All of these example scripts are BAM
+focused and don’t cover the use of Colosseum and Unreal Engine.</p>
+<p><strong>NOTE:</strong> Example files are intended to be run from the
+root directory to preserve paths and dependencies. Please move the files
+to the root directory and run the file in that location with the MATLAB
+‘Current Folder’ set to the root directory.</p>
+<p>Additionally, this folder contains a few example <code>.bat</code>
+and <code>.bash</code> scripts that show how a user could run the BAM
+simulation and the associated ROS2 publishing from a system script.</p>
+<h2 id="example_template.m">example_template.m</h2>
+<p>Minimal template for creating new simulation scenarios. - Basic
+structure with path checks and workspace cleanup - Documentation
+sections - User parameter placeholders - Setup call and execution code -
+Visualization commands</p>
+<h2 id="example_customtrajectory.m">example_customTrajectory.m</h2>
+<p>Demonstrates custom waypoint-based trajectory creation. - Custom XYZ
+position waypoints with timing - Piecewise Bezier trajectory generation
+- Takeoff, climb and turn profile - Trajectory visualization</p>
+<h2 id="example_circle.m">example_circle.m</h2>
+<p>Creates a circular flight path trajectory. - 7-waypoint circular
+configuration - Combined horizontal and vertical movement - Complete
+360° path with smooth transitions - Visualization and performance
+plotting</p>
+<h2 id="example_landing.m">example_landing.m</h2>
+<p>Shows a controlled landing trajectory. - Climb profile terminated and
+immediately lands - Landing profile visualization</p>
+<h2 id="example_modifyic.m">example_modifyIC.m</h2>
+<p>Shows how to modify own-ship initial conditions prior to simulation
+execution - Uses <code>setup.m</code> to initialize default Bernstein
+polynomial trajectory - Uses <code>SimPar</code> to modify initial
+position - <strong>NOTE:</strong> The geometric controller is robust,
+but large initial condition variations from the desired starting
+conditions can result in the controller driving the vehicle unstable</p>
+<h2
+id="example_collision_avoidance.m">example_collision_avoidance.m</h2>
+<p>Advanced collision avoidance scenario setup. - Multi-object
+trajectory configuration - Selectable “own-ship” and “baseball”
+trajectories, from challenge problem - Collision scenario simulation -
+Optional ROS2 publishing support - Part of the Collision Avoidance
+Challenge Problem</p>
+<p><a href="../README.html#api-documentation">Back to main</a></p>
+</body>
+</html>

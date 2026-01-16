@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="batch-processing">Batch Processing</h1>
+<p>This README provides a step-by-step guide for using the
+<code>example_batch_runme.m</code> script to run a batch processing
+workflow. This is a simple example which generates parameter files
+containing random reference trajectories, uses a shell script to run
+compiled simulations in parallel, then reads and plots the results.</p>
+<h2 id="overview">Overview</h2>
+<p>The script <code>example_batch_runme.m</code> demonstrates
+programmatically creating a series of parameter sets to evaluate with a
+compiled executable. It carries out the following steps:</p>
+<ol type="1">
+<li>Write parameter files</li>
+<li>Run the simulation using an external executable</li>
+<li>Read the output files</li>
+<li>Plot the results</li>
+</ol>
+<p>This process is designed to be run in parallel, utilizing multiple
+CPU cores.</p>
+<h2 id="expected-output">Expected Output</h2>
+<p>The expected output for approximately 100 runs, with a simulation
+duration of 40 seconds each.</p>
+<p>MATLAB:</p>
+<pre><code>Writing pFiles...done   (Execution time: 6.665s)
+Running sim...done  (Execution time: 11.780s)
+Loading results...done  (Execution time: 10.703s)
+Plotting results...done (Execution time: 0.071s)</code></pre>
+<p>SHELL:</p>
+<pre><code>** starting the model **
+&#39;stdin&#39; successfully changed to binary mode
+Num Read = 1, size of param = 2536
+** created bam_out001.mat **
+...
+all done</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="step-1-compile-simulation">Step 1: Compile Simulation</h3>
+<p>Run <code>buildExe.m</code> to create the <code>BAM_app</code>
+executable (<code>BAM_app.exe</code> on Windows). See <a
+href="../../README.html">AutoCodeModels</a> for more information.</p>
+<h3 id="step-2-initialize-data-directory">Step 2: Initialize Data
+Directory</h3>
+<p>Create a <code>_data</code> directory under the top level folder of
+the repo. If <code>_data/</code> already exists and contains
+<code>.bin</code> or <code>.mat</code> files, these may interfere with
+future runs.</p>
+<h3 id="step-3-copy-executable-and-example-scripts">Step 3: Copy
+Executable and Example Scripts</h3>
+<p>Copy <code>BAM_app&lt;.exe&gt;</code> and
+<code>aRunParallel.sh</code> to <code>_data/</code>, and copy
+<code>example_batch_runme.m</code> to the top level folder.</p>
+<p>For example, in Windows, run the following terminal commands from the
+root directory:</p>
+<pre><code>cp AutoCodeModels/examples/BatchProcessing/aRunParallel.sh _data/
+cp AutoCode/BAM_app/BAM_app.exe _data/
+cp AutoCodeModels/examples/BatchProcessing/example_batch_runme.m .</code></pre>
+<p>In Unix:</p>
+<pre><code>cp AutoCodeModels/examples/BatchProcessing/aRunParallel.sh _data/
+cp AutoCode/BAM_app/BAM_app _data/
+cp AutoCodeModels/examples/BatchProcessing/example_batch_runme.m .</code></pre>
+<h3 id="step-4-verify-system-commands">Step 4: Verify System
+Commands</h3>
+<p>In the copy of <code>example_batch_runme.m</code>, verify that the
+<code>shell_cmd</code> and <code>app_name</code> variables are set
+appropriately for your system. Note that
+<code>example_batch_runme.m</code> will create and run a
+<code>system</code> command, using the supplied <code>shell_cmd</code>
+to run <code>aRunParallel.sh</code> (a shell script) from the
+<code>_data/</code> directory. Therefore, these variables must be set
+correctly to elicit the desired behavior. The command string passed to
+<code>system</code> is printed as a warning for debugging purposes.</p>
+<h3 id="step-5-run-example-script">Step 5: Run Example Script</h3>
+<p>Navigate to the top level folder containing <code>setup.m</code>,
+<code>_data/</code>, and the copy of <code>example_batch_runme.m</code>.
+Run the copy of <code>example_batch_runme.m</code> from there.</p>
+<h2 id="explanation-of-the-example-script">Explanation of the Example
+Script</h2>
+<p><code>example_batch_runme.m</code> first tries to check for the
+presence of required files and directories, alerting you to any missing
+components or path errors. However, it cannot debug the system command,
+so this may need to be modified for your system. If any errors are
+raised, return to steps 2-4 in the previous section.</p>
+<p>Next, the script checks for the existence of a
+<code>workspace.mat</code> workspace file. If this does not exist, it
+executes the default <code>setup</code> script to initialize data
+structures needed for creating parameter files without repeatedly
+running <code>setup</code>. Note that <code>setup</code> does
+<em>not</em> need to be run to run the executable; this is only needed
+for creating parameter files and processing data.</p>
+<p>Next, <code>example_batch_runme.m</code> generates a set of unique,
+randomized Simulink parameter objects. These are written to binary files
+named <code>pFile&lt;XXX&gt;.bin</code>. The script sets turbulence
+intensity, reference trajectory points, and other simulation variables
+before writing each file.</p>
+<p>Once the parameter files have been created,
+<code>example_batch_runme.m</code> creates a <code>system</code> command
+(printed as a warning for debugging purposes) which it uses to run
+<code>aRunParallel.sh</code>. This is a shell script which runs the
+<code>BAM_app</code> executable for each save parameter file. Simulation
+outputs are saved to <code>bam_out&lt;XXX&gt;.bin</code>.</p>
+<p>Finally, <code>example_batch_runme.m</code> loads the saved
+simulation output files into a MATLAB workspace struct, and plots the
+trajectories using the <code>plot_trajectories</code> function.</p>
+</body>
+</html>

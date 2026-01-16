@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="auto-code-model">Auto-Code Model</h1>
+<p><a href="../README.html#api-documentation">Back</a></p>
+<h2 id="overview">Overview</h2>
+<p>MATLAB supports the creation of executables from simulations which
+increases execution speed, enables parallel execution without requiring
+multiple licenses, and can improve code distribution. Static libraries
+can also be created. However, this process introduces additional
+complexity into the simulation environment and imposes certain
+limitations on what can be utilized within these simulations.</p>
+<p>See <a
+href="examples/BatchProcessing/README.html">examples/BatchProcessing</a>
+for a detailed example workflow for Windows and Unix.</p>
+<p>Another short example of performing batch processing in Windows is
+provided in <a
+href="examples/exampleBAMbatch.bat">examples/exampleBAMbatch.bat</a>.</p>
+<h2 id="key-features">Key Features</h2>
+<ol type="1">
+<li><strong>Build Functions and Scripts</strong> Several build functions
+and scripts are provided to automatically create an executable or
+library from the main Simulink diagram. They have several quality of
+life features such as building in a clean MATLAB instance.</li>
+<li><strong>Custom Parameter Updates</strong> The <code>SimPar</code>
+structure was created to capture the tunable parameters in the
+simulation. With the custom interface to the executable, new
+<code>SimPar</code> values can be sent to an existing executable.</li>
+<li><strong>Data Processing</strong> The bus structure information
+defined in the base simulation is used to parse the output of the
+executables, taking a large output timeseries and converting it to a
+MATLAB structure with the correct names and signal sizes.</li>
+</ol>
+<h2 id="key-functions">Key Functions</h2>
+<h3 id="building-without-ros2-dependencies">Building without ROS2
+dependencies</h3>
+<h4 id="build.m"><code>build.m</code></h4>
+<p>Core function that handles all the Simulink configuration needed to
+compile an executable if no ROS2 dependencies exist. Compiles the
+executable or the library. Resets Simulink to default configuration.
+Called by <code>buildExe.m</code> and <code>buildLib.m</code>
+respectively. #### <code>buildExe.m</code> This wrapper script builds an
+executable from the information (<code>model_name</code>,
+<code>SimIn</code>, <code>SimPar</code>, buses) defined in the MATLAB
+workspace. #### <code>buildLib.m</code> This wrapper script builds a
+static library from the information (<code>model_name</code>,
+<code>SimIn</code>, <code>SimPar</code>, buses) defined in the MATLAB
+workspace.</p>
+<h3 id="building-with-ros2-dependencies">Building with ROS2
+dependencies</h3>
+<h4 id="buildwithros.m"><code>buildWithRos.m</code></h4>
+<p>Core function that handles all the Simulink configuration needed to
+compile an executable that has ROS2 dependencies. Compiles the
+executable or the library. Resets Simulink to default configuration.
+Called by <code>buildExeRos.m</code> and <code>buildLibRos.m</code>
+respectively. This function is based on the <code>build.m</code>
+function and its capabilities will likely be formally incorporated into
+it during a future release. #### <code>buildExeRos.m</code> This wrapper
+script builds an executable that has ROS2 dependencies from the
+information (<code>model_name</code>, <code>SimIn</code>,
+<code>SimPar</code>, buses) defined in the MATLAB workspace. It makes
+use of a user-specified array of strings that specify which ROS2
+packages are required. Default values are set based on known variant
+definitions, if the <code>rosPackages</code> variable does not exist.
+#### <code>buildLibRos.m</code> This wrapper script builds a static
+library that has ROS2 dependencies from the information
+(<code>model_name</code>, <code>SimIn</code>, <code>SimPar</code>,
+buses) defined in the MATLAB workspace. It makes use of a user-specified
+array of strings that specify which ROS2 packages are required. Default
+values are set if the <code>rosPackages</code> variable does not exist.
+### Utilities #### <code>writePfile.m</code> Writes a binary file
+containing all the information in <code>SimPar.Value</code>. This file
+is then read by the executable and used to update the tunable parameters
+of the simulation executable. #### <code>convertArrayToStruct.m</code>
+Loads the .mat file generated by running the executable and parses the
+data according to the signal definition in
+<code>BUS_USER_SIM_OUT</code>.</p>
+<h2 id="getting-started-guide">Getting Started Guide</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Install MATLAB on your system.</li>
+<li>Ensure required toolboxes for Simulink code generation (e.g.,
+Simulink Coder) are available.</li>
+<li>Verify an active MATLAB license that supports code generation.</li>
+</ul>
+<h3 id="step-by-step-instructions">Step-by-Step Instructions</h3>
+<h4 id="check-compiler-setup">1. Check Compiler Setup</h4>
+<p>Ensure the MEX compiler is set up:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">mex</span> <span class="op">-</span><span class="va">setup</span></span></code></pre></div>
+<p>Select or verify your C/C++ compiler configuration in MATLAB.</p>
+<h4 id="run-setup-script">2. Run Setup Script</h4>
+<p>Run setup script.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">setup</span><span class="op">;</span>  </span></code></pre></div>
+<p>or example script, such as <code>example_defaults.m</code> with
+desired <code>userStruct</code> modifications.</p>
+<h4 id="building-without-ros2-dependencies-1">3. Building without ROS2
+dependencies</h4>
+<p>Capabilities were developed for performing code generation on a
+Simulink model file that does not have any dependencies on ROS2
+packages. These functions and scripts allow the user to generate either
+an executable or a static library which can be integrated with a
+third-party application.</p>
+<h5 id="a.-build-an-executable">a. Build an Executable</h5>
+<p>Generate an executable using the <code>buildExe.m</code> script:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">buildExe</span><span class="op">;</span></span></code></pre></div>
+<p>This compiles the Simulink model into an executable file directly
+from your current workspace.</p>
+<h5 id="b.-build-a-static-library">b. Build a Static Library</h5>
+<p>Generate a static library using the <code>buildLib.m</code>
+script:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">buildLib</span><span class="op">;</span></span></code></pre></div>
+<p>This compiles the Simulink model into a static library file directly
+from your current workspace.</p>
+<p>Significant knowledge on how to utilize a library generated from a
+Simulink model by a third-party application is required. For the current
+implementation, it is left to the user on identifying the needed header
+files and/or developing a potential interface wrapper library that
+contains any knowledge of MATLAB-specific headers in it, preventing the
+need of the third-party application to have that knowledge.</p>
+<h5
+id="c.-building-an-executable-or-static-library-in-a-separate-matlab-shell">c. Building
+an Executable or Static Library in a separate MATLAB shell</h5>
+<p>In the root directory, <code>sim_build.m</code> is a convenience
+function which can be used to generate either an executable or a static
+library in a separate MATLAB shell, making use of the
+<code>buildExe.m</code> and <code>buildLib.m</code> scripts,
+respectively. <code>sim_build.m</code> can help manage MATLAB toolbox
+license usage during the build process, and is useful for isolating your
+build and development environments.</p>
+<p><em><code>sim_build.m</code> currently only supports building
+Simulink models without ROS2 dependencies.</em></p>
+<p>For detailed usage information, see the <code>sim_build</code>
+documentation. Here are several simple use cases.</p>
+<p>Generate an executable using the default <code>setup</code> script
+and MATLAB license:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">systemCmd</span> <span class="op">=</span> <span class="va">sim_build</span>()<span class="op">;</span></span></code></pre></div>
+<p>Note that <code>sim_build.m</code> returns a <code>systemCmd</code>
+string which is passed to MATLAB’s <code>system</code> function (which
+in turn calls the system shell). If the build fails, this may be useful
+for debugging the process, or simply be used to modify the command and
+run manually from a shell.</p>
+<p>Generate an executable using a user-specified setup script,
+<code>userSetup.m</code>:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">setupScript</span> <span class="op">=</span> <span class="ss">&#39;userSetup&#39;</span> <span class="co">% user setup script name without file extension</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">sim_build</span>(<span class="va">setupScript</span><span class="op">=</span><span class="va">setupScript</span>)</span></code></pre></div>
+<p>Generate an executable using a specific MATLAB license file:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">licensePath</span> <span class="op">=</span> <span class="ss">&#39;/path/to/my/license&#39;</span><span class="op">;</span>  <span class="co">% Path to the license file to use</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">sim_build</span>(<span class="va">licensePath</span><span class="op">=</span><span class="va">licensePath</span>)<span class="op">;</span></span></code></pre></div>
+<p>Generate a static library:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">sim_build</span>(<span class="va">buildTarget</span><span class="op">=</span><span class="ss">&#39;library&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>This compiles the Simulink model into a static library file in a
+temporary workspace using the specified setup function. The static
+library allows the model to be called from a third-party application, on
+a frame-by-frame basis.</p>
+<h4 id="building-with-ros2-dependencies-1">4. Building with ROS2
+dependencies</h4>
+<p>The core capabilities of building an executable or static library
+from a Simulink model were expanded to support ROS2 dependencies. New
+functions and scripts, <code>buildWithRos.m</code>
+<code>buildExeRos.m</code> <code>buildLibRos.m</code>, were developed
+based on the original ones described above. In the future, these may be
+fully integrated into the original functions and scripts.</p>
+<p>To build with ROS2 dependencies, make sure that you start MATLAB from
+an environment which has access to <code>colcon</code> build tools. To
+check this, run</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">colcon</span> <span class="op">-</span><span class="va">h</span></span></code></pre></div>
+<p>Also make sure that your setup script specifies the desired publisher
+and subscriber types. For more information, see the <a
+href="../ROS2_ws/README.html">ROS2_ws README</a>.</p>
+<h5 id="a.-build-an-executable-1">a. Build an Executable</h5>
+<p>Generate an executable using <code>buildExeRos.m</code> script:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">buildExeRos</span><span class="op">;</span></span></code></pre></div>
+<p>This compiles the Simulink model into an executable file directly
+from your current workspace.</p>
+<h5 id="b.-build-a-static-library-1">b. Build a Static Library</h5>
+<p>Generate a static library using <code>buildLibRos.m</code>
+script:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">buildLibRos</span><span class="op">;</span></span></code></pre></div>
+<p>This compiles the Simulink model into a static library file directly
+from your current workspace.</p>
+<p>Significant knowledge on how to utilize a library generated from a
+Simulink model by a third-party application is required. For the current
+implementation, it is left to the user on identifying the needed header
+files and/or developing a potential interface wrapper library that
+contains any knowledge of MATLAB-specific headers in it, preventing the
+need of the third-party application to have that knowledge.</p>
+<h4 id="locate-the-build-target">5. Locate the Build Target</h4>
+<h5 id="a.-without-ros2-dependencies">a. Without ROS2 dependencies</h5>
+<p>Find the generated target under:</p>
+<pre><code>AutoCode/{ModelName}_{BuildType}/</code></pre>
+<p>where <code>BuildType</code> is either <code>app</code> for an
+executable or <code>lib</code> for a static library. For example:</p>
+<ul>
+<li>(Windows) <code>AutoCode/BAM_app/BAM_app.exe</code></li>
+<li>(Unix) <code>AutoCode/BAM_app/BAM_app</code></li>
+</ul>
+<h5 id="b.-with-ros2-dependencies">b. With ROS2 dependencies</h5>
+<p>Find the generated target under:</p>
+<pre><code>AutoCodeRos/{ModelName}_{BuildType}/</code></pre>
+<p>where <code>BuildType</code> is either <code>app</code> for an
+executable or <code>lib</code> for a static library</p>
+<p>Since the <code>colcon</code> tool is used when building with ROS2
+dependencies, the resulting binary is located under the default folders
+created by it: - (Windows)
+<code>AutoCodeRos/BAM_app/install/bin/BAM_app.exe</code> - (Unix)
+<code>AutoCodeRos/BAM_app/install/bin/BAM_app</code></p>
+<h4 id="run-the-executable-with-a-parameter-file">6. Run the Executable
+with a Parameter File</h4>
+<p>If you want to run an BAM executable, it is necessary to generate a
+binary file from the SimPar object, and then provide that binary file as
+a command line argument to the executable.</p>
+<p>For an example of this see <a
+href="./examples/BatchProcessing/README.html">executable
+example</a>.</p>
+<p>In general, the process is to first use the <code>writePfile</code>
+utility to save a binary file of the modifiable parameters in the
+<code>SimPar</code> Simulink parameter object:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">writePfile</span>(<span class="va">SimPar</span>.<span class="va">Value</span><span class="op">,</span><span class="ss">&#39;pFile01.bin&#39;</span>)</span></code></pre></div>
+<p>Note that <code>SimIn</code> parameters are hardcoded in the
+executable at build time. Any parameter that a user wishes to change at
+runtime must be specified as <code>SimPar</code>, AND that
+<code>SimPar</code> parameter must be used in the <code>BAM.slx</code>
+model appropriately prior to building the executable.</p>
+<p>Now execute the program with the saved parameters and a specified
+output file, <code>out01.mat</code>. On Windows:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a> .<span class="op">\</span><span class="va">AutoCode</span><span class="op">\</span><span class="va">BAM_app</span><span class="op">\</span><span class="va">BAM_app</span>.<span class="va">exe</span> <span class="op">&lt;</span> <span class="va">pFile01</span>.<span class="va">bin</span> <span class="va">out01</span>.<span class="va">mat</span></span></code></pre></div>
+<p>On Unix:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a> <span class="op">./</span><span class="va">AutoCode</span><span class="op">/</span><span class="va">BAM_app</span><span class="op">/</span><span class="va">BAM_app</span> <span class="op">&lt;</span> <span class="va">pFile01</span>.<span class="va">bin</span> <span class="va">out01</span>.<span class="va">mat</span></span></code></pre></div>
+<p>The parameter binary file is piped to the executable, which after
+execution stores the user defined <code>SimOut</code> variable in
+<code>out01.mat</code>. Note that the user-specified <code>SimOut</code>
+structure (see <code>User Signal Logging</code> block) at build time
+dictates what data is written.</p>
+<h4 id="load-data-and-convert-output-data-to-structure">7. Load Data and
+Convert Output Data to Structure</h4>
+<p>Convert vector data into a structured format using
+<code>convertArrayToStruct</code>:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">data</span> <span class="op">=</span> <span class="va">convertArrayToStruct</span>(<span class="ss">&#39;out01.mat&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>This organizes output data based on predefined bus definitions.</p>
+<p><a href="../README.html#api-documentation">Back</a></p>
+</body>
+</html>

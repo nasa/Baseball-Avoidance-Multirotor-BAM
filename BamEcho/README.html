@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1
+id="bamecho-unreal-visualization-video-generation-tool-for-bam-to-airsim-data">BamEcho:
+Unreal Visualization &amp; Video Generation Tool for BAM To Airsim
+Data</h1>
+<p><a href="../README.html#api-documentation">Back</a></p>
+<p><strong>BamEcho Version:</strong> 1.0</p>
+<p><a href="ExampleMedia/FrontCenter_Scene.mp4">Scene Video Output
+Sample</a></p>
+<p>Sample “Scene” camera view from the front of Drone running off BAM
+data.</p>
+<p><a href="ExampleMedia/FrontCenter_Depth.mp4">Depth Video Output
+Sample</a></p>
+<p>Sample “DepthVis” camera view from the front of Drone running off BAM
+data.</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This tool is designed to automate the process of taking a
+pregenerated BAM trajectory data file, transmitting the trajectories
+contained to an Airsim Unreal Environment (one for the ownship drone and
+one for the baseball), and then generate a video from the scene
+created.</p>
+<hr />
+<h2 id="getting-started">Getting Started</h2>
+<p>Generating videos with Bam Echo generally follows this process</p>
+<ol type="1">
+<li><p>Attain a flight run from BAM.</p></li>
+<li><p>Run the flight data through <code>genBamEchoScenario</code> to
+obtain CSV files that Echo uses to create the video frame by
+frame.</p></li>
+<li><p>Launch and run an Unreal Environment with Airsim. (configure
+Airsim JSON file prior to launch for custom camera and sensors)</p></li>
+<li><p>Run BamEcho with the CSV data files and all desired options to
+generate video files.</p></li>
+</ol>
+<hr />
+<h2 id="usage-examples">Usage &amp; Examples</h2>
+<p>The following is the standard format; two required parameters (the
+trajectory files) followed by any options to be activated.
+<code>python BamEcho.py \&lt;DroneTrajectory\&gt; \&lt;BaseballTrajectory\&gt; [options]</code>
+Also valid, assuming No Baseball options have been set, is the following
+where only one trajectory file argument is required:
+<code>python BamEcho.py \&lt;DroneTrajectory\&gt; [options]</code></p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><code>python BamEcho.py Drone_Scen01.csv Baseball_Scen01.csv</code>
+- Simple use. Logs at a normal level. Uses Default values and naming
+conventions.</li>
+<li><code>python BamEcho.py Drone_Scen02.csv Baseball_Scen02.csv -s</code>
+- Runs the program in Silent Mode.</li>
+<li><code>python BamEcho.py Drone_Scen03.csv Baseball_Scen03.csv -v -t MyScenarioTag</code>
+- Runs the program in verbose mode; sets a custom tag for the output
+directories.</li>
+<li><code>python BamEcho.py Drone_Scen01.csv -noBB -rm</code> - No
+Baseball use. Just flys and records the multirotor, logs at a normal
+level, and removes the image file directories after video processing.
+Notice the second file argument is not required if no baseball mode is
+used at the command line or in the json configuration file.</li>
+</ul>
+<hr />
+<h2 id="options">Options</h2>
+<ul>
+<li><strong>‘-s’</strong> - Silent Mode. Disables almost all text
+output.</li>
+<li><strong>‘-v’</strong> - Verbose Mode. The most detailed console
+output available.</li>
+<li><strong>‘-t’</strong> - Tag name. Allows user to set a custom string
+tag for the generated output. Requires the user to input a string after
+the option flag on the command line. Usage:
+<code>python BamEcho.py &lt;file1&gt; &lt;file2&gt; -t &lt;StringTag&gt;</code></li>
+<li><strong>‘-dt’</strong>- Debug Trajectory mode. This allows testing
+of the trajectory visualization while disabling the time intensive image
+collection and video export routines.</li>
+<li><strong>‘-noBB’</strong>- Disables all activities with the baseball
+actor.</li>
+<li><strong>‘-rm’</strong>- Enable directory cleanup at the end; removes
+all the generated frame images, leaving just the the videos.</li>
+</ul>
+<hr />
+<h2 id="requirements-assumptions">Requirements &amp; Assumptions</h2>
+<p>This script is critically dependent on several compatibility
+assumptions with BAM and the chosen Unreal Airsim environment. A lack of
+these items will likely result in failures by Echo or undefined
+behavior.</p>
+<p>Assumptions:</p>
+<ul>
+<li>Python 3+ installed</li>
+<li>ffmpeg installed and on your path.</li>
+<li>ffmpeg-python python module installed.</li>
+<li>Run within (or on path) with <code>Airsim/PythonClient</code>.</li>
+<li>Bam Trajectories are given in CSV files with established format.
+(see tool <code>genBamEchoScenario.m</code>)</li>
+<li>An Airsim ready Unreal environment must be running. For more
+information, see <a
+href="../ROS2_ws/visualization_pkgs/UNREALENVIRONMENT.html">Airsim
+Unreal Environment Supplemental</a>.</li>
+<li>Unreal environment has an asset that is spawnable named
+<code>BamBaseball</code></li>
+<li>Unreal environment was configured with a JSON file that:
+<ul>
+<li>Sets the camera resolution (like using CameraDefaultSettings)</li>
+<li>Instantiates at least one Airsim Multirotor vehicle named
+‘Drone’</li>
+<li>Disables the Airsim physics by setting:
+<code>"PhysicsEngineName": "ExternalPhysicsEngine"</code></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="performance">Performance</h2>
+<p>This tool’s speed is heavily dependent on two connected items: the
+size of the camera resolution that is being captured (defaults are Front
+Scene and Front Depth), and the number of cameras being captured. The
+biggest computational demand is <code>Client.simGetImages()</code>, and
+unfortunately it can’t be spun off in a thread because it would create a
+race condition between what image is being captured and the scene being
+actively updated by the main transmission logic.</p>
+<p>Tips to speed up performance:</p>
+<ul>
+<li>Reduce resolution of target cameras.</li>
+<li>Reduce the number of cameras (dynamic camera system via
+<code>BameEcho.json</code>).</li>
+<li>Headless mode on the environment (Not available on all platforms. I
+haven’t tested this, but Airsim claims it works in Linux).</li>
+</ul>
+<hr />
+<h2 id="bambaseball-integration">BamBaseball Integration</h2>
+<p>Bam produces and transmits a multirotor and a baseball trajectory
+dataset into Airsim. To properly leverage this in Airsim, the user’s
+environment needs to have an appropriate asset spawned that can be used
+as a baseball. The BamEcho tool likewise needs to be able to move the
+baseball around as it generates stills for the forthcoming video. Since
+users have the flexibility to use whatever Unreal Environment that
+Airsim has been dropped into, a common asset was created and provided to
+fulfill BamEcho’s needs.</p>
+<p>To integrate BamBaseball, do the following:</p>
+<ol type="1">
+<li>Locate the asset file (FBX) under
+<code>/BamEcho/UnrealAssets/BamBaseball.7z</code> and extract to a
+desired location. The folder contents should contain the following:</li>
+</ol>
+<p><a href="ExampleMedia/BaseballUnzipped.jpg">Unzipped BamBaseball
+Archive</a></p>
+<ol start="2" type="1">
+<li>In Unreal Editor, create or select a folder location for the
+imported BamBaseball object.</li>
+</ol>
+<p><a href="ExampleMedia/ImportAssetFolder.jpg">Create Baseball Asset
+Folder</a></p>
+<ol start="3" type="1">
+<li>Import the asset by selecting ‘Import Content’ from the ‘Add’ drop
+down button in Unreal Editor, and then select
+<code>BamBaseball.fbx</code> from
+<code>/BamEcho/UnrealAssets</code>.</li>
+</ol>
+<p><a href="ExampleMedia/ImportAsset.jpg">Import FBX Asset</a></p>
+<p>Once completed the loaded asset should look like this:</p>
+<p><img src="ExampleMedia/BamBaseball.jpg"  width="800" onclick="this.requestFullscreen()"/></p>
+<ol start="4" type="1">
+<li>Open the normal map texture named ‘baseball_normal’ and check that
+the ‘Flip Green Channel’ is enabled.</li>
+</ol>
+<p><img src="ExampleMedia/FlipGreenChannel.jpg"  width="800" onclick="this.requestFullscreen()"/></p>
+<ol start="5" type="1">
+<li>Place an instance of the BamBaseball static mesh in the level. You
+may chose to hide it, or just move it somewhere it cannot be seen. Note:
+it seems important for the asset to be instantiated. Unreal only seems
+to add instantiated assets to the asset list. It can not simply be left
+in the level’s content drawer.</li>
+</ol>
+<p><img src="ExampleMedia/BaseballInstance.jpg"  width="800" onclick="this.requestFullscreen()"/></p>
+<ol start="6" type="1">
+<li>Rebuild and run the environment. (BamEcho and Bam2Airsim will handle
+appropriate spawning and scaling).</li>
+</ol>
+<hr />
+<h2 id="json-configuration-file">JSON Configuration File</h2>
+<p>The configuration file system allows for one place for holding and
+setting the default values for parameters and options being used in
+BamEcho; with the exception of the raw input files. The key feature that
+most users will likely want to leverage is the camera view options. This
+section will allow complete customization of which vehicle, camera, and
+image type (within the capability of Bam and Airsim) will be captured
+and processed into a video product. Below is a listing of the
+parameters, explanation for each, and how to set them.</p>
+<ul>
+<li><em>LogLevel</em> - (0-Silent, 1-Normal, 2-Verbose) - Sets the
+verbosity of the logging during execution (tied to -s and -v options).
+Valid values: 0-Silent, 1-Normal, 2-Verbose/</li>
+<li><em>ImageCapture</em> - (true, false) - Flags whether the script
+should capture images or not (useful if only testing trajectory
+transmission).<br />
+</li>
+<li><em>VideoExport</em> - (true, false) - Enable or disable video
+exporting at the end. Again, only really useful if testing data
+transmission.</li>
+<li><em>IgnoreBaseball</em> - (true, false) - Enable or disable the
+transmission and processing of the Baseball actor. This is useful if
+only concerned with the Drone’s behavior.</li>
+<li><em>CleanupFrames</em> - (true, false) - Enable or disable the
+deletion of generate image captures after execution. This is a space
+saver if only concerned with the video output.</li>
+<li><em>CompressFrames</em> - (true, false) - Enable or disable image
+compression from captures on PNG formats.</li>
+<li><em>DefaultTag</em> - (text) A simple text title that will serve as
+the main part of the generated output folder. Default value is
+“Echo”.</li>
+<li><em>VideoProcessing</em> - The items in this section allow
+configuration of the output video (may expand more in the future)
+<ul>
+<li><em>InputFramerate</em> - (0-100) - This expressed the expected
+frame rate of the input files. Currently unused, but will be used in the
+future for fine tunning ffmpeg.</li>
+<li><em>OutputFrameRate</em> - (0-60) - This expressed the desired video
+output framerate. It can really be any positive integer, but really the
+20-30 range the best bang for the buck.</li>
+<li><em>QualityFactor</em> - 5 - Lower numbers seem to be less lossy,
+but produce huge videos. Higher numbers produce small but grainy videos.
+Five is the recommended selection.</li>
+</ul></li>
+<li><em>CameraViews</em> - These items let the user set the basic
+cameras and image types they want captured and exported to video
+ultimate. Only the Scene and Depth cameras have been experimented with.
+The other Airsim supported cameras may require additional processing be
+added.
+<ul>
+<li><em>Target</em> - (“Drone”) Currently the system only supports one
+multirotor named Drone, but in the future this could be any known Airsim
+vehicle with onboard cameras.</li>
+<li><em>Camera</em> - (See Airsim documentation,
+https://microsoft.github.io/AirSim/) This is the name or number value of
+an onboard camera of the target vehicle. The default used is
+‘front_center’ or 0.</li>
+<li><em>Type</em> - (See Airsim documentation) This list is the the
+image types (vision types) that will be capture for this camera on this
+target vehicle. The defaults are “Scene” and “DepthVis”.
+<strong>Note</strong>: The resolution for camera capture is actually
+configured in the main Airsim.json file for the Unreal environment. If
+the user wishes to up or downgrade image quality, it must be done there
+for now.</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="obtaining-bamecho-scenario-data">Obtaining BamEcho Scenario
+Data</h2>
+<p>Echo data is obtained by generating properly formatted CSV files from
+output data created by the BAM simulation in Matlab / Simulink or the
+autocoded BAM executable.</p>
+<ol type="1">
+<li><p>Configure and run BAM with the desired Ownship and Baseball
+criteria.</p></li>
+<li><p>Once BAM has completed, run the tool
+<code>genBamEchoScenario</code> with the following inputs</p>
+<ul>
+<li><em>SimInData</em> - The structure of simulation input data; it
+should be in the main workspace called <code>SimIn</code> unless
+something went wrong.</li>
+<li><em>SimOutData</em> - The structure of values obtained from
+<code>simout.logsout{1}.Values</code>. simout can be found in the main
+workspace after BAM runs.</li>
+<li><em>framerate</em> - (optional, default=24) - The rate at which
+frames are generated per second using the simulation dataset.</li>
+<li><em>tagString</em> - (optional, default=’’) - A string that will be
+included in the filename to customize it for recognition purposes.</li>
+<li><em>doBaseball</em>- (optional, default=logical(1)) - Flag to enable
+/ disable baseball file generation. ECHO is off. <strong>Example
+Usage</strong>:
+<code>Matlab&gt;&gt; genBamEchoScenario(SimIn, simOut.logsout{1}.Values);</code></li>
+</ul>
+<p><strong>Result</strong>: Two files in the CWD of Matlab formatted as
+such: ECHO is off.</p>
+<ul>
+<li>BamScn_<em>timestamp</em>_multirotor.csv</li>
+<li>BamScn_<em>timestamp</em>_baseball.csv ECHO is off.</li>
+</ul></li>
+<li><p>Move files to a directory of your preference (like the BamEcho
+working directory), and use the files as appropriate in the command line
+arguments for BamEcho as described above.</p></li>
+</ol>
+<hr />
+<h2 id="ongoing-future-work">Ongoing &amp; Future Work</h2>
+<ul>
+<li>Dynamic video configuration</li>
+<li>Multi-vehicle support</li>
+</ul>
+<hr />
+<h2 id="questions-contact">Questions / Contact</h2>
+<p>Daniel R. Hill - daniel.r.hill@nasa.gov</p>
+<hr />
+<h2 id="version-history">Version History</h2>
+<ul>
+<li><strong>0.90</strong> - Initial Beta. Handles basic CSV parsing,
+transmission of Drone and baseball positions to Airsim, screen grabs of
+Scene and Depth cameras onboard the Drone vehicle, and exporting video
+to AVI via ffmpeg.</li>
+<li><strong>0.95</strong> - Added BamBaseball asset for Unreal
+Environments. Added the ability to create PFM videos with FFMpeg. Skip
+baseball option. Threading for Image saving. Image file cleanup after
+option.</li>
+<li><strong>0.99</strong> - Added JSON configuration file and dynamic
+camera view system. Allows the user more up front visibility to the
+options available in Echo, and a way to setup the desired camera views
+that will be exported to video. Defaults are set as the current Dev
+preferences. The camera views beyond Scene and Depth are nominally
+available, but have not been tested. There may need to be additional
+handling and processing logic implemented to handle the more complex
+views Airsim provides (Done as needs arise.).</li>
+<li><strong>1.00</strong> - Full integration with baseball trajectory
+data. Scenario data validation.</li>
+</ul>
+<p><a href="../README.html#api-documentation">Back</a></p>
+</body>
+</html>
