@@ -1,0 +1,28 @@
+# folders to ignore for now
+AutoCode/
+AutoCodeRos/
+AutoCodeModels/custom_src/
+slprj/
+
+mapToUserSimOut.m
+*.slxc
+*.swp
+*.c
+*.tlc
+*.asv
+*.autosave
+*.r2020b
+*.r2022b
+*.r2023b
+*.original
+**__pycache__/
+ROS2_ws/build/
+ROS2_ws/install/
+ROS2_ws/log/
+ROS2_ws/config/win64/pixi.lock
+setup_with_ros2.m
+
+# default data directory for AutoCodeModels/examples/BatchProcessing
+_data/
+
+ChallengeProblem/Chal_Prob_plots/
