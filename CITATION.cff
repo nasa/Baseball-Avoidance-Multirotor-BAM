@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: Baseball-Avoidance-Multirotor-BAM
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: 'Michael '
+    family-names: Acheson
+    email: michael.j.acheson@nasa.gov
+    affiliation: NASA
+  - given-names: Kasey
+    family-names: Ackerman
+    email: kasey.a.ackerman@nasa.gov
+    affiliation: NASA
+  - given-names: Newton et al.
+    family-names: Campbell
+    affiliation: 'NASA '
+    email: newton.h.campbell@nasa.gov
+identifiers:
+  - type: url
+    value: >-
+      https://github.com/nasa/Baseball-Avoidance-Multirotor-BAM
+keywords:
+  - collision avoidance
+  - autonomy
+  - ROS2
+  - Unreal Engine
+  - Colosseum
+  - Airsim
+license: NASA-1.3
+version: V1.0
+date-released: '2025-08-01'

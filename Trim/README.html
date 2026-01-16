@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="trim">Trim</h1>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+<p>This folder includes scripts and functions for simulating and
+trimming multirotor dynamics. The trim solutions are obtained for both
+the polynomial aero-propulsive model, and the simplified aero-propulsive
+model. The folder contains the following:</p>
+<ol type="1">
+<li><p>Top level scripts for solving the multirotor trim problem over a
+range of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>
+body frame velocities. The top level scripts are the
+<code>Gen_Trim_Map.m</code> and <code>Gen_Trim_Map_Poly.m</code> for the
+simplified and polynomial models respectively. These generate trim map
+scripts make use of MATLAB <code>fmincon</code> and corresponding cost,
+and non-linear constraint m-files.</p></li>
+<li><p>MATLAB <code>.mat</code> files which contain the trim solutions
+over the range of body frame velocities produced from the generate trim
+map scripts. These files are <code>T_map.mat</code> and
+<code>Poly_T_map.mat</code> for the simplified and polynomial
+aero-propulsive models respectively.</p></li>
+<li><p>The cost function scripts (used with <code>fmincon</code>)
+<code>mycost.m</code> and <code>mycost_poly.m</code> for the simplified
+and polynomial aero-propulsive models respectively. The cost utilized
+for the optimization is merely the square of the state derivatives for
+Euler angles, body velocities, and body rates.</p></li>
+<li><p>Scripts that compute the state derivatives using an
+aero-propulsive model. These scripts are <code>nldyn_sim_eqn.m</code>
+and <code>nldyn_sim_eqn_poly.m</code> for the respective aero-propulsive
+models.</p></li>
+</ol>
+<p>Below, the corresponding m-files for the <strong>simplified
+aeropropulsive model</strong> are described. The polynomial model
+m-files are not described in detail, but are similar enough to the
+<strong>simplified aeropropulsive model</strong> versions as to be
+self-explanatory to users.</p>
+<p><strong>Version:</strong> 1.0</p>
+<h2 id="gen_trim_map">1. <code>Gen_Trim_Map</code></h2>
+<p>The function <code>Gen_Trim_Map</code> generates a trim map for
+multirotor configurations, which determines the state and actuator
+settings required to achieve desired orientations without accelerating.
+It systematically explores different velocity states to produce a
+comprehensive trim map.</p>
+<h3 id="inputs">Inputs</h3>
+<ul>
+<li><code>tmap_fname</code>: Path/filename of the output .mat data file
+containing trim maps.</li>
+</ul>
+<h3 id="outputs">Outputs</h3>
+<ul>
+<li><code>t_struc</code>: Structure containing arrays for pitch
+(<code>phi</code>), roll (<code>theta</code>), and propeller rotations
+per minute (<code>p1</code>, <code>p2</code>, <code>p3</code>,
+<code>p4</code>) across different velocity states.</li>
+</ul>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>c</code>, <code>units</code>, <code>rho</code> (implicitly
+defined within this script): Multirotor configuration parameters, units,
+and atmospheric density, respectively.</li>
+</ul>
+<h3 id="key-process">Key Process</h3>
+<p>The function iterates over pre-defined velocity vectors, solving an
+optimization problem to minimize deviation from desired trimmed
+conditions using the <code>fmincon</code> function:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mtext mathvariant="normal">Objective: </mtext><mspace width="0.333em"></mspace></mrow><munder><mi>min</mi><mtext mathvariant="normal">eu</mtext></munder><mo stretchy="false" form="postfix">∥</mo><msub><mi>x</mi><mi>d</mi></msub><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>:</mo><mn>9</mn><mo stretchy="false" form="postfix">)</mo><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex"> \text{Objective: } \min_{\text{eu}} \| x_d(1:9) \|^2 </annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>d</mi></msub><annotation encoding="application/x-tex">x_d</annotation></semantics></math>
+is the state derivative vector calculated by <code>nldyn_sim_eqn</code>
+where the objective (cost) is found in <code>mycost</code>. Similar
+functions for the polynomial model are utilized
+<code>nldyn_sim_eqn_poly</code> and <code>mycost_poly</code>. There is a
+difference in how the use of <code>fmincon</code> equality constraints
+are handled between the polynomial and the simplified aeropropulsive
+<code>Gen_Trim_Map</code> scripts. In particular, the
+<code>Gen_Trim_Map_Poly</code> uses the state derivatives directly as
+equality constraints in <code>fmincon</code> while
+<code>Gen_Trim_Map</code> (simplified model) does not.</p>
+<h2 id="nldyn_sim_eqn">2. <code>nldyn_sim_eqn</code></h2>
+<p>The function <code>nldyn_sim_eqn</code> computes the state
+derivatives based on the aircraft’s rigid body motion equations of
+motion. Users are referred to the polynomial version
+<code>nldyn_sim_eqn_poly</code> to note the slight differences in the
+polynomial model version of this script.</p>
+<h3 id="description">Description</h3>
+<p>This script calculates the translational and rotational dynamics of a
+multirotor system, taking into account gravitational forces, aerodynamic
+drag, and propulsion inputs. The function is primarily used to evaluate
+how changes in control inputs affect the multirotor’s state over
+time.</p>
+<h3 id="inputs-1">Inputs</h3>
+<ul>
+<li><code>param</code>: A placeholder for parameter estimates (not
+used).</li>
+<li><code>u</code>: Control inputs vector.</li>
+<li><code>x</code>: State vector consisting of Euler angles
+(<code>φ</code>, <code>θ</code>, <code>ψ</code>), body frame velocities
+(<code>u</code>, <code>v</code>, <code>w</code>), angular rates
+(<code>p</code>, <code>q</code>, <code>r</code>), and inertial position
+(<code>x</code>, <code>y</code>, <code>z</code>).</li>
+<li><code>c</code>: Structure containing multirotor configuration
+parameters.</li>
+<li><code>g_fps2</code>: Gravitational acceleration in ft/s².</li>
+<li><code>rho_slugpft3</code>: Atmospheric density in slug/ft³.</li>
+<li><code>aero_p</code>: Drag force-related multirotor properties.</li>
+<li><code>units</code>: Units structure.</li>
+</ul>
+<h3 id="outputs-1">Outputs</h3>
+<ul>
+<li><code>xd</code>: Time derivative of the state vector.</li>
+<li><code>accel</code>: Vector containing translational and rotational
+accelerations.</li>
+</ul>
+<h3 id="key-equations">Key Equations</h3>
+<ol type="1">
+<li><p><strong>Rotational Kinematics:</strong>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>ϕ</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>p</mi><mo>+</mo><mrow><mi>tan</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>r</mi><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>θ</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>q</mi><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>r</mi><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>ψ</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi>sec</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>r</mi><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{align*}
+\dot{\phi} &amp;= p + \tan(\theta) (q \sin(\phi) + r \cos(\phi)) \\
+\dot{\theta} &amp;= q \cos(\phi) - r \sin(\phi) \\
+\dot{\psi} &amp;= \sec(\theta) (q \sin(\phi) + r \cos(\phi))
+\end{align*}
+ </annotation></semantics></math></p></li>
+<li><p><strong>Translational Dynamics:</strong>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>u</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mi>q</mi><mi>w</mi><mo>+</mo><mi>r</mi><mi>v</mi><mo>−</mo><mi>g</mi><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mfrac><mi>X</mi><mi>m</mi></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>v</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mi>r</mi><mi>u</mi><mo>+</mo><mi>p</mi><mi>w</mi><mo>+</mo><mi>g</mi><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mfrac><mi>Y</mi><mi>m</mi></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>w</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mi>p</mi><mi>v</mi><mo>+</mo><mi>q</mi><mi>u</mi><mo>+</mo><mi>g</mi><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mfrac><mi>Z</mi><mi>m</mi></mfrac></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{align*}
+\dot{u} &amp;= -q w + r v - g \sin(\theta) + \frac{X}{m} \\
+\dot{v} &amp;= -r u + p w + g \cos(\theta) \sin(\phi) + \frac{Y}{m} \\
+\dot{w} &amp;= -p v + q u + g \cos(\theta) \cos(\phi) + \frac{Z}{m}
+\end{align*}
+</annotation></semantics></math></p></li>
+<li><p><strong>Rotational Dynamics:</strong>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>p</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>I</mi><mi>z</mi></msub><mi>L</mi><mo>+</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><mi>N</mi><mo>−</mo><msubsup><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow><mn>2</mn></msubsup><mi>q</mi><mi>r</mi><mo>−</mo><msubsup><mi>I</mi><mi>z</mi><mn>2</mn></msubsup><mi>q</mi><mi>r</mi><mo>+</mo><msub><mi>I</mi><mi>x</mi></msub><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><mi>p</mi><mi>q</mi><mo>−</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msub><mi>I</mi><mi>y</mi></msub><mi>p</mi><mi>q</mi><mo>+</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msub><mi>I</mi><mi>z</mi></msub><mi>p</mi><mi>q</mi><mo>+</mo><msub><mi>I</mi><mi>y</mi></msub><msub><mi>I</mi><mi>z</mi></msub><mi>q</mi><mi>r</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><msubsup><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow><mn>2</mn></msubsup><mo>−</mo><msub><mi>I</mi><mi>x</mi></msub><msub><mi>I</mi><mi>z</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>q</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mi>M</mi><mo>−</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msup><mi>p</mi><mn>2</mn></msup><mo>+</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msup><mi>r</mi><mn>2</mn></msup><mo>−</mo><msub><mi>I</mi><mi>x</mi></msub><mi>p</mi><mi>r</mi><mo>+</mo><msub><mi>I</mi><mi>z</mi></msub><mi>p</mi><mi>r</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msub><mi>I</mi><mi>y</mi></msub><mo>;</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>r</mi><mo accent="true">̇</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><mi>L</mi><mo>+</mo><msub><mi>I</mi><mi>x</mi></msub><mi>N</mi><mo>+</mo><msubsup><mi>I</mi><mi>x</mi><mn>2</mn></msubsup><mi>p</mi><mi>q</mi><mo>+</mo><msubsup><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow><mn>2</mn></msubsup><mi>p</mi><mi>q</mi><mo>−</mo><msub><mi>I</mi><mi>x</mi></msub><msub><mi>I</mi><mi>y</mi></msub><mi>p</mi><mi>q</mi><mo>−</mo><msub><mi>I</mi><mi>x</mi></msub><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><mi>q</mi><mi>r</mi><mo>+</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msub><mi>I</mi><mi>y</mi></msub><mi>q</mi><mi>r</mi><mo>−</mo><msub><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow></msub><msub><mi>I</mi><mi>z</mi></msub><mi>q</mi><mi>r</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><msubsup><mi>I</mi><mrow><mi>x</mi><mi>z</mi></mrow><mn>2</mn></msubsup><mo>−</mo><msub><mi>I</mi><mi>x</mi></msub><msub><mi>I</mi><mi>z</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>;</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{align*}
+\dot{p} &amp;= -(I_z L + I_{xz} N - I_{xz}^2 q r - I_z^2 q r + I_x I_{xz} p q - I_{xz} I_{y} p q + I_{xz} I_{z} p q + I_y I_z q r)/(I_{xz}^2 - I_x I_z) \\
+\dot{q} &amp;= (M - I_{xz} p^2 + I_{xz} r^2 - I_x p r + I_z p r)/I_y; \\
+\dot{r} &amp;= -(I_{xz} L + I_x N + I_x^2 p q + I_{xz}^2 p q - I_x I_y p q - I_x I_{xz} q r + I_{xz} I_y q r - I_{xz} I_z q r)/(I_{xz}^2 - I_x I_z);
+\end{align*}
+</annotation></semantics></math></p></li>
+<li><p><strong>Rotation Matrix</strong>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ψ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>sin</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="center" style="text-align: center"><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mrow><mi>cos</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+R = \begin{bmatrix} \cos(\psi) \cos(\theta) &amp; \cos(\psi) \sin(\phi) \sin(\theta) - \cos(\phi) \sin(\psi) &amp; \sin(\phi) \sin(\psi) + \cos(\phi) \cos(\psi) \sin(\theta)\\
+      \cos(\theta) \sin(\psi) &amp; \cos(\phi) \cos(\psi) + \sin(\phi) \sin(\psi) \sin(\theta) &amp; \cos(\phi) \sin(\psi) \sin(\theta) - \cos(\psi) \sin(\phi)\\
+               -\sin(\theta) &amp; \cos(\theta) \sin(\phi) &amp; \cos(\phi) \cos(\theta)
+   \end{bmatrix}
+   </annotation></semantics></math></p></li>
+</ol>
+<p>Users are referred to the polynomial version
+<code>nldyn_sim_eqn_poly</code> to note the slight differences in the
+polynomial model version of this script.</p>
+<h3 id="dependencies">Dependencies</h3>
+<p>Simplified aeropropulsive model: -
+<strong><code>compute_multirotor_FM</code>:</strong> Computes forces and
+moments given rotor speeds, velocities, and densities for the simplified
+aero-propulsive model. This script is located in <code>AeroProp</code>
+folder. - <strong><code>quad_drag</code>:</strong> Estimates aerodynamic
+drag forces acting on the quadrotor for the simplified aero-propulsive
+model. This script is located in <code>AeroProp</code> folder.</p>
+<p>Polynomial aeropropulsive model: -
+<strong><code>IMPACT_AeroProp_RSE_V1_10Jun25_180239</code>:</strong>
+Computes the forces and moments for the polynomial aero-propulsive
+model. This script is located in the <code>AeroProp</code> folder.</p>
+<h2 id="additional-functions">Additional Functions</h2>
+<ul>
+<li><strong><code>nlinCon_poly</code>:</strong> Solves the non-linear
+equations and uses them as equality constraints for use with fmincon in
+<code>mycost_poly</code>.</li>
+</ul>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+</body>
+</html>

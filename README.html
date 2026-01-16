@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="baseball-avoidance-multirotor-bam-simulation">Baseball Avoidance
+Multirotor (BAM) Simulation</h1>
+<p>Welcome to the BAM simulation GitHub repository This open-source
+project aims to foster collaboration and comparison between researchers
+working on autonomous collision avoidance (i.e., perception, prediction,
+and planning) for operations of urban air mobility (UAM) vehicles. This
+simulation challenges researchers to demonstrate the ability for a
+quad-rotor to autonomously avoid baseballs on collision courses (in real
+time). BAM is MATLAB &amp; Simulink based, but provides easy interfaces
+with high fidelity graphics (Unreal Engine) and sensors (e.g.,
+CodeLabsLLC Colosseum, and Microsoft Airsim) while also easily
+accommodating external algorithms (e.g., Python and C++) via the Robot
+Operating System II (ROS2).</p>
+<center>
+<img src=".graphics/Exam_4.gif" width="400" height="250" />
+</center>
+<p><strong>Version:</strong> 1.1</p>
+<p><strong>MATLAB &amp; Simulink Version:</strong> 2024b</p>
+<p><strong>Compatibility: Windows, Linux, Mac</strong></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#overview-and-key-features">Overview and Key
+Features</a></li>
+<li><a href="#api-documentation">Documentation</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#compatability-notes">Compatibility Notes</a></li>
+<li><a href="#license-information">License</a></li>
+<li><a href="#contact-information">Contact Information</a></li>
+<li><a href="#citation">Citation</a></li>
+</ol>
+<h2 id="overview-and-key-features">Overview and Key Features</h2>
+<p>BAM integrates various modeling aspects including environmental
+effects, tunable parameters, control systems, and data visualization,
+with an emphasis on high-complexity simulation for realistic UAM
+scenarios. It supports MATLAB/Simulink and Robot Operating System 2
+(ROS2) integration, offering comprehensive tools and datasets for an
+“Autonomous Collision Avoidance” challenge problem. BAM can be run as a
+stand-alone Simulink simulation or in combination with ROS2, Colosseum,
+and Unreal Engine to take advantage of the sensors, visualization, and
+perception tools. A “Users Guide” (see README.html at the repository top
+level) is provided which consists of a series of linked README
+files.</p>
+<h3 id="key-components">Key Components</h3>
+<ol type="1">
+<li><p><strong>Simulation Architecture</strong>: Built using Simulink,
+provides comprehensive bus structures for a six-degree-of-freedom, rigid
+body, non-linear aerospace simulation of a quad-rotor. The simulation is
+fully autocode capable, including ROS2 communications with external
+algorithms. BAM also includes a variety of aerospace library blocks and
+scripts for computing many aerospace quantities.</p></li>
+<li><p><strong>ROS2 Integration</strong>: Uses MATLAB s-functions to
+facilitate communication between MATLAB/Simulink simulations and ROS2
+nodes (NO MATLAB ROS2 TOOLBOX required)</p></li>
+<li><p><strong>Data Visualization</strong>: Includes high-fidelity
+visualization integration with CodexLabLLC Colosseum / Microsoft Airsim
+and Unreal Engine, as well as scripts and Simulink subsystems for
+plotting vehicle state information.</p></li>
+<li><p><strong>Baseball Aerodynamic &amp; Ballistic Modeling</strong>:
+Offline trajectory generation data sets and scripts for generation of
+near collision baseball trajectories which include, gravitational
+modeling, drag effects and spin aerodynamics.</p></li>
+<li><p><strong>Environmental and Sensor Models</strong>: Incorporates
+wind and turbulence (Dryden based) effects within the Simulink model.
+Additionally, Unreal Engine v5+ enables very high fidelity atmospheric
+modeling (e.g., visibility, fog) for sensor degradation
+modeling.</p></li>
+<li><p><strong>Control Systems</strong>: Includes baseline geometric
+controller with an inner/outer loop control structure derived from
+recent research, enabling sophisticated guidance systems. Easy for users
+to drop in replacement control algorithms.</p></li>
+<li><p><strong>Trajectory Injection</strong>: Supports Bernstein
+polynomial reference trajectories (both own-ship and baseball).
+Additionally, has the capability to utilize user-specified time series
+trajectories.</p></li>
+<li><p><strong>Colosseum and Airsim</strong>: These simulation
+frameworks were used in this repo to take advantage of their API
+capability to interface with Unreal Engine and provide users with
+various sensors (e.g., Lidar and cameras). The BAM Simulink simulation
+provides the dynamic (physics) simulation and the Colosseum/Airsim
+Unreal Plugin was used in “External Physics” mode. A standalone
+executable (and source code) is provided with this repo to receive the
+BAM vehicle POSE information via ROS2 messages and communicate via API
+to the Unreal Engine Environment.</p></li>
+<li><p><strong>Unreal Engine Executable Environment</strong>: An Unreal
+Engine executable (including Colosseum plug-in) is provided based on the
+Unreal Engine asset “English College Level 4 Sample” <a
+href="https://www.fab.com/channels/unreal-engine">Fab.com</a>. This
+executable enables users to obtain sensor data (e.g., lidar, camera) in
+a photo-realistic environment. Instructions and scripts provided which
+enable users to drop in Colosseum (or Airsim) plug-in into their own
+user provided Unreal Engine environment and readily connect BAM to this
+environment.</p></li>
+</ol>
+<h3 id="suggested-tools-plug-ins">Suggested Tools &amp; Plug-ins</h3>
+<ul>
+<li><strong>CodexLabsLLC Colosseum (Microsoft Airsim Plugin)</strong>:
+Users who wish to rebuild the provided Unreal Engine environment
+executable or to utilize their own Unreal environment should obtain
+these open-source repositories.</li>
+<li><strong>Unreal Engine Environment</strong>: While not required,
+users who wish to build their own environment ecosystem will need to
+obtain a copy of the Unreal Engine editor etc.. Additionally, for users
+for which the provided Unreal environment executable doesn’t work, they
+will need to rebuild it by providing Unreal Engine, Colosseum plug-in,
+and the Unreal Engine asset “English College” noted above.</li>
+<li><strong>FFMPG</strong>: Some example videos created using FFMPEG
+(open-source) from the Unreal executable are included in this
+repository. While optional, users may find it useful to use this or a
+similar tool to generate videos from camera sensor images obtained using
+the Colosseum plug-in.</li>
+<li><strong>ROS2</strong>: While not required for execution of the BAM
+simulation, users who want to utilize the Unreal Engine &amp; Colosseum
+environment will need to utilized ROS2 (see Compatibility for suggested
+versions).</li>
+<li><strong>Robostack</strong>: In lieu of a direct installation of
+ROS2, we also utilized Robostack (conda pixi package) for ROS2 (see
+compatibility for suggested versions).</li>
+<li><strong>Python</strong>: While python is not utilized with the BAM
+simulation, or to enable the ROS2/Colosseum/Unreal Engine pipeline, it
+is used extensively for a variety of ROS2 nodes. See the associated
+README files <a
+href="./ROS2_ws/analysis_pkgs/README.html">ROS2_ws/Analysis Packages</a>
+or the <a href="./ROS2_ws/config/linux/environment.yml">Env .yml
+Linux</a> and <a href="./ROS2_ws/config/win64/pixi.toml">pixi Win</a>
+for details on relevant Python packages.</li>
+</ul>
+<hr />
+<h2 id="api-documentation">API Documentation</h2>
+<p>A top level README file is provided which consists of a compilation
+of the associated README files in this repo (see links below). The
+following documentation listed below aligns with the folder structure in
+BAM.</p>
+<ol type="1">
+<li><a href="AeroProp/README.html">AeroProp</a>: Multirotor
+Aero-Propulsive Model which includes thrust, torque, basic aerodynamics,
+and vehicle mass/inertia properties</li>
+<li><a href="AutoCodeModels/README.html">AutoCodeModels</a> Scripts and
+utilities to autocode Simulink models with/without ROS2</li>
+<li><a href="BamEcho/README.html">BamEcho</a> Postprocess Unreal
+Visualization</li>
+<li><a href="Bez_Functions/README.html">Bez_Functions</a> Bernstein
+Polynomial toolbox</li>
+<li><a href="ChallengeProblem/README.html">ChallengeProblem</a>
+Autonomous Collision Avoidance Challenge Problem</li>
+<li><a href="Examples/README.html">Examples</a> Contains example
+scripts/template for initiating the BAM simulation with a variety of
+trajectories. Demonstrates how to utilize userStruct structure, and vary
+SimPar parameters (e.g., initial conditions). <strong>NOTE</strong>:
+Before running any example files, first run <code>setup.m</code> in the
+main BAM directory. This ensures all paths and dependencies work
+correctly when executing the files</li>
+<li><strong>lib</strong> Folder contains a variety of aerospace related
+MATLAB scripts and Simulink libraries (e.g., quaternions, vehicle
+dynamics, Geodesics, axis transformations)</li>
+<li><a href="Ref_Models/README.html">Ref_Models</a>
+<ol type="1">
+<li><a href="Ref_Models/Autocode_RT_Pacing/README.html">Autocode
+Real-Time Pacing</a> This subsystem should be used only when it is
+desired to perform simulation real-time pacing in
+<strong>executable</strong> code. For normal simulation pacing, use the
+built in Simulink Run/Simulation pacing button<br />
+</li>
+<li><a href="Ref_Models/Baseball/README.html">Baseball</a> Baseball
+scripts and Simulink simulation for baseball trajectory generation
+(e.g., randomized initial conditions , baseball drag and spin models
+etc..)</li>
+<li><a href="Ref_Models/Controller/README.html">Controller</a> High
+performance quadrotor geometric controller</li>
+<li><a href="Ref_Models/Environment/README.html">Environment</a>
+Atmospheric model (1976), wind, and Dryden turbulence models</li>
+<li><a href="Ref_Models/Plots/README.html">Plots</a> Visualization
+capabilities native in MATLAB and Simulink</li>
+<li><a href="Ref_Models/Sensors/README.html">Sensors</a> Sensor
+models</li>
+</ol></li>
+<li><a href="ROS2_ws/README.html">ROS2_ws</a> ROS2 nodes and
+installation scripts</li>
+<li><a href="setup/README.html">setup</a> Simulation setup scripts</li>
+<li><a href="Trim/README.html">Trim</a> MATLAB m-files used to create
+and implement a vehicle trim schedule</li>
+<li><strong>Util</strong> Folder contains a variety of utility scripts.
+One script recursively builds bus objects from a given MATLAB structure.
+Another script recursively downgrades all .slx files to a previous
+version of MATLAB. A .bat script is provided that recursively produces
+linked HTML documents from all markdown files in the repo. This script
+was used to create the top-level README.html document which serves as
+the user guide for this repository<br />
+</li>
+<li><strong>VisualEnv</strong> This folder contains the executable of
+the Unreal Engine environment for use with BAM. Users will find the
+compressed version of the environment executable for the Windows
+operating system. With the instructions provided, users can generate a
+Linux version as needed. These executables are not necessary to run the
+Simulink BAM simulation but there are required for those users who wish
+to work with the Airsim/Colosseum and Unreal Engine visualization
+pipeline. This environment is released as a binaries (not source code)
+as the FAB marketplace free asset “English College” was used which is
+allowed under the FAB marketplace licensing. <strong>NOTE</strong>:
+These binaries are large files ~1.2gb and therefore are not included in
+the git repo but instead are released as part of a BAM release version
+on GitHub. Users will need to download the Windows executable
+separately.</li>
+</ol>
+<hr />
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="matlab-and-simulink-only">MATLAB and Simulink (only)</h3>
+<p>To get started with the BAM simulation (no ROS2), ensure you have
+MATLAB/Simulink installed, then follow these steps:</p>
+<ol type="1">
+<li><p>Clone this repository, move example file, and open MATLAB:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/nasa/Baseball-Avoidance-Multirotor-BAM.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bam_baseball_avoidance_multirotor</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ./Examples/example_template.m .</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">matlab</span></span></code></pre></div>
+<p>ECHO is off.</p></li>
+<li><p>Run example script in MATLAB command window:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">example_template</span><span class="op">;</span></span></code></pre></div></li>
+<li><p>Users can interact with the simulation (e.g., add or remove
+publisher and subscriber nodes via the <a
+href="./setup/README.html">setup</a> process). See <a
+href="./Examples/README.html">examples</a> for details on modifying
+own-ship trajectory or executing BAM <code>Challenge Problem</code>
+scenarios.</p></li>
+</ol>
+<h3 id="ros2">ROS2</h3>
+<p>For details on using ROS2 in conjunction with the BAM simulation see
+the <a href="./ROS2_ws/README.html">ROS2_ws</a> folder.</p>
+<h3 id="bam-to-unreal-engine-pipeline-real-time">BAM to Unreal Engine
+Pipeline (Real-time)</h3>
+<p>To utilize the BAM to Unreal pipeline, it is important to first note
+that in addition to sourcing ROS2, the user will need to have an Airsim
+/ Colosseum compliant environment application. BAM comes with a Windows
+11 (and Linux) / Colosseum binary named
+<code>BAM_EnglishCollege.exe</code> using Unreal 5. If users require
+another solution, they will need to produce their own Unreal environment
+application, which is described in the <a
+href="./ROS2_ws/visualization_pkgs/UNREALENVIRONMENT.html">Unreal
+Environment Supplemental</a> and in both the Airsim and Colosseum
+documentation websites.</p>
+<ol type="1">
+<li><p>Enable ROS2 (users need to install ROS2 on their machine or
+utilize <code>robostack</code> for a packaged version of ROS2). See
+Compatibility notes below</p>
+<ul>
+<li>Example: (Windows) robostack users:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>cd <span class="op">&lt;</span>path <span class="ex">to</span> robostack installation<span class="op">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> shell <span class="at">-e</span> jazzy</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span> once jazzy shell opens ...</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">robostack:jazzy</span><span class="kw">)</span> <span class="op">&gt;</span>cd <span class="op">&lt;</span>path <span class="ex">to</span> BAM/ros2_ws<span class="op">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">colcon</span> build <span class="co"># only perform this step if no install folder (i.e., fresh clone of repo)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">call</span> ./install/local_setup.bat <span class="co"># source local ROS2 packages</span></span></code></pre></div>
+<ul>
+<li>Example: (Windows) non-robostack users: open a
+<code>Developer Command Prompt for VS 2022</code>. NOTE: ROS2 doesn’t
+work properly on Windows using just a <code>command Prompt</code></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>cd <span class="op">&lt;</span>path <span class="ex">to</span> ROS2 installation<span class="op">&gt;</span> <span class="co"># Only required if ROS2 is not already in path</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>call <span class="ex">./setup.bat</span> <span class="co"># Only required if ROS2 is not already in path</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>cd <span class="op">&lt;</span>path <span class="ex">to</span> BAM/ros2_ws<span class="op">&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>colcon <span class="ex">build</span> <span class="co"># only perform this step if no install folder (i.e., fresh clone of repo)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>call <span class="ex">./install/local_setup.bat</span> <span class="co"># source local ROS2 packages</span></span></code></pre></div></li>
+<li><p>Startup MATLAB / Simulink</p>
+<ul>
+<li>Example: (Windows) robostack users:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">robostack:jazzy</span><span class="kw">)</span><span class="op">&gt;</span>matlab <span class="co"># start matlab from robostack command window so MATLAB has ROS2 sourced</span></span></code></pre></div>
+<ul>
+<li>Example: (Windows) non-robostack users:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>matlab <span class="co"># start matlab from command window which has ROS2 sourced so MATLAB also has ROS2 sourced</span></span></code></pre></div>
+<ul>
+<li>Verify ROS2 is sourced by typing <code>&gt;&gt;  ros2</code> in the
+MATLAB command line ECHO is off.</li>
+</ul></li>
+<li><p>Move the <code>settings.json</code> file:</p>
+<ul>
+<li>Copy the example <code>settings.json</code> file from the folder:
+<code>./ROS2_ws/visualization_pkgs/bam_2_airsim/Sample_settings.json</code></li>
+<li>Move and rename the sample file to the folder
+<code>&lt;path to user's Windows Documents folder&gt;/Airsim/settings.json</code>
+(windows). Note: Windows users may need to create the Airsim folder:
+<code>&lt;path to user's Windows Documents folder&gt;/Airsim</code>.
+Modify the <code>settings.json</code> file as desired. Linux users
+should place the modified <code>settings.json</code> file in the
+<code>~/Documents/AirSim</code> folder.</li>
+</ul></li>
+<li><p>Run the default Unreal Environment Executable (e.g.,
+<code>EnglishCollege.exe</code>). More details on this can be found at:
+<a href="./ROS2_ws/visualization_pkgs/UNREALENVIRONMENT.html">Unreal
+Environment Supplemental</a>. (NOTE: Users can provide their own Unreal
+Environments for use with BAM if desired.)</p></li>
+<li><p>Build and run Bam_2_Airsim ROS2 executable. See <a
+href="./ROS2_ws/visualization_pkgs/bam_2_airsim/README.html">bam_2_airsim</a>
+on how to build the bam_2_airsim executable and link to Colosseum
+etc.</p>
+<ul>
+<li>Run the Bam_2_Airsim node</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">robostack:jazzy</span><span class="kw">)</span><span class="op">&gt;</span>ros2 <span class="ex">run</span> bam_2_airsim_pkg Bam2Airsim <span class="co"># runs the ROS node for robostack ROS2 (unable to run =&gt; colcon build &amp; source local setup)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>ros2 <span class="ex">run</span> bam_2_airsim_pkg Bam2Airsim <span class="co"># runs the ROS node for non-robostack ROS2 (unable to run =&gt; colcon build &amp; source local setup)</span></span></code></pre></div>
+<ul>
+<li>NOTE: this Bam_2_Airsim node should be run AFTER the Unreal
+Environment executable is running as it tries to connect to the Unreal
+executable via the Airsim/Colosseum plug-in.</li>
+</ul></li>
+<li><p>Run the BAM simulation. Instructions for setting up and running
+the BAM simulation for a collision scenario can be found in: <a
+href="./Examples/example_collision_avoidance.m">example_collision_avoidance.m</a>.
+If users have run <code>setup</code> previously, then they can run
+<code>example_collision_avoidance</code> directly from the MATLAB
+command line at the BAM top level folder, otherwise users will need to
+move <code>./Examples/example_collision_avoidance.m</code> to the BAM
+top level to run it.</p>
+<ul>
+<li>The BAM repo provides binaries for the ROS2 Simulink s-functions. If
+these built binaries don’t work as provided, then users will need to
+rebuild them see <a href="./ROS2_ws/README.html">ROS2_ws</a></li>
+</ul></li>
+</ol>
+<h3 id="bam-to-unreal-engine-video-generation-with-echo-replay">Bam To
+Unreal Engine Video Generation With Echo (Replay)</h3>
+<p>The following allows users to take individual runs from BAM and
+generate video files with specified camera and sensor views using Airsim
+&amp; Unreal. Caution: this only does one trajectory at a time, because
+of the resource load of generating videos.</p>
+<p>Much like the last pipeline, this pipeline requires the installation
+and configuration of a variation of Airsim and an Unreal Environment
+application (<a
+href="./ROS2_ws/visualization_pkgs/UNREALENVIRONMENT.html">Unreal
+Environment Supplemental</a>. This pipeline also leverages the Python
+Client that comes with Airsim / Colosseum.</p>
+<ol type="1">
+<li><p>Run MATLAB / Simulink</p></li>
+<li><p>Run BAM to generate a data run for visualization</p></li>
+<li><p>Create an Echo compliant data file by processing the Bam data run
+with Echo’s companion tool (see <a
+href="./BamEcho/README.html#obtaining-bamecho-scenario-data">BamEcho
+Preparation documentation</a> for more info.)</p></li>
+<li><p>Launch and run an Airsim compatible Unreal Environment
+application..</p></li>
+<li><p>Configure and run BamEcho with the data files produced in Step 3.
+See <a href="./BamEcho/README.html">BamEcho Documentation</a> for
+details, options, and examples.</p></li>
+</ol>
+<h3 id="autocode">Autocode</h3>
+<p>Details on the processes to autocode the BAM simulation can be found
+in <a
+href="./AutoCodeModels/README.html#getting-started-guide">AutoCodeModels</a>
+and additionally for details on batch processing see <a
+href="./AutoCodeModels/examples/BatchProcessing/README.html">Batch
+Processing</a>.</p>
+<hr />
+<h2 id="compatibility-notes">Compatibility Notes</h2>
+<ul>
+<li><p>Operating Systems: Testing of the simulation was only performed
+on Windows 11, MAC OS 15 (Apple and Intel processors), and some Linux
+versions.</p></li>
+<li><p>MATLAB and Simulink: The base BAM simulation is provided in a
+newer version of Simulink (2024b). This was done solely for taking
+advantage of the Cmake Toolchain for Simulink code generation available
+with 2024b. The basic BAM simulation was tested and found to be fully
+compatible with multiple prior versions of Simulink. Users who wish to
+utilize previous versions of Simulink, see the m-function <a
+href="./Util/downgradeModelsTo2024a.m">Downgrade Simulink</a>).</p></li>
+<li><p>ROS2: Usage of ROS2 to communicate with external algorithms was
+shown to be compatible with installations of Humble and Jazzy.
+Additionally, we utilized the bundled ROS2 <a
+href="https://robostack.github.io">robostack</a> versions Jazzy and
+higher. The robostack version of Humble did result in some
+errors.</p></li>
+<li><p><a href="https://github.com/CodexLabsLLC/Colosseum">Colosseum</a>
+and <a href="https://microsoft.github.io/AirSim/">Airsim</a>: Airsim is
+an open source simulation environment which we utilized solely as a
+plug-in with an Unreal Engine environment. Colosseum is an open-source
+repo which is the follow on to Airsim after it was archived.</p></li>
+<li><p>Unreal Engine: Users are encouraged to utilize Colosseum instead
+of Airsim, as Colosseum is the repository continuing Airsim development
+after Airsim was archived. Specific versions of Unreal Engine required
+are: CodexLabsLLC Colosseum - Unreal Engine 5.4+, Microsoft Airsim -
+Unreal Engine 4.25+</p></li>
+</ul>
+<hr />
+<h2 id="license-information">License Information</h2>
+<p>This software is released by NASA as open-source. Users must provide
+MATLAB and Simulink, but the other software packages users may wish to
+enable are either open-source and/or no-cost usage. If users utilize the
+binaries (e.g., Unreal Environment executable) provided with this
+repository, then no other software is required. Users who wish to
+autocode the BAM simulation will also need the appropriate MATLAB
+toolboxes (e.g., Simulink coder). See attached <a
+href="./LICENSE.pdf">BAM License</a>.</p>
+<hr />
+<h2 id="contact-information">Contact Information:</h2>
+<p><strong>Contributors</strong>: Michael J. Acheson, Kasey Ackerman,
+Garrett Asper, Rachel Axten, Barton Bacon, John Bullock, Thomas Britton,
+Newton Campbell, Stephen Derry, Irene Gregory, Daniel Hill, John “Dana”
+McMinn, Nicolas Miguel, Tenavi Nakamura-Zimmerer, Andrew Patterson, and
+Benjamin Simmons.</p>
+<p><strong>Contact</strong>: - <strong>Name:</strong> Michael J. Acheson
+- <strong>Organization:</strong> NASA Langley Research Center (LaRC) -
+<strong>Department:</strong> Dynamics Systems and Control Branch (D-316)
+- <strong>Email:</strong> <a
+href="mailto:michael.j.acheson@nasa.gov">michael.j.acheson@nasa.gov</a></p>
+<hr />
+<h2 id="citation">Citation</h2>
+<p>To cite the Baseball Avoidance Multirotor, please use:</p>
+<p><span class="citation" data-cites="misc">@misc</span>{BAM2025, author
+= {Acheson, M., Ackerman, K., Campbell, N. et al. }, title = {Baseball
+Avoidance Multirotor (BAM)}, year = {2025}, publisher = {GitHub},
+journal = {GitHub repository}, howpublished = {}, commit = {TBD} }</p>
+<hr />
+<h2
+id="required-notices-and-disclaimers-see-section-3b-of-open-source-license.pdf-file">Required
+Notices and Disclaimers (See section 3B of open-source LICENSE.pdf
+file):</h2>
+<p>Copyright Notice for the NASA Software “Baseball Avoidance Multirotor
+Simulation” v.1.1 (LAR-20691-1): Copyright 2025 United States Government
+as represented by the Administrator of the National Aeronautics and
+Space Administration. All Rights Reserved. 1. The NASA Software
+“Baseball Avoidance Multirotor Simulation” v.1.1 (LAR-20691-1) may be
+released/downloaded with “BAM_English College,” which is NASA developed
+software in executable code only, for Royalty-Free distribution Only as
+a Non-Engine Product, both as defined in the Unreal® Engine End User
+License Agreement. Unreal® Engine, Engine Code, Examples, and Starter
+Content software are not bundled with this NASA software; users of this
+NASA software may obtain their own license from Epic Games, Inc. The
+NASA Software “Baseball Avoidance Multirotor Simulation” v.1.1
+(LAR-20691-1) may include a rendered linear media product within such
+executable code, such as English College Level 4 Sample, by user
+AccuCities, via FAB. Each is subject to the terms and conditions of its
+licensor. English College Level 4 Sample, by user AccuCities, via FAB.
+https://www.fab.com/listings/374fb588-5711-41f1-a69b-4e60c95beea5 (Fab
+Standard License: https://fab.com/s/0d437fa051bd) CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/legalcode.en
+https://accucities.com/ AccuCities® is a trademark or registered
+trademark of AccuCities Ltd, in the USA and/or elsewhere. Fab End User
+License Agreement https://www.fab.com/eula Unreal® Engine, Copyright
+1998 – 2025, Epic Games, Inc. All rights reserved Unreal® Engine End
+User License Agreement: https://www.unrealengine.com/en-US/eula/unreal
+Unreal® and Fab are trademarks or registered trademarks of Epic Games,
+Inc. in the USA and/or elsewhere. 2. This NASA software may include NASA
+developed User Files as defined in the Mathworks Program Offering Guide
+for MATLAB® software products, which may be found in the applicable
+Documentation for Release. MATLAB® software is not bundled with this
+NASA software; users of this NASA software may obtain their own license
+from The Mathworks, Inc., which is subject to the terms and conditions
+of its licensor (e.g., The MathWorks, Inc. Software License Agreement),
+as applicable at the time of licensing. Hyperlinks are provided here for
+information purposes only: https://www.mathworks.com/ MATLAB® is a
+registered trademark of The MathWorks, Inc. 3. This NASA software may be
+bundled with the following third-party software which is subject to the
+terms and conditions of its licensor, as applicable at the time of
+licensing. Original copies of the third-party software may be available
+from the licensor. a. Simulation Environment for Multirotor UAVs,
+Version 1.2.0.0 (127 KB) by Jan Vervoorst, A Modular Simulation
+Environment for the Improved Dynamic Simulation of Multirotor UAVs
+Copyright (c) 2016, Jan Vervoorst All rights reserved. Redistribution
+and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met: *
+Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer. * Redistributions
+in binary form must reproduce the above copyright notice, this list of
+conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution * Neither the name of
+University of Illinois at Urbana-Champaign nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission. THIS SOFTWARE
+IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. Cite As:
+Jan Vervoorst (2025). Simulation Environment for Multirotor UAVs
+(https://www.mathworks.com/matlabcentral/fileexchange/59705-simulation-environment-for-multirotor-uavs),
+MATLAB Central File Exchange. Retrieved August 15, 2025. b. spdlog The
+MIT License (MIT) Copyright (c) 2016 Gabi Melman. Permission is hereby
+granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the “Software”), to deal in the
+Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions: The above
+copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED
+“AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. “– NOTE: Third party dependency used by this software –
+This software depends on the fmt lib (also MIT License), Copyright (c)
+2012 - present, Victor Zverovich and {fmt} contributors, and users must
+comply to its license:
+https://raw.githubusercontent.com/fmtlib/fmt/master/LICENSE”
+https://github.com/gabime/spdlog 4. The NASA Software “Baseball
+Avoidance Multirotor (BAM) Simulation” v.1.1 (LAR-20691-1) calls the
+following third-party software, which is subject to the terms and
+conditions of its licensor, as applicable at the time of licensing. The
+third-party software is not bundled or included with this software but
+may be available from the licensor. Users must supply their own
+third-party software. License hyperlinks are provided here for
+information purposes only. ********** pytest MIT:
+https://github.com/pytest-dev/pytest Copyright (c) 2004 Holger Krekel
+and others ********** MSR Aerial Informatics and Robotics Platform MSR
+Aerial Informatics and Robotics Simulator (AirSim) MIT:
+https://github.com/microsoft/airsim?tab=License-1-ov-file#readme
+https://microsoft.github.io/AirSim/ Copyright (c) Microsoft Corporation
+All rights reserved. ********** Colosseum (“a successor of AirSim”) MIT:
+https://github.com/CodexLabsLLC/Colosseum? tab=License-1-ov-file#readme
+https://codexlabsllc.github.io/Colosseum/ MSR Aerial Informatics and
+Robotics Platform MSR Aerial Informatics and Robotics Simulator (AirSim)
+Copyright (c) Microsoft Corporation. 2022 All rights reserved.
+(Colosseum) MSR Aerial Informatics and Robotics Platform MSR Aerial
+Informatics and Robotics Simulator (AirSim) Copyright (c) Codex
+Laboratories LLC. 2022 All rights reserved. ********** ROS2 Apache 2.0:
+https://github.com/ros2 (No copyright notice located) ********** Unreal®
+Engine https://www.unrealengine.com/en-US/eula/unreal Copyright 1998 –
+2025, Epic Games, Inc. All rights reserved ********** MATLAB®/SIMULINK®
+brand simulation software products Offered by The MathWorks,
+Inc. https://www.mathworks.com **** Any trademarks used herein are the
+property of their respective owner. Trade names and trademarks are used
+for identification only. Their usage does not constitute an official
+endorsement, either expressed or implied, by the National Aeronautics
+and Space Administration.</p>
+<p>Disclaimers No Warranty: THE SUBJECT SOFTWARE IS PROVIDED “AS IS”
+WITHOUT ANY WARRANTY OF ANY KIND, case EITHER EXPRESSED, IMPLIED, OR
+STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SUBJECT
+SOFTWARE WILL CONFORM TO SPECI-FICATIONS, ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICU-LAR PURPOSE, OR FREEDOM FROM
+INFRINGEMENT, ANY WARRANTY THAT THE SUBJECT SOFTWARE WILL BE ERROR FREE,
+OR ANY WARRANTY THAT DOCUMENTATION, IF PRO-VIDED, WILL CONFORM TO THE
+SUBJECT SOFTWARE. THIS AGREEMENT DOES NOT, IN ANY MANNER, CONSTITUTE AN
+ENDORSEMENT BY GOVERNMENT AGENCY OR ANY PRI-OR RECIPIENT OF ANY RESULTS,
+RESULTING DESIGNS, HARDWARE, SOFTWARE PROD-UCTS OR ANY OTHER
+APPLICATIONS RESULTING FROM USE OF THE SUBJECT SOFT-WARE. FURTHER,
+GOVERNMENT AGENCY DISCLAIMS ALL WARRANTIES AND LIABILITIES REGARDING
+THIRD-PARTY SOFTWARE, IF PRESENT IN THE ORIGINAL SOFTWARE, AND
+DISTRIBUTES IT “AS IS.”</p>
+<p>Waiver and Indemnity: RECIPIENT AGREES TO WAIVE ANY AND ALL CLAIMS
+AGAINST THE UNITED STATES GOVERNMENT, ITS CONTRACTORS AND
+SUBCONTRACTORS, AS WELL AS ANY PRIOR RECIPIENT. IF RECIPIENT’S USE OF
+THE SUBJECT SOFTWARE RESULTS IN ANY LIABILITIES, DEMANDS, DAMAGES,
+EXPENSES OR LOSSES ARISING FROM SUCH USE, IN-CLUDING ANY DAMAGES FROM
+PRODUCTS BASED ON, OR RESULTING FROM, RECIPI-ENT’S USE OF THE SUBJECT
+SOFTWARE, RECIPIENT SHALL INDEMNIFY AND HOLD HARMLESS THE UNITED STATES
+GOVERNMENT, ITS CONTRACTORS, AND SUBCONTRAC-TORS, AS WELL AS ANY PRIOR
+RECIPIENT, TO THE EXTENT PERMITTED BY LAW. RECIPI-ENT’S SOLE REMEDY FOR
+ANY SUCH MATTER SHALL BE THE IMMEDIATE, UNILATERAL TERMINATION OF THIS
+AGREEMENT.</p>
+</body>
+</html>
