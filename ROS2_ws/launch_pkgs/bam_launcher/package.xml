@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>bam_launcher</name>
+  <version>0.0.1</version>
+  <description>BAM Launcher Package</description>
+  <maintainer email="newton.h.campbell@nasa.gov">Newton Campbell</maintainer>
+  <license>TODO: License declaration</license>
+
+  <!--<buildtool_depend>ament_python</buildtool_depend>-->
+
+  <depend>rclpy</depend>
+  <depend>launch_ros</depend>
+  <depend>drone_plotter_py</depend>
+  <depend>phase_space_warping_py</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

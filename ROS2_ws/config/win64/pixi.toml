@@ -1,0 +1,19 @@
+[workspace]
+name = "ros2-environment"
+channels = ["conda-forge", "robostack-staging"]
+platforms = ["win-64", "linux-64", "osx-64"]
+
+[dependencies]
+python = ">=3.9"
+scipy = ">=1.15.2,<2"
+numpy = ">=2.2.4,<3"
+matplotlib = ">=3.10.1,<4"
+pandas = ">=2.2.3,<3"
+sympy = ">=1.13.3,<2"
+networkx = ">=3.4.2,<4"
+pillow = ">=11.1.0,<12"
+
+[tasks]
+launch-bam = "ros2 launch bam_launcher bam_launch.py"
+run-psw = "ros2 run phase_space_warping_py psw_node"
+run-plotter = "ros2 run drone_plotter_py drone_plotter"

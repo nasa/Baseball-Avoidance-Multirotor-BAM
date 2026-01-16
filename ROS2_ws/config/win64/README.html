@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="windows-ros-2-workspace">Windows ROS 2 Workspace</h1>
+<p>This directory contains scripts and utilities for setting up and
+managing the ROS 2 workspace for BAM (Baseball Avoidance Multi-rotor) on
+Windows systems. It provides a structured environment for building and
+running BAM ROS 2 components on Windows.</p>
+<h2 id="directory-contents">Directory Contents</h2>
+<ul>
+<li><code>install_ros2_jazzy_robostack.bat</code>: Script to install
+ROS2 Jazzy using Robostack</li>
+<li><code>load_matlab_ros_dev.bat</code>: Script to load the ROS2 Jazzy
+environment and prepare MATLAB</li>
+<li><code>install_bam_ros_packages.bat</code>: Script to install BAM
+ROS2 packages into a workspace</li>
+<li><code>ros_workspace_cleaner.bat</code>: Utility to clean and
+optionally rebuild ROS workspaces</li>
+</ul>
+<h2 id="windows-installation">Windows Installation</h2>
+<h3 id="installing-ros2-jazzy-with-pixirobostack">Installing ROS2 Jazzy
+with Pixi/<a
+href="https://robostack.github.io/GettingStarted.html">Robostack</a></h3>
+<ol type="1">
+<li>Open Command Prompt as a regular user (not administrator)</li>
+<li>Navigate to this directory</li>
+<li>Run the installation script:</li>
+</ol>
+<pre><code>install_ros2_jazzy_robostack.bat</code></pre>
+<ol start="4" type="1">
+<li>Follow the prompts to complete the installation</li>
+</ol>
+<p>The script will: - Install Pixi if not already installed - Create a
+<a href="https://robostack.github.io/GettingStarted.html">RoboStack</a>
+project in your home directory (<code>%USERPROFILE%\robostack</code>) -
+Configure and install ROS2 Jazzy - Create a convenient activation
+shortcut</p>
+<h3 id="using-the-ros2-jazzy-environment-with-robostack">Using the ROS2
+Jazzy Environment with Robostack</h3>
+<p>To activate the ROS2 Jazzy environment and prepare MATLAB:</p>
+<pre><code>cd %USERPROFILE%\workspace\bam_baseball_avoidance_multirotor
+ROS2\win64\load_matlab_ros_dev.bat</code></pre>
+<p>This will load the Robostack Pixi environment for ROS Jazzy in a new
+window and provide instructions for running MATLAB with the necessary
+ROS variables.</p>
+<pre><code>cd %USERPROFILE%\robostack pixi update</code></pre>
+<h2 id="installing-bam-ros2-packages">Installing BAM ROS2 Packages</h2>
+<p>To install BAM ROS2 packages into your workspace:</p>
+<pre><code>ROS2\win64\install_bam_ros_packages.bat</code></pre>
+<p>This script will: - Detect or create a ROS2 workspace - Copy or link
+BAM packages into the workspace - Build the packages using colcon -
+Source the workspace setup file</p>
+<h2 id="cleaning-the-workspace">Cleaning the Workspace</h2>
+<p>To clean your ROS2 workspace:</p>
+<pre><code>ROS2\win64\ros_workspace_cleaner.bat</code></pre>
+<p>This utility allows you to: - Automatically detect ROS workspaces -
+Remove build, install, and log directories - Optionally clean source
+packages - Rebuild the workspace after cleaning</p>
+<h2 id="usage">Usage</h2>
+<p>After setting up the workspace, you can run the BAM ROS2 components
+from MATLAB Simulink. The <code>run_bam.bat</code> script in the root
+directory will handle most of the setup for you.</p>
+<h2 id="development">Development</h2>
+<p>For development on Windows:</p>
+<ol type="1">
+<li>Make changes to the package source files in the main
+directories</li>
+<li>Use <code>ros_workspace_cleaner.bat</code> to clean the workspace if
+needed</li>
+<li>Rebuild the packages using
+<code>install_bam_ros_packages.bat</code></li>
+<li>Test your changes</li>
+<li>Commit your changes to version control</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Windows support is primarily for the MATLAB/Simulink
+integration</li>
+<li>Analysis and visualization nodes are typically run on Ubuntu</li>
+<li>Ensure proper network configuration for cross-platform
+communication</li>
+</ul>
+</body>
+</html>

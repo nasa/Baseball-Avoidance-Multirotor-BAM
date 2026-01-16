@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="unix-ros2-build-tools">Unix ROS2 build tools</h1>
+<p><a href="../../README.html">Back..</a></p>
+<p>This directory contains scripts and utilities for building and
+managing ROS2 packages for Unix systems (Linux, macOS). This readme also
+describes how to manually install the packages using
+<code>colcon build</code>.</p>
+<p><em><strong>Note:</strong> <code>mex</code> binaries for publishers
+and subscribers are included in the <code>ROS2_ws/bin</code> folder. The
+simulation can be run on its own without building the other ROS2
+packages (for example, <code>bam_to_airsim</code>). The installation
+scripts and process are used to build these external packages for your
+system, or rebuild the binaries in case they do not run.</em></p>
+<h2 id="bash-scripts">Bash scripts</h2>
+<h3
+id="install_bam_ros_packages"><code>install_bam_ros_packages</code></h3>
+<p>This script installs BAM ROS2 packages into a ROS2 workspace. It
+creates symbolic links from the BAM repository to the ROS2 workspace,
+builds the packages using <code>colcon</code>, and sources the workspace
+setup file.</p>
+<p>To use this script, first initialize a ROS2 workspace (the
+<code>ROS2_ws</code> directory can be used for this), and ensure that
+<code>colcon</code> and <code>rosdep</code> are installed and available.
+Then run</p>
+<pre class="shell"><code>source install_bam_ros_packages.bash [options]</code></pre>
+<p>Options: * <code>-w</code>, <code>--workspace &lt;PATH&gt;</code>
+Specify ROS2 workspace path directly * <code>-a</code>,
+<code>--airsim</code> Install the <code>bam_2_airsim</code> package
+(optional, requires Airsim installation) * <code>-e</code>,
+<code>--editable</code> Call <code>colcon build</code> with
+<code>--symlink-install</code> (optional) * <code>-s</code>,
+<code>--sudo</code> Initialize <code>rosdep</code> using
+<code>sudo</code>, which may be required on some systems (optional) *
+<code>-h</code>, <code>--help</code> Display help message</p>
+<p>If no workspace is specified, the script will attempt to find an
+existing ROS2 workspace in common locations. If no workspace is found,
+it will create one at <code>config/unix/ros_ws</code>.</p>
+<p><em><strong>Note:</strong> If you create new ROS2 packages, you may
+need to manually update this script to point to them.</em></p>
+<h3 id="ros_workspace_cleaner"><code>ros_workspace_cleaner</code></h3>
+<p>This script provides a user-friendly way to clean ROS2 workspaces by
+removing <code>build</code>, <code>install</code>, <code>log</code>, and
+<code>src</code> directories. It can be useful for cleanly testing ROS2
+nodes against the simulator. It includes automatic workspace detection
+in common locations with comprehensive naming patterns, and safeguards
+to prevent accidental data loss. Also offers automatic rebuilding of the
+workspace after cleaning by running
+<code>install_bam_ros_packages.bash</code>.</p>
+<p>To use this script, run</p>
+<pre class="shell"><code>bash ros_workspace_cleaner.bash [options]</code></pre>
+<p>Options: * <code>-w</code>, <code>--workspace &lt;PATH&gt;</code>
+Specify ROS2 workspace path directly * <code>-a</code>,
+<code>--airsim</code> When rebuilding, install the
+<code>bam_2_airsim</code> package (optional, requires Airsim
+installation) * <code>-e</code>, <code>--editable</code> When
+rebuilding, call <code>colcon build</code> with
+<code>--symlink-install</code> (optional) * <code>-s</code>,
+<code>--sudo</code> When rebuilding, initialize <code>rosdep</code>
+using <code>sudo</code>, which may be required on some systems
+(optional) * <code>-h</code>, <code>--help</code> Display help
+message</p>
+<h2 id="manual-installation">Manual installation</h2>
+<p>Here we describe the basic steps to manually build the BAM ROS2
+packages.</p>
+<ol type="1">
+<li><p>Initialize a ROS2 workspace and activate the environment. See,
+for example, <a
+href="https://robostack.github.io/GettingStarted.html">Robostack +
+pixi</a>. The <code>ROS2_ws</code> directory can be used for this. If
+needed, an example conda environment is provided in <a
+href="./environment.yml"><code>environment.yml</code></a>.</p></li>
+<li><p>Inside your ROS2 workspace, create symbolic links to the package
+sources:
+<code>shell  mkdir src  BAM_ROS_DIR=&lt;path/to/bam/ROS2_ws&gt;  ln -sf $BAM_ROS_DIR/analysis_pkgs/phase_space_warping_py src/  ln -sf $BAM_ROS_DIR/interfaces_pkgs/ros_msg_iface src/  ln -sf $BAM_ROS_DIR/launch_pkgs/bam_launcher src/  ln -sf $BAM_ROS_DIR/s_function_pkgs/subscribers/ src/  ln -sf $BAM_ROS_DIR/s_function_pkgs/publishers/ src/  ln -sf $BAM_ROS_DIR/visualization_pkgs/drone_plotter_py src/</code>
+If Airsim is installed, you can also run
+<code>shell  ln -sf $BAM_ROS_DIR/visualization_pkgs/bam_2_airsim src/</code>
+ECHO is off.</p></li>
+<li><p>Install dependencies:
+<code>shell  rosdep init  # May require sudo  rosdep update  rosdep install --from-paths src --ignore-src -y</code></p></li>
+<li><p>Build the packages: <code>shell  colcon build</code></p></li>
+<li><p>Run the setup script:
+<code>shell  cd install  source setup.bash  cd ..</code> Depending on
+how you’ve installed ROS2, you may get an error, but this does not
+necessarily mean that the setup failed. To check that packages were
+successfully installed, run:
+<code>shell  ros2 pkg list | grep drone</code> You should see
+<code>drone_plotter_py</code> in the terminal.</p></li>
+</ol>
+<h2 id="usage">Usage</h2>
+<p>After setting up the workspace, you can run the BAM ROS2
+components:</p>
+<pre class="shell"><code># Run the Phase Space Warping analyzer
+ros2 run phase_space_warping_py psw_node
+
+# Run the drone plotter
+ros2 run drone_plotter_py drone_plotter
+
+# Or launch both of these at the same time
+ros2 launch bam_launcher bam_launch.py</code></pre>
+<p>Instructions for running the MATLAB/Simulink simulation with ROS2
+publishing enabled are provided in the <a
+href="../../README.html">ROS2_ws/README</a>.</p>
+<p><a href="../../README.html">Back..</a></p>
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="bam-ros2-workspace">BAM ROS2 Workspace</h1>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+<h2 id="overview">Overview</h2>
+<p>This directory contains ROS2 packages for the BAM (Baseball Avoidance
+MultiRotor) project. These packages integrate with MATLAB/Simulink for
+simulation and analysis of multi-rotor vehicles avoiding dynamic
+obstacles.</p>
+<p>ROS2 is used within BAM for several different reasons:</p>
+<ol type="1">
+<li>ROS2 is utilized to publish ROS2 messages from Simulink (see
+<code>s_function_pkgs/publishers</code>). Specifically, these publishing
+nodes publish both own-ship and baseball pose information to the ROS2
+topics <code>pub_pose</code> and <code>bball_pub_pose</code>.</li>
+<li>The bam_2_airsim is a cpp executable which subscribes to the
+published POSE information and pipes it to Airsim or Colloseum via their
+APIs for use with the provided Unreal Engine environment
+executable.</li>
+<li>User modifiable example nodes are also provided including:
+<code>phase_space_warping_py</code> and
+<code>s_function_pkgs/subscribers</code>. The
+<code>phase_space_warping_py</code> node is an example to show users how
+to implement an external python node to receive data from MATLAB in
+real-time. The subscriber node shows users how to pipe information from
+an external node back into the Simulink simulation.</li>
+<li>The <code>drone_plotter_py</code> node is a visualization tool that
+plots the simulation output. The <code>bam_launcher</code> is a helper
+tool to launch multiple nodes, specifically both the
+<code>phase_space_warping_py</code> node and the
+<code>drone_plotter_py</code> node.</li>
+</ol>
+<p>Please note that the ROS nodes in the folder are not all required for
+use with BAM. For users that only intend to run the BAM Simulink
+simulation including the Unreal Engine visualization, only three ROS2
+nodes are used. The first two nodes are publishing nodes (in the form of
+Simulink s-functions) used to publish the own-ship and baseball POSE
+information (<code>mat_airsim_pub</code> and
+<code>mat_airsim_bball_pub</code> respectively) found in the
+<code>s_function_pkgs/publishers</code> folder. The final node required
+for the BAM to Unreal visualization pipeline is the
+<code>bam_2_airsim</code> node/executable found in the
+<code>visualization_pkgs/bam_2_airsim</code> folder. This node
+subscribes to the POSE publishing nodes and pipes this data thru
+Colosseum (Airsim) APIs to the Unreal Environment. Additionally, the
+own-ship and baseball publisher nodes come in two varieties: library and
+non-library. The library version of these nodes packages all ROS2 into a
+stand-alone static library that is called by the respective publishing
+s-function. The non-library nodes just incorporate ROS2 directly into
+the respective s-function. The static library version of the publishing
+nodes were required to autocode the BAM simulation (including the ROS2
+publishing) <em>from the MATLAB command line</em>. The non-library
+versions can be built into a full BAM executable but this is performed
+outside of MATLAB. For more information on building BAM within MATLAB
+see <a href="../AutoCodeModels/README.html">AutoCodeModels</a>.</p>
+<p>However, for users who wish to solve the collision avoidance
+challenge problem provided with this repository, we have provided
+additional sample nodes (<code>phase_space_warping_py</code> and
+<code>s_function_pkgs/subscribers</code>) so users can see how they can
+integrate external algorithms via ROS and then within Simulink subscribe
+to the output from those external algorithms. These types of nodes will
+be required for users who wish to demonstrate real-time collision
+avoidance within the BAM and Unreal framework. For example, users who
+get familiar with these nodes should be able to pipe information from
+Simulink to external applications and send information back to BAM for
+execution such that a new Bernstein trajectory is flown which avoids
+collision, or perhaps the external algorithm bypasses the controller and
+directly controls the vehicle effectors to avoid collision.</p>
+<h3 id="directory-structure">Directory Structure</h3>
+<pre><code>├── analysis_pkgs/       # Packages for analyzing simulation data
+│   └── phase_space_warping_py/  # Python implementation of phase space warping analysis
+├── config/              # Configuration and setup scripts
+│   ├── unix/            # Unix (Linux, macOS)-specific installation scripts and config
+│   └── win64/           # Windows-specific installation scripts and config
+├── interfaces_pkgs/     # ROS2 message and service interfaces
+│   └── ros_msg_iface/   # C++ interface for ROS2 messaging
+├── launch_pkgs/         # Launch packages for coordinating nodes
+│   └── bam_launcher/    # Main launcher for BAM system components
+├── s_function_pkgs/     # MATLAB/Simulink integration packages
+│   ├── publishers/      # S-functions to publish data from MATLAB/Simulink to ROS2
+│   ├── subscribers/     # S-functions to subscribe to ROS2 topics within MATLAB/Simulink
+│   └── test/            # Testing utilities for S-functions
+└── visualization_pkgs/  # Visualization tools and packages
+    └── bam_2_airsim/      # Airsim/Unreal Visualization
+    └── drone_plotter_py/  # Python-based trajectory visualization</code></pre>
+<h3 id="key-components">Key Components</h3>
+<h4 id="analysis-packages"><a
+href="./analysis_pkgs/README.html">Analysis Packages</a></h4>
+<p>Example of advanced algorithms for analyzing simulation data: -
+<strong><a
+href="./analysis_pkgs/phase_space_warping_py/README.html">phase_space_warping_py</a></strong>:
+Example python implementation of phase space warping for trajectory
+analysis</p>
+<h4 id="interface-packages"><a
+href="./interfaces_pkgs/README.html">Interface Packages</a></h4>
+<p>Custom ROS2 message and service definitions: - <strong><a
+href="./interfaces_pkgs/ros_msg_iface/README.html">ros_msg_iface</a></strong>:
+C++ library providing standardized interfaces for BAM communications.
+This library was necessary when building the BAM simulation using the
+MATLAB codegen process. This library interface was not required when
+users build the simulation outside the MATLAB process.</p>
+<h4 id="launch-packages"><a href="./launch_pkgs/README.html">Launch
+Packages</a></h4>
+<p>Coordinated system startup files: - <strong>bam_launcher</strong>:
+Example launch package which starts up
+<code>phase_space_warping_py</code> and <code>drone_plotter_py</code>
+nodes</p>
+<h4 id="s-function-packages"><a
+href="./s_function_pkgs/README.html">S-Function Packages</a></h4>
+<p>MATLAB/Simulink integration components:</p>
+<ul>
+<li><strong><a
+href="./s_function_pkgs/publishers/README.html">Publishers</a></strong>:
+S-functions that publish data from MATLAB/Simulink to ROS2
+<ul>
+<li><strong><a
+href="./s_function_pkgs/publishers/mat_airsim_pub/README.html">mat_airsim_pub</a></strong>:
+Interface between MATLAB and AirSim</li>
+<li><strong>mat_airsim_bball_pub</strong>: Baseball trajectory
+publisher</li>
+<li><strong>mat_airsim_pub_nonlib</strong>: Interface between MATLAB and
+AirSim</li>
+<li><strong>mat_airsim_bball_pub_nonlib</strong>: Baseball trajectory
+publisher</li>
+</ul></li>
+<li><strong><a
+href="./s_function_pkgs/subscribers/README.html">Subscribers</a></strong>:
+S-functions for receiving ROS2 data in MATLAB/Simulink
+<ul>
+<li><strong>psw_sub</strong>: Phase Space Warping subscriber</li>
+</ul></li>
+</ul>
+<h4 id="visualization-packages"><a
+href="./visualization_pkgs/README.html">Visualization Packages</a></h4>
+<p>Data visualization tools: - <strong><a
+href="./visualization_pkgs/bam_2_airsim/README.html">bam_2_airsim</a></strong>:
+Ros Node server (and test node publisher) for transmitting BAM data to
+an Unreal Airsim environment. - <strong><a
+href="./visualization_pkgs/drone_plotter_py/README.html">drone_plotter_py</a></strong>:
+Python-based visualization for drone trajectories</p>
+<h4 id="creating-user-nodes"><a
+href="./s_function_pkgs/subscribers/CONTRIBUTING.html">Creating User
+Nodes</a></h4>
+<p>This link provides detailed instructions for users who wish to create
+and use their own ROS2 nodes within BAM.</p>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>ROS2 distribution (Humble or newer recommended)</li>
+<li>MATLAB/Simulink (R2022b or newer recommended)</li>
+<li>colcon build tools</li>
+<li>Python 3.8+ (for Python-based packages)</li>
+</ul>
+<hr />
+<h2 id="running-bam-with-ros2">Running BAM with ROS2</h2>
+<p>This repo includes pre-built <code>mex</code> binaries for publishers
+and subscribers in the <code>bin</code> folder. These allow the
+MATLAB/simulink simulation can be run on its own without building the
+external ROS2 packages (<code>phase_space_warping_py</code>,
+<code>drone_plotter_py</code>, <code>bam_to_airsim</code>). This section
+describes how to run MATLAB/Simulink with<em>out</em> the external
+nodes.</p>
+<ol type="1">
+<li><p>Initialize a ROS2 workspace and activate the environment. See,
+for example, <a
+href="https://robostack.github.io/GettingStarted.html">Robostack +
+pixi</a>. The <code>ROS2_ws</code> directory can be used for this. On
+Windows, the batch script <code>config\win64\load_ros2_dev.bat</code>
+can be used.</p>
+<p>Prior to running BAM with ROS2, we suggest verifying your ROS2
+environment successfully runs the <a
+href="https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Turtlesim</a>
+ROS2 example package.</p></li>
+<li><p>In the ROS2 environment, start MATLAB from the command line. ####
+Windows You can use the helper script:</p>
+<pre><code>call config\win64\load_matlab_ros_dev.bat</code></pre>
+<p>Or from a developer’s command prompt:</p>
+<pre><code>C:/&lt;path/to/matlab&gt;/bin/matlab</code></pre>
+<h4 id="linux">Linux</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/local/MATLAB/R2024b/bin/matlab</span></span></code></pre></div>
+<h4 id="macos">macOS</h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/Applications/MATLAB_R2024b.app/bin/matlab</span></span></code></pre></div></li>
+<li><p>Verify that MATLAB has access to ROS2 by entering</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">ros2</span></span></code></pre></div>
+<p>in the MATLAB command window.</p></li>
+<li><p>In the <a href="../setup/README.html"><code>userStruct</code></a>
+for your BAM simulation (see e.g., <a
+href="../Examples/example_collision_avoidance.m"><code>example_collision_avoidance.m</code></a>),
+set</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">pubType</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">pubTypeBball</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span></span></code></pre></div></li>
+<li><p>Open a second command window and activate ROS2.</p></li>
+<li><p>Run the BAM MATLAB/Simulink simulation. While the simulation is
+running, in the second command window, enter</p>
+<pre class="shell"><code>ros2 topic echo /pub_pose</code></pre>
+<p>You should see printouts of the multirotor’s position and attitude
+quaternion (<code>pub_pose</code> topic messages output by BAM). For
+example,</p>
+<pre class="shell"><code>---
+header:
+stamp:
+   sec: 0
+   nanosec: 0
+frame_id: &#39;&#39;
+pose:
+position:
+   x: 57.56432813568191
+   y: -29.893639731060922
+   z: -49.67726236167068
+orientation:
+   x: 0.8783494938256347
+   y: -0.004965431178318116
+   z: 0.013104739037961673
+   w: -0.47781353790437125</code></pre></li>
+</ol>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>In step 6, if instead of position and attitude messages, you get an
+error message like</p>
+<pre><code>WARNING: topic [pub_pose] does not appear to be published yet
+Could not determine the type for the passed topic</code></pre>
+<p>try the following troubleshooting steps:</p>
+<ol type="1">
+<li>Verify that MATLAB has access to ROS2 as in step 3 above.</li>
+<li>Verify that <code>userStruct</code> has set
+<code>userStruct.variants.pubType = 2;</code> to publish
+<code>pub_pose</code> messages.</li>
+<li>In the Simulink block diagram, verify that the <code>ROS2</code>
+block has the <code>ROS2 Publisher</code> variant subsystem enabled.
+Within this subsystem, you should be able to see scopes displaying
+multirotor position and attitude.</li>
+<li>Instead of running the simulation with the play button, use the
+<em>step forward</em> command to advance one timestep, then try step 6
+again. If you don’t see the above error, you should be able to run the
+simulation as normal and see <code>pub_pose</code> messages.</li>
+</ol>
+<p>If you get a MATLAB error that says that S-functions are not
+available, refer to the <a href="#installation">Installation</a> section
+below.</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<p>If you want to run the example external packages
+(<code>phase_space_warping_py</code>, <code>drone_plotter_py</code>,
+<code>bam_to_airsim</code>), or if the provided <code>mex</code>
+binaries do not run on your system, you will need to build them. The
+<code>config</code> directory provides scripts for this purpose.</p>
+<p>This section presents an overview of how to use the provided
+installation scripts. For detailed information, see <a
+href="config/win64/README.html"><code>config/win64/README.html</code></a>
+(Windows) or <a
+href="config/unix/README.html"><code>config/unix/README.html</code></a>
+(Linux, macOS).</p>
+<h3 id="windows"><a href="config/win64/README.html">Windows</a></h3>
+<p>The <code>config/unix</code> directory contains build tools for
+Windows. These include - <code>install_bam_ros_packages.bat</code>: Main
+installation script. - <code>load_ros2_dev.bat</code>: Script to set up
+ROS2 development environment - <code>load_matlab_ros_dev.bat</code>:
+Script to configure MATLAB for ROS2 development -
+<code>ros_workspace_cleaner.bat</code>: Tool to clean and rebuild ROS2
+workspaces</p>
+<p>To use <code>install_bam_ros_packages.bat</code>, first initialize a
+ROS2 workspace (the <code>ROS2_ws</code> directory can be used for
+this), and ensure that <code>colcon</code> and <code>rosdep</code> are
+installed and available. Then run</p>
+<pre><code>call config\win64\load_ros2_dev.bat
+call config\win64\install_bam_ros_packages.bat [-w|--workspace &lt;ros_workspace_path&gt;]</code></pre>
+<h3 id="unix-linux-macos"><a href="config/unix/README.html">Unix (Linux,
+macOS)</a></h3>
+<p>The <code>config/unix</code> directory contains build tools for Unix
+(Linux, macOS) systems. These include -
+<code>install_bam_ros_packages.bash</code>: Main installation script. -
+<code>ros_workspace_cleaner.bash</code>: Tool to clean and rebuild ROS2
+workspaces. - <code>environment.yml</code>: Example Conda environment
+specification</p>
+<p>To use <code>install_bam_ros_packages.bash</code>, first initialize a
+ROS2 workspace (the <code>ROS2_ws</code> directory can be used for
+this), and ensure that <code>colcon</code> and <code>rosdep</code> are
+installed and available. Then run</p>
+<pre class="shell"><code>source config/unix/install_bam_ros_packages.bash [options]</code></pre>
+<p>Options: * <code>-w</code>, <code>--workspace &lt;PATH&gt;</code>
+Specify ROS2 workspace path directly * <code>-a</code>,
+<code>--airsim</code> Install the <code>bam_2_airsim</code> package
+(optional, requires Airsim installation) * <code>-e</code>,
+<code>--editable</code> Call <code>colcon build</code> with
+<code>--symlink-install</code> (optional) * <code>-s</code>,
+<code>--sudo</code> Initialize <code>rosdep</code> using
+<code>sudo</code>, which may be required on some systems (optional) *
+<code>-h</code>, <code>--help</code> Display help message</p>
+<p>If no workspace is specified, the script will attempt to find an
+existing ROS2 workspace in common locations. If no workspace is found,
+it will create one at <code>config/unix/ros_ws</code>.</p>
+<p>To check that packages were successfully installed, run:</p>
+<pre class="shell"><code>ros2 pkg list | grep drone</code></pre>
+<p>You should see <code>drone_plotter_py</code> in the terminal.</p>
+<hr />
+<h2 id="running-bam-ros2-nodes">Running BAM ROS2 nodes</h2>
+<p>After <a href="#installation">installing</a> the BAM ROS2 nodes,
+execute steps <a href="#running-bam-with-ros2">1-5 as described
+above</a>. Then follow these steps.</p>
+<ol start="6" type="1">
+<li><p>In the second command window, make sure the installed packages
+are available to ROS2.</p>
+<h4 id="windows-1">Windows</h4>
+<p>You can use the helper script:</p>
+<pre><code>call config\win64\load_ros2_dev.bat</code></pre>
+<h4 id="linux-macos">Linux, macOS</h4>
+<pre class="shell"><code>cd &lt;path/to/ros/workspace&gt;/install
+source setup.bash</code></pre></li>
+<li><p>Launch the BAM ROS2 nodes:</p>
+<pre class="shell"><code>ros2 launch bam_launcher bam_launch.py</code></pre>
+<p>The Python nodes that subscribe to and publish back to BAM should now
+be launched.</p></li>
+<li><p>Run the BAM MATLAB/Simulink simulation. You should see the
+multirotor’s trajectory plotted in a pop-up window, and printouts from
+the phase space warping analyzer in the second command window.</p></li>
+</ol>
+<h3 id="troubleshooting-1">Troubleshooting</h3>
+<p>If issues arise during testing, check the following:</p>
+<ol type="1">
+<li>Ensure ROS2 environment is properly loaded in both terminals</li>
+<li>Verify that all BAM ROS2 packages are correctly installed</li>
+<li>Check that the correct paths are being used for scripts and
+commands</li>
+<li>Examine command outputs for error messages</li>
+</ol>
+<h2 id="contributing">Contributing</h2>
+<p>When contributing to this project: - Follow the existing directory
+structure - Create appropriate unit tests for new functionality - Update
+relevant <code>README.html</code> files to document changes - Ensure
+cross-platform compatibility (Windows/Linux/macOS)</p>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+</body>
+</html>

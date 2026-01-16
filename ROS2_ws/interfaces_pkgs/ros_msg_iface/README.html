@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="ros2-message-interface-package-ros_msg_iface">ROS2 Message
+Interface Package (<code>ros_msg_iface</code>)</h1>
+<p><a href="../README.html">Back..</a></p>
+<p>The <code>ros_msg_iface</code> class is an interface class for use
+with MATLAB S-Functions and encapsulates ROS2 functionality,
+specifically for the <code>PoseStamped</code> message type. This
+interface:</p>
+<ul>
+<li>Abstracts ROS2 message handling for Simulink components</li>
+<li>Provides seamless conversion between Simulink data structures and
+ROS2 message types</li>
+<li>Handles publication of PoseStamped messages to ROS2 topics</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="using-in-a-matlab-level-2-s-function">Using in a MATLAB Level 2
+S-Function</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Example C++ usage of the ros_msg_iface class in a MATLAB Level 2 S-function</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;ros_msg_iface/ros_msg_iface.hpp&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="dt">void</span> mdlStart<span class="op">(</span>SimStruct <span class="op">*</span>S<span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Create an interface instance</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Initialize ros_msg_iface</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ros_msg_iface<span class="op">::</span>start<span class="op">();</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="dt">void</span> mdlOutputs<span class="op">(</span>SimStruct <span class="op">*</span>S<span class="op">,</span> int_T tid<span class="op">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> real_T <span class="op">*</span>Pos_bii_in <span class="op">=</span> <span class="op">(</span>real_T <span class="op">*)</span> ssGetInputPortRealSignal<span class="op">(</span>S<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> real_T <span class="op">*</span>Q_i2b_in <span class="op">=</span> <span class="op">(</span>real_T <span class="op">*)</span> ssGetInputPortRealSignal<span class="op">(</span>S<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  real_T <span class="op">*</span>y <span class="op">=</span> <span class="op">(</span>real_T <span class="op">*)</span> ssGetOutputPortRealSignal<span class="op">(</span>S<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Publish a message</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  ros_msg_iface<span class="op">::</span>outputs<span class="op">(</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                         <span class="co">// inputs</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                         <span class="kw">static_cast</span><span class="op">&lt;</span><span class="at">const</span> <span class="dt">double</span><span class="op">*&gt;(</span>Pos_bii_in<span class="op">),</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                         <span class="kw">static_cast</span><span class="op">&lt;</span><span class="at">const</span> <span class="dt">double</span><span class="op">*&gt;(</span>Q_i2b_in<span class="op">),</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                         <span class="co">// outputs</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                         <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">double</span><span class="op">*&gt;(</span>y<span class="op">)</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                        <span class="op">);</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="dt">void</span> mdlTerminate<span class="op">(</span>SimStruct <span class="op">*</span>S<span class="op">)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Terminate the interface</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  ros_msg_iface<span class="op">::</span>terminate<span class="op">();</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="using-in-another-package">Using in Another Package</h3>
+<p>To use this package in your package:</p>
+<ol type="1">
+<li><p>Add a dependency in your <code>package.xml</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">depend</span>&gt;ros_msg_iface&lt;/<span class="kw">depend</span>&gt;</span></code></pre></div></li>
+<li><p>Add a dependency in your <code>CMakeLists.txt</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cmake"><code class="sourceCode cmake"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">find_package</span>(ros_msg_iface <span class="ot">REQUIRED</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ament_target_dependencies</span>(<span class="dv">${PROJECT_NAME}</span> ros_msg_iface)</span></code></pre></div></li>
+</ol>
+<h2 id="building">Building</h2>
+<p>To build the interface packages:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> ros_msg_iface</span></code></pre></div>
+<h2 id="extending">Extending</h2>
+<p>This library can easily be modified by users to utilize other built
+in ROS2 message types and/or user defined ROS2 message types. Users who
+desire to integrate different ROS2 message types into their own
+simulation and who require the simulation to be autocode capable (within
+MATLAB) should modify the ros_msg_iface.cpp source code to include and
+utilize the message types of their choice. For example, the
+<code>ros_msg_iface.cpp</code> code currently only includes the
+<code>pose_stamped</code> ROS2 message type:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sstream&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">// ros includes</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;rclcpp/rclcpp.hpp&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;geometry_msgs/msg/pose_stamped.hpp&quot;</span><span class="pp"> </span><span class="co">// DESIRED RO2 MSG TYPE HERE</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;ros_msg_iface/ros_msg_iface.hpp&quot;</span></span></code></pre></div>
+<p>Additionally, users can readily modify the publishing node for use
+with other topics. Users can simply alter the node class definition with
+new class name, node name and new topic (see below):</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> ros_msg_iface</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> PubPoseNode <span class="op">:</span> <span class="kw">public</span> rclcpp<span class="op">::</span>Node <span class="co">// MODIFY CLASS NAME</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">public</span><span class="op">:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    PubPoseNode <span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> strNodeName<span class="op">,</span> <span class="at">const</span> <span class="bu">std::</span>string<span class="op">&amp;</span> strTopicName<span class="op">)</span> <span class="op">:</span> Node<span class="op">(</span>strNodeName<span class="op">)</span> <span class="co">// MODIFY NODE NAME</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="va">publisher_</span> <span class="op">=</span> <span class="kw">this</span><span class="op">-&gt;</span>create_publisher<span class="op">&lt;</span>geometry_msgs<span class="op">::</span>msg<span class="op">::</span>PoseStamped<span class="op">&gt;(</span>strTopicName<span class="op">,</span> <span class="dv">10</span><span class="op">);</span> <span class="co">//TOPIC NAME HERE</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      RCLCPP_INFO<span class="op">(</span><span class="kw">this</span><span class="op">-&gt;</span>get_logger<span class="op">(),</span> <span class="st">&quot;Publish Pose Node Station has been started.&quot;</span><span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>DEBUG_FLAG<span class="op">)</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="op">{</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Constructor for &quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;&lt;</span> strNodeName</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;&lt;</span> <span class="st">&quot; node is executed, topic name: &quot;</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;&lt;</span> strTopicName </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span> </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>PubPoseNode <span class="op">()</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>DEBUG_FLAG<span class="op">)</span> <span class="op">{</span> <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Destructor for node is executed</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+<p>The use of the <code>ros_msg_iface</code> library is required during
+the MATLAB and Simulink autocode process due to linking issues.
+Specifically, unless the static library is built, then MATLAB is unable
+to find the correct ROS2 libraries during linking. It should be noted
+that users don’t need to use the ros_msg_iface library to integrate ROS2
+into their simulation. Several non-library versions of the ROS2 nodes
+can be found in the publishers subfolder:
+<code>mat_airsim_pub_nonlib</code> and
+<code>mat_airssim_bball_pub_nonlib</code>. These ROS2 nodes integrate
+ROS2 directly into the Simulink s-functions and can be run directly in
+Simulink (as long as ROS2 was sourced when opening MATLAB). Users who
+wish to build the BAM simulation using these non-lib nodes can readily
+do so using the <code>Cmake</code> toolchain found in MATLAB R2024b to
+generate the source code for BAM, and then using CMAKE and/or
+<code>colcon build</code> to incorporate their non-library ROS2
+s-function nodes into the final BAM executable.</p>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li>Keep message definitions simple and focused</li>
+<li>Use standard message types when possible</li>
+<li>Document each field in the message definition</li>
+<li>Test interfaces with all components before integration</li>
+</ul>
+<p><a href="../README.html">Back..</a></p>
+</body>
+</html>

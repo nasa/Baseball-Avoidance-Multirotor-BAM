@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="phase-space-warping-psw-analysis-for-evtol-dynamics">Phase Space
+Warping (PSW) Analysis for eVTOL Dynamics</h1>
+<p><a href="../README.html">Back..</a></p>
+<p><a
+href="https://docs.ros.org/en/rolling/">//img.shields.io/badge/ROS2-Rolling-green)</a></p>
+<h2 id="overview">Overview</h2>
+<p>The Phase Space Warping (PSW) analyzer is an advanced anomaly
+detection module for the BAM eVTOL simulation framework. It implements a
+rigorous mathematical approach to detect parameter drift, system
+degradation, and off-nominal behavior in flight dynamics by analyzing
+the evolution of the system’s state in phase space.</p>
+<p>This implementation is based on the theoretical framework established
+by Chelidze &amp; Cusumano (2006) in their seminal paper “Phase space
+warping: nonlinear time-series analysis for slowly drifting systems.”
+The approach has been adapted and optimized for real-time analysis of
+eVTOL flight dynamics within the BAM simulation environment.</p>
+<h2 id="technical-approach">Technical Approach</h2>
+<h3 id="phase-space-warping-theory">Phase Space Warping Theory</h3>
+<p>Phase Space Warping detects parameter drift by:</p>
+<ol type="1">
+<li><strong>Embedding the system state</strong> in a higher-dimensional
+phase space using delay coordinates (Takens embedding)</li>
+<li><strong>Establishing a reference model</strong> of nominal system
+dynamics from initial flight data</li>
+<li><strong>Calculating a tracking function</strong> that measures
+deviations from expected behavior</li>
+<li><strong>Computing statistical metrics</strong> to quantify the
+significance of detected anomalies</li>
+</ol>
+<p>Unlike traditional anomaly detection methods that rely on predefined
+thresholds or supervised learning, PSW is particularly effective for
+detecting gradual drift in complex nonlinear systems where the
+underlying dynamics are not fully known a priori.</p>
+<h3 id="implementation-details">Implementation Details</h3>
+<p>The analyzer operates in the following sequence:</p>
+<ol type="1">
+<li><strong>Data Collection</strong>: Buffers position and orientation
+data from the eVTOL simulation</li>
+<li><strong>Phase Space Reconstruction</strong>: Creates a
+delay-coordinate embedding of the system state</li>
+<li><strong>Reference Model Construction</strong>: Establishes a
+statistical model of nominal dynamics</li>
+<li><strong>Tracking Function Calculation</strong>: Computes deviations
+from expected behavior using local linear models</li>
+<li><strong>Statistical Analysis</strong>: Calculates metrics to
+quantify the significance of detected anomalies</li>
+<li><strong>Results Publication</strong>: Provides real-time feedback to
+the simulation environment</li>
+</ol>
+<h2 id="usage">Usage</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>(Tested on) ROS 2 Rolling, Humble, Jazzy, Kilted</li>
+<li>Python 3.8+</li>
+<li>NumPy, SciPy, scikit-learn</li>
+</ul>
+<h3 id="manual-installation">Manual Installation</h3>
+<p>This is in place of using the <code>install_bam_ros_packages</code>
+scripts:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone the BAM repository (if not already done)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>BAM_REPOSITORY<span class="op">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-R</span> ROS2_ws/analysis_pkgs/phase_space_warping_py <span class="op">&lt;</span>ROS_WORKSPACE<span class="op">&gt;</span>/src/</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the package</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="op">&lt;</span>ROS_WORKSPACE<span class="op">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">colcon</span> build <span class="at">--packages-select</span> phase_space_warping_py</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> install/setup.bash</span></code></pre></div>
+<h3 id="running-the-node">Running the Node</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with default parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> run phase_space_warping_py psw_node</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with custom parameters</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> run phase_space_warping_py psw_node <span class="at">--ros-args</span> <span class="at">-p</span> buffer_size:=150 <span class="at">-p</span> analysis_interval_steps:=10</span></code></pre></div>
+<h3 id="enabling-debug-output">Enabling Debug Output</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set debug level for detailed analysis information</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> run phase_space_warping_py psw_node <span class="at">--ros-args</span> <span class="at">--log-level</span> phase_space_warping_analyzer:=debug</span></code></pre></div>
+<h2 id="configuration-parameters">Configuration Parameters</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 27%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>buffer_size</code></td>
+<td>100</td>
+<td>Number of state vectors to buffer for analysis</td>
+</tr>
+<tr>
+<td><code>analysis_interval_steps</code></td>
+<td>15</td>
+<td>Number of simulation timesteps between analyses</td>
+</tr>
+<tr>
+<td><code>embedding_dimension</code></td>
+<td>4</td>
+<td>Dimension of the delay-coordinate embedding</td>
+</tr>
+<tr>
+<td><code>time_delay</code></td>
+<td>4</td>
+<td>Time delay for the embedding</td>
+</tr>
+<tr>
+<td><code>reference_percentage</code></td>
+<td>0.25</td>
+<td>Fraction of initial data used as reference</td>
+</tr>
+<tr>
+<td><code>k_neighbors</code></td>
+<td>12</td>
+<td>Number of nearest neighbors for local linear models</td>
+</tr>
+<tr>
+<td><code>svd_threshold</code></td>
+<td>0.95</td>
+<td>Variance threshold for dimensionality reduction</td>
+</tr>
+<tr>
+<td><code>confidence_threshold</code></td>
+<td>0.75</td>
+<td>Threshold for confidence in analysis results</td>
+</tr>
+</tbody>
+</table>
+<h2 id="output-metrics">Output Metrics</h2>
+<p>The analyzer publishes a <code>Float32MultiArray</code> message to
+the <code>/phase_space_warping_analyzer</code> topic with the following
+elements:</p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 18%" />
+<col style="width: 30%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Index</th>
+<th>Metric</th>
+<th>Description</th>
+<th>Typical Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Timestep</td>
+<td>Current simulation timestep</td>
+<td>[0, ∞)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Tracking Magnitude</td>
+<td>Average deviation from expected dynamics</td>
+<td>[0.01, 10.0]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Tracking Variance</td>
+<td>Variability of deviations</td>
+<td>[0.001, 5.0]</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Max Warping</td>
+<td>Maximum deviation observed</td>
+<td>[0.1, 20.0]</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Confidence</td>
+<td>Reliability of the analysis</td>
+<td>[0, 1]</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Significance</td>
+<td>Statistical significance of deviations</td>
+<td>[0.5, 10.0]</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Drift Rate</td>
+<td>Rate of change in deviation magnitude</td>
+<td>[-0.1, 0.1]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integration-with-bam-and-simulink">Integration with BAM and
+Simulink</h2>
+<h3 id="subscribing-to-psw-results-in-simulink">Subscribing to PSW
+Results in Simulink</h3>
+<p>To receive PSW analysis results in Simulink:</p>
+<ol type="1">
+<li>Create a ROS Subscriber block in Simulink</li>
+<li>Configure it to subscribe to the
+<code>/phase_space_warping_analyzer</code> topic</li>
+<li>Set the message type to <code>std_msgs/Float32MultiArray</code></li>
+<li>Extract the data array for downstream processing</li>
+</ol>
+<h3 id="interpretation-of-results">Interpretation of Results</h3>
+<ul>
+<li><strong>Tracking Magnitude</strong>: Primary indicator of system
+health; higher values indicate greater deviation from nominal
+behavior</li>
+<li><strong>Confidence</strong>: Indicates reliability of the analysis;
+values below 0.5 suggest the system is operating in regions not
+well-represented in the reference data</li>
+<li><strong>Significance</strong>: Statistical measure of how unusual
+the current behavior is; values above 3.0 typically indicate anomalous
+behavior</li>
+<li><strong>Drift Rate</strong>: Indicates whether the system’s
+condition is improving (negative) or deteriorating (positive)</li>
+</ul>
+<h2 id="mathematical-foundation">Mathematical Foundation</h2>
+<p>The core PSW methodology involves:</p>
+<ol type="1">
+<li><p><strong>Takens Embedding</strong>: If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{x}(t)</annotation></semantics></math>
+is the system state at time
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>,
+the delay-coordinate embedding is:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐲</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mi>𝐱</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>𝐱</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>τ</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>𝐱</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mn>2</mn><mi>τ</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>𝐱</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mo stretchy="false" form="prefix">(</mo><mi>d</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>τ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\mathbf{y}(t) = [\mathbf{x}(t), \mathbf{x}(t-\tau), \mathbf{x}(t-2\tau), ..., \mathbf{x}(t-(d-1)\tau)]</annotation></semantics></math></p></li>
+<li><p><strong>Local Linear Models</strong>: For each point
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐲</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mathbf{y}_i</annotation></semantics></math>
+in the embedded space, we predict its successor using:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐲</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>𝐀</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo>+</mo><mi>𝐛</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{y}_{i+1} = \mathbf{A}(\mathbf{y}_i)\mathbf{y}_i + \mathbf{b}(\mathbf{y}_i)</annotation></semantics></math></p></li>
+<li><p><strong>Tracking Function</strong>: The difference between actual
+and predicted successors:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐞</mi><mi>R</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo>,</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>𝐲</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><mo stretchy="false" form="prefix">[</mo><mi>𝐀</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo>+</mo><mi>𝐛</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\mathbf{e}_R(\phi, \mathbf{y}_i) = \mathbf{y}_{i+1} - [\mathbf{A}(\mathbf{y}_i)\mathbf{y}_i + \mathbf{b}(\mathbf{y}_i)]</annotation></semantics></math></p></li>
+<li><p><strong>Tracking Metric</strong>: The average norm of the
+tracking function:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐞</mi><mi>R</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ϕ</mi><mo>,</mo><msub><mi>𝐲</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">\gamma(\phi) = \frac{1}{N} \sum_{i=1}^{N} \|\mathbf{e}_R(\phi, \mathbf{y}_i)\|</annotation></semantics></math></p></li>
+</ol>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li><strong>Computational Complexity</strong>: O(N·k·d²) where N is the
+number of points, k is the number of neighbors, and d is the embedding
+dimension</li>
+<li><strong>Memory Usage</strong>: Approximately (buffer_size ×
+state_dimension × 8 bytes) for the main data buffer</li>
+<li><strong>Latency</strong>: Typically &lt; 50ms per analysis on modern
+hardware</li>
+</ul>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><p>Chelidze, D., &amp; Cusumano, J. P. (2006). Phase space warping:
+nonlinear time‐series analysis for slowly drifting systems.
+<em>Philosophical Transactions of the Royal Society A</em>, 364(1846),
+2495-2513.</p></li>
+<li><p>Takens, F. (1981). Detecting strange attractors in turbulence. In
+<em>Dynamical Systems and Turbulence</em>, Lecture Notes in Mathematics,
+vol. 898, pp. 366-381.</p></li>
+<li><p>Sauer, T., Yorke, J. A., &amp; Casdagli, M. (1991). Embedology.
+<em>Journal of Statistical Physics</em>, 65(3-4), 579-616.</p></li>
+</ol>
+<h2 id="authors">Authors</h2>
+<ul>
+<li><strong>Newton Campbell</strong> - <em>Initial implementation</em> -
+[newton.h.campbell@nasa.gov]</li>
+</ul>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<ul>
+<li>Chelidze &amp; Cusumano for the original PSW methodology</li>
+<li>The BAM simulation framework development team</li>
+</ul>
+<hr />
+<p><em>For questions or support, please contact the BAM development
+team.</em></p>
+<p><a href="../README.html">Back..</a></p>
+</body>
+</html>
