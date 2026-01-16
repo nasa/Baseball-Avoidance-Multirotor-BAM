@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h2 id="baseball-reference-model">Baseball Reference Model</h2>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+<p>The creation of baseball near-collision trajectories was accomplished
+offline using the m-file
+<code>ChallengeProblem/Create_BBall_Traj.m</code> and the corresponding
+baseball dynamics Simulink model
+<code>ChallengeProblem/Dynamics.slx</code>.</p>
+<p>The baseball trajectory generation script uses some basic baseball
+parameters:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% *************************************************************************</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% Set baseball parameters</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">bball_mass</span>  <span class="op">=</span> <span class="fl">0.145</span><span class="op">;</span> <span class="co">% Baseball mass (kg)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">bball_diam</span>  <span class="op">=</span> <span class="fl">2.90</span><span class="op">*</span><span class="va">SimIn</span>.<span class="va">Units</span>.<span class="va">in</span><span class="op">;</span> <span class="co">% Baseball diameter (meters)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">bball_area</span>  <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">4</span><span class="op">*</span><span class="va">bball_diam</span><span class="op">^</span><span class="fl">2</span><span class="op">;</span> <span class="co">% Baseball flat plate area (meters^2)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">Atmos_den</span>   <span class="op">=</span> <span class="fl">1.224999155887712</span><span class="op">;</span> <span class="co">% Density of standard atmos air (kg/m^3)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">bball_MagC</span>  <span class="op">=</span> <span class="fl">4.1e-5</span><span class="op">;</span> <span class="co">% Magnus Force coefficient for baseball </span></span></code></pre></div>
+<p>and then utilizes a set of randomized variable parameters:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% The following values should be set to correspond with Create_OwnShip_Traj.m values</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">min_alt</span>         <span class="op">=</span> <span class="fl">10</span><span class="op">;</span> <span class="co">% Minimum starting/ending altitude in meters </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">max_alt</span>         <span class="op">=</span> <span class="fl">50</span><span class="op">;</span> <span class="co">% Maximum starting altitude in meters</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Max sim execution time (stop block kills sim when alt &lt;= 0)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">bball_t_max</span>     <span class="op">=</span> <span class="fl">50</span><span class="op">;</span> <span class="co">% Maximum simulation time (should align with max_time from Create_OwnShip_Traj.m)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">% Set the desired impact azimuth angles</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="va">min_az_ang</span>      <span class="op">=</span> <span class="op">-</span><span class="fl">45</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">;</span> <span class="co">% min baseball impact azimuth angle (radians)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">max_az_ang</span>      <span class="op">=</span> <span class="fl">45</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">;</span> <span class="co">% max baseball impact azimuth angle (radians)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="va">cd_min</span>          <span class="op">=</span> <span class="fl">0.2</span><span class="op">;</span> <span class="co">% Minimum drag coefficient</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="va">cd_max</span>          <span class="op">=</span> <span class="fl">0.4</span><span class="op">;</span> <span class="co">% Maximum drag coefficient</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="va">grav_max</span>        <span class="op">=</span> <span class="va">grav_act</span><span class="op">;</span> <span class="co">% Define maximum gravity</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="va">grav_min</span>        <span class="op">=</span> <span class="fl">0.6</span> <span class="op">*</span> <span class="va">grav_act</span><span class="op">;</span> <span class="co">% Define minimum gravity</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="va">spin_min</span>        <span class="op">=</span> <span class="fl">1600</span><span class="op">;</span> <span class="co">% RPM</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="va">spin_max</span>        <span class="op">=</span> <span class="fl">2600</span><span class="op">;</span> <span class="co">% RPM</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="va">spin_ang_max</span>    <span class="op">=</span> <span class="fl">45</span><span class="op">*</span><span class="va">SimIn</span>.<span class="va">Units</span>.<span class="va">deg</span><span class="op">;</span> <span class="co">% +/- spin axis rotation angle (around x-axis)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">% Prescribe collision point offset parameters from a randomly selected own-ship trajectory collision point</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="va">max_perp_dist</span>   <span class="op">=</span> <span class="fl">10</span><span class="op">*</span><span class="va">defUnits</span>.<span class="va">ft</span><span class="op">;</span> <span class="co">% maximum perpendicular distance from the own-ship velocity vector at the trajectory “collision” point</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="va">num_traj</span>        <span class="op">=</span> <span class="fl">3000</span><span class="op">;</span> <span class="co">% Specify number of baseball trajectories to create from own_ship trajectories..</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">% *************************************************************************</span></span></code></pre></div>
+<p>These aforementioned parameters are sampled from a uniform
+distribution, and paired with a randomized initial velocity and offset
+heading from own-ship heading at the time of “collision”. This
+information is then simulated in the baseball dynamics simulation
+<em>Dynamics.slx</em>:</p>
+<center>
+<img src=".graphics/Baseball_Dynamics.png" width="450" height="450" />
+</center>
+<p>The resulting baseball trajectory is shifted and rotated to ensure
+that it arrives at the “near-collision” point randomly selected for the
+given own-ship trajectory. The resulting baseball trajectory is then
+converted to a Bernstein polynomial and saved in the
+<code>bball_trajectory_data.mat</code> file.</p>
+<p>This process was repeated for all 3000 own-ship trajectories that
+were randomly created previously. This process results in 3000
+“near-collision” scenarios for use with the autonomous collision
+avoidance challenge problem.</p>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h2 id="autocode-real-time-pacing">Autocode Real-Time Pacing</h2>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+<p>The Autocode_RT_Pacing reference model contains a variant subsystem
+with two variants: None and RT_Pacing. The none option is the default
+selection:</p>
+<p><strong>userStruct.variants.rt_pacing = RT_NONE</strong> where the
+<code>PaceEnum.m</code> enumeration has the options: RT_NONE and
+RT_PACE.</p>
+<p>As its’ name implies, RT_NONE selection does not slow down Simulink
+execution and therefore the entire BAM simulation executes at the
+fastest permissible speed based on user hardware. Conversely, selecting
+RT_PACE slows down Simulink execution to the pace specified by the
+associated mask parameter.</p>
+<p>The real-time pacing variant uses a Simulink MEX block with a system
+timer that slows down Simulink execution to the specified real-world
+pace. This mex and the associated source code can be obtained via the
+Mathworks code sharing at: <a
+href="https://www.mathworks.com/matlabcentral/fileexchange/30953-simulink-block-for-real-time-execution?s_tid=prof_contriblnk">Simulink
+Block for Real Time Execution</a></p>
+<p>ECHO is off. <a href="../../README.html#api-documentation">Back to
+BAM..</a> <strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+</body>
+</html>

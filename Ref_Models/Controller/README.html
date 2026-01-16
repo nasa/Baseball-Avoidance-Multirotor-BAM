@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h2 id="controller">Controller</h2>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+<p>The BAM simulation comes with a baseline geometric quad-rotor
+controller. Relevant reference papers include <cite> Lee et al. [1]
+</cite>,<cite>Ackerman et al. [2] </cite>.</p>
+<p>The basic structure of the controller consists of the following
+cascaded elements: - Outer loop: Path-following control - Inner loop:
+Proportional integral and feed forward rate controller - Control
+allocation: Pseudo-inverse (single matrix) allocator - Motor Model:
+quadratic model with saturation (converts desired thrust to motor
+RPM)</p>
+<p>The output of the outer loop are desired body rates and a total
+thrust desired. The inner loop takes only the desired body rates from
+the outer loop and converts them into desired rotational moments. The
+control allocation subsystem takes the desired moments and the desired
+total thrust and allocates the thrust to each of the four motors.
+Finally, the Thrust_to_RPM_MDL subsystem uses a non-linear model to
+convert the desired thrust for each motor into an RPM command.</p>
+<center>
+<img src=".graphics/Bam_Cont.png" width="550" height="250" />
+</center>
+<hr />
+<h3 id="outer-loop"><strong>Outer Loop</strong></h3>
+<p>The controller outer loop takes the following inputs: 1. Actual
+position and velocity, expressed in NED inertial frame 2. Actual body
+rates (<code>p,q,r</code>) and quaternion (inertial to body) 3. Desired
+position, velocity and acceleration, expressed in NED inertial Frame 4.
+Desired heading angle</p>
+<p>The outputs of the outer loop are a total desired thrust and desired
+body rates. The total desired thrust is computed as: (see Eq. 15 of
+<cite> [1] </cite>)</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>f</mi><mo>=</mo><mi>−</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>k</mi><mi>x</mi></msub><msub><mi>e</mi><mi>x</mi></msub><mo>−</mo><msub><mi>k</mi><mi>v</mi></msub><msub><mi>e</mi><mi>v</mi></msub><mo>−</mo><mi>m</mi><mi>g</mi><msub><mi>e</mi><mn>3</mn></msub><mo>+</mo><mi>m</mi><msub><mover><mi>x</mi><mo accent="true">̈</mo></mover><mi>d</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mi>R</mi><msub><mi>e</mi><mn>3</mn></msub></mtd></mtr></mtable><annotation encoding="application/x-tex">
+   \begin{align*}
+   f = -(k_x e_x-k_v e_v-mg e_3+m\ddot{x}_d) \cdot Re_3
+   \end{align*}
+</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>x</mi></msub><annotation encoding="application/x-tex">k_x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>v</mi></msub><annotation encoding="application/x-tex">k_v</annotation></semantics></math>
+are the gains on the position error
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>e</mi><mi>x</mi></msub><mo>=</mo><msub><mi>p</mi><mrow><mi>a</mi><mi>c</mi><mi>t</mi></mrow></msub><mo>−</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">e_x=p_{act}-p_{des}</annotation></semantics></math>
+and the velocity error
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>e</mi><mi>v</mi></msub><mo>=</mo><msub><mi>v</mi><mrow><mi>a</mi><mi>c</mi><mi>t</mi></mrow></msub><mo>−</mo><msub><mi>v</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">e_v=v_{act}-v_{des}</annotation></semantics></math>
+respectively. The vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mn>3</mn></msub><annotation encoding="application/x-tex">e_3</annotation></semantics></math>
+is a unit vector in the z-direction, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>x</mi><mo accent="true">̈</mo></mover><annotation encoding="application/x-tex">\ddot{x}</annotation></semantics></math>
+is the NED inertial frame actual acceleration. Details on computation of
+the desired body rate are found in <cite> [1],[2] </cite>.</p>
+<hr />
+<h3 id="inner-loop"><strong>Inner Loop</strong></h3>
+Details on the inner loop proportional, integral and feed-forward
+controller design are found in <cite>[2]</cite>. Recall that the inner
+loop converts desired body rates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ω</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi></mrow></msub><annotation encoding="application/x-tex">\omega_{des}</annotation></semantics></math>
+into desired rotational moments. Details on the terms used to compute
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ω</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi></mrow></msub><annotation encoding="application/x-tex">\omega_{des}</annotation></semantics></math>
+can be seen in Eq. 16 of <cite>[1]</cite>.<br />
+
+<center>
+<img src=".graphics/Inner_Loop.png" width="550" height="250" />
+</center>
+<hr />
+<h3 id="control-allocation"><strong>Control Allocation</strong></h3>
+<p>The input into the control allocation subsystem is a concatenated
+vector of desired rotational moments and the desired total thrust.
+Conversion of this vector into desired thrusts for each motor is
+performed using a simple weighted pseudo-inverse single matrix control
+allocation algorithm. In general, for a given controls effectiveness
+matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+and specified weighting matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math>,
+the weighted pseudo-inverse is found using:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><msup><mi>B</mi><mi>T</mi></msup><msup><mi>W</mi><mi>T</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>B</mi><msup><mi>W</mi><mi>T</mi></msup><msup><mi>B</mi><mi>T</mi></msup><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">
+   P = B^TW^T(BW^TB^T)^{-1}
+</annotation></semantics></math></p>
+<p>In this application, the specified weighting matrix is the identity
+matrix, and thus the pseudo-inverse used is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><msup><mi>B</mi><mi>T</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>B</mi><msup><mi>B</mi><mi>T</mi></msup><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">P=B^T(BB^T)^{-1}</annotation></semantics></math>
+in the BAM simulation.</p>
+<hr />
+<h3 id="motor-model-thrust-to-rpm-model"><strong>Motor Model (Thrust to
+RPM Model)</strong></h3>
+<p>The output of the control allocation is a vector of 4 desired thrusts
+(one for each motor). The thrust to RPM subsystem converts each desired
+thrust into a commanded motor RPM using a quadratic polynomial model of
+the form:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>a</mi><msup><mi>r</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>r</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex"> T = ar^2+br+c</annotation></semantics></math></p>
+<p>with the thrust
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>,
+the commanded RPM
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+and the polynomial coefficients
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a,b,c</annotation></semantics></math>.
+Rearranging the polynomial fit and solving for the (real) zeros
+gives:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mfrac><mrow><mi>−</mi><mi>b</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo>−</mo><mi>T</mi><mo stretchy="false" form="postfix">)</mo><msup><mo stretchy="false" form="postfix">)</mo><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow></msup></mrow><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex"> 
+r = \frac{-b+(b^2-4a(c-T))^{1/2}}{2a}
+</annotation></semantics></math></p>
+<p>Note, saturation (maximum and minimum RPM limits) are enforced after
+the quadratic model determination.</p>
+<hr />
+<p>[1] <em>Control of Complex Maneuvers for a Quadrotor UAV using
+Geometric Methods on SE3</em>, T. Lee, M. Leok, H. McClamroch, revised 9
+Sep 2011 (https://arxiv.org/abs/1003.2005)</p>
+<p>[2] <em>Flight Control Methods for Multirotor UAS</em>, K Ackerman,
+I. Gregory, and N. Hovakimyan, 2019 International Conference on Unmanned
+Aircraft Systems (ICUAS), Atlanta GA., June 11-14, 2019</p>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+</body>
+</html>

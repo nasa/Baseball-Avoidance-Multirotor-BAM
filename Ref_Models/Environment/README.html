@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="environment-system">Environment System</h1>
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+<p>This environmental model simulates atmospheric conditions and local
+wind velocities. The model integrates static wind patterns, turbulence
+effects, and standard atmospheric properties to create realistic
+environmental conditions for simulation scenarios. Users who wish to
+include atmospheric winds (steady-state) and turbulence should use the
+<code>userStruct.simulation_defaults.Environment.Turbulence</code>
+fields. Note that the winds and turbulence are always active in the
+simulation, but the default values in the
+<code>userStruct.simulation_defaults.Environment.Turbulence</code> winds
+and turbulence intensity fields are set to zero.</p>
+<h2 id="subsystems">Subsystems</h2>
+<h3 id="static-winds">1. Static Winds</h3>
+<p>The static wind component represents a constant wind field throughout
+the simulation environment. The associated
+<code>userStruct.simulation_defaults.Environment.Turbulence</code>
+fields are: <code>WindAt5kft</code> (kts) and
+<code>WindDirectionAt5kft</code> (deg True).</p>
+<p><strong>Features:</strong> - Configurable wind magnitude and
+direction parameters - Horizontal wind components fully customizable -
+Vertical wind component currently zeroed out by default.<br />
+- Wind vectors are applied in the Earth-fixed reference frame</p>
+<h3 id="turbulence-model">2. Turbulence Model</h3>
+<p>The turbulence model simulates atmospheric disturbances that affect
+aircraft motion.</p>
+<p><strong>Configuration Options:</strong> - <strong>Model
+Selector:</strong> This is manually selected in the
+<code>Dryden Model</code> subsystem - 1 = TM-4511 specification - 2 =
+MIL-1797 specification (Military standard) - <strong>Intensity
+Levels:</strong> This is specified using the
+<code>userStruct.simulation_defaults.Environment.Turbulence.intensity</code>
+field. - 1 = Light - 2 = Moderate - 3 = Severe</p>
+<p><strong>Implementation Details:</strong> - Based on the Dryden
+turbulence model - Default configuration uses TM-4511 specification -
+Gusts are generated as body-frame velocities (<code>u, v, w</code>) -
+Severe turbulence (level 3) is scaled by the following factors for each
+intensity level: - None: <code>[0, 0, 0]</code> - Light:
+<code>[0.2, 0.2, 0.17]</code> for (u, v, w) respectively - Moderate:
+<code>[0.4, 0.4, 0.34]</code> for (u, v, w) respectively - Severe:
+<code>[0.4, 1.152, 0.34]</code> for (u, v, w) respectively - Only linear
+turbulence effects are currently implemented</p>
+<p><strong>Note:</strong> The turbulence implementation focuses on
+translational disturbances without rotational components.</p>
+<h3 id="atmospheric-model">3. Atmospheric Model</h3>
+<p>A single-layer atmospheric model based on the U.S. Standard
+Atmosphere 1976.</p>
+<p><strong>Key Constants:</strong> - Gas constant (r): 1716.55915670803
+- Ratio of specific heats (gamma): 1.4 - Gravitational acceleration (g):
+32.17405 ft/s² - Earth radius (re): 20855531.5 ft - Sea level
+temperature (tsl): 518.67°R (288.15 K × 1.8) - Sea level pressure (psl):
+2116.22 psf - Sea level altitude (hsl): 0 ft - Sea level density
+(sldens): 0.0023769 slugs/ft³ - Sea level pressure (slpr): 2116.220
+psf</p>
+<p><strong>Features:</strong> - Calculates air density, pressure, and
+temperature as functions of altitude - Provides standard atmospheric
+properties for flight simulation</p>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Turbulence model only includes linear effects</li>
+<li>Atmospheric model uses a simplified single-layer approach</li>
+<li>No terrain effects on wind patterns are currently modeled</li>
+</ul>
+<hr />
+<p><a href="../../README.html#api-documentation">Back to BAM..</a>
+<strong>or</strong> <a href="../README.html">Back to
+Ref_Models..</a></p>
+</body>
+</html>
