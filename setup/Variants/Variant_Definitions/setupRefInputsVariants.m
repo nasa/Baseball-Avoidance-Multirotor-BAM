@@ -1,0 +1,15 @@
+% define refinput variant conditions
+refin_m = enumeration('RefInputEnum');
+refin_len = length(refin_m);
+for i=1:refin_len
+  cond_expr = sprintf('SimIn.variants.refInputType == RefInputEnum.%s', refin_m(i));
+  switch refin_m(i)
+    case RefInputEnum.TIMESERIES
+      GVS_REFINPUT_TYPE_TIMESERIES = Simulink.Variant(cond_expr);
+    case RefInputEnum.BEZIER
+      GVS_REFINPUT_TYPE_BEZIER = Simulink.Variant(cond_expr);
+    otherwise
+  end
+end
+
+clear refin_m refin_len i cond_expr;

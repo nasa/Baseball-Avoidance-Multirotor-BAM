@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="simulation-setup-guide">Simulation Setup Guide</h1>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+<p>This guide outlines the process of setting up simulations in a way
+that balances user modifiability and subcomponent integration
+requirements. The setup focuses on four key data structures:
+<code>userStruct</code>, <code>compStruct</code>, <code>simIn</code>,
+and <code>simPar</code>. These structures are designed to maintain
+consistency across subsystems, avoiding conflicts and ensuring similar
+code structure.</p>
+<h2 id="key-structures">Key Structures</h2>
+<p>The following structures should be used in order:</p>
+<ol type="1">
+<li><strong><code>userStruct</code></strong></li>
+<li><strong><code>compStruct</code></strong></li>
+<li><strong><code>SimIn</code></strong></li>
+<li><strong><code>SimPar</code></strong></li>
+</ol>
+<p>Each structure should have identical field structures to allow for
+consistent value referencing by simply changing the top-level structure
+name. These structures should mirror the Simulink block diagram levels
+so that top-level blocks correspond to the appropriate place in the
+structure.</p>
+<h2 id="structure-details">Structure Details</h2>
+<h3 id="userstruct"><code>userStruct</code></h3>
+<ul>
+<li><strong>Scope</strong>: Primary interface for users to change
+simulation behavior</li>
+<li><strong>Purpose</strong>: Contains essential pre-setup values
+necessary for simulation configuration</li>
+<li><strong>Usage</strong>: Prefer using these values over modifying
+parameters post-setup to ensure consistent initial conditions (e.g.,
+determining the initial pitch angle from an initial velocity)</li>
+</ul>
+<h4 id="fields">Fields</h4>
+<ul>
+<li><strong>Top Level</strong>: Simulink information
+<ul>
+<li><code>info</code>: Not user-editable</li>
+<li><code>model_params</code>: Simulink configuration details (model
+explorer)</li>
+<li><code>simulation_defaults</code>: Variables used in Simulink
+blocks</li>
+<li><code>variants</code>: Simulink variants</li>
+<li><code>types</code>: Toggle options without defining variants</li>
+<li><code>outputFunc</code>: File name for output bus definition</li>
+</ul></li>
+</ul>
+<h4 id="requirements">Requirements</h4>
+<ul>
+<li>Assign all values before creating <code>SimIn</code></li>
+<li>Check existing field values and use them if available; otherwise,
+assign default values</li>
+<li>Do not edit after <code>SimIn</code> initialization</li>
+</ul>
+<p><strong><a href="./SETUP.html">Detailed userStruct
+Info</a></strong></p>
+<h3 id="compstruct"><code>compStruct</code></h3>
+<ul>
+<li><strong>Scope</strong>: Internal use only. Not for user
+interaction</li>
+<li><strong>Purpose</strong>: Derived from <code>userStruct</code>,
+assigned before creating <code>SimIn</code></li>
+<li><strong>Usage</strong>: Populate fields when it’s convenient to
+execute code simultaneously during the <code>userStruct</code> setup
+process (e.g., computing initial conditions for trajectories). Used to
+pass information between functions, when the information is not user
+facing or modifiable</li>
+</ul>
+<h4 id="requirements-1">Requirements</h4>
+<ul>
+<li>Assign values based on <code>userStruct</code></li>
+<li>Do not edit after <code>SimIn</code> initialization</li>
+</ul>
+<h3 id="simin"><code>SimIn</code></h3>
+<ul>
+<li><strong>Scope</strong>: Secondary interface for users to change
+simulation behavior that is not superseded by <code>SimPar</code></li>
+<li><strong>Purpose</strong>: Contains values used to be included in
+<code>SimPar</code> or directly called by simulation
+blocks/configuration menus</li>
+<li><strong>Usage</strong>: Partially defines a Simulink run but may not
+capture the entire Simulink environment configuration required in the
+user workspace (e.g., bus objects, <code>SimPar</code> values)
+<strong><a href="./SimIn/BAMSimIn.html">Simulink Locations Where SimIn
+is Used in BAM</a></strong></li>
+</ul>
+<h4 id="structure">Structure</h4>
+<ul>
+<li>Corresponds with Simulink diagram levels (e.g.,
+<code>SimIn.Environment</code> for environment block parameters)</li>
+</ul>
+<h4 id="requirements-2">Requirements</h4>
+<ul>
+<li>Only include values used by a simulation block or in
+<code>simPar</code></li>
+</ul>
+<h3 id="simpar"><code>SimPar</code></h3>
+<ul>
+<li><strong>Scope</strong>: Secondary interface for users to change
+simulation behavior</li>
+<li><strong>Purpose</strong>: A special MATLAB object allowing runtime
+tuning of block values post-compilation</li>
+<li><strong>Usage</strong>: Generated by the <code>setupParams</code>
+function. Direct modifications affect simulation behavior but may not
+update signal characteristics for compilation or runtime tuning
+<strong><a href="./SimPar/BAMSimPar.html">Simulink Locations Where
+SimPar is Used in BAM</a></strong></li>
+</ul>
+<h4 id="requirements-3">Requirements</h4>
+<ul>
+<li>Use the <code>setParams</code> function to modify parameters
+safely</li>
+</ul>
+<p><a href="../README.html#api-documentation">Back..</a></p>
+</body>
+</html>

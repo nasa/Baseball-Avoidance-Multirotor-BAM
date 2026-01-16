@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BAMSimPar_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<p><a href="../README.html">Back..</a></p>
+<h1 id="simpar-variable-usage-in-bam.slx">SimPar Variable Usage in
+BAM.slx</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 13%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Block Path</th>
+<th style="text-align: left;">Property Name</th>
+<th style="text-align: left;">Variable Name</th>
+<th style="text-align: left;">Property Value</th>
+<th style="text-align: left;">Value Type</th>
+<th style="text-align: left;">Value Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Model Configuration</td>
+<td style="text-align: left;">StopTime</td>
+<td style="text-align: left;">SimPar.model_params.stop_time</td>
+<td style="text-align: left;">80</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Kff/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Kff/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Inner.Kff_1</td>
+<td style="text-align: left;">[0.1;0.1;0.1]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Ki/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Ki/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Inner.Ki_1</td>
+<td style="text-align: left;">[0.8;0.8;0.8]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Kp/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Gain Kp/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Inner.Kp_1</td>
+<td style="text-align: left;">[7;7;7]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.Q_i2b</td>
+<td
+style="text-align: left;">[0.996028827442064;0.00603286149235858;0.0166034758370229;0.0872611258048479]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant18</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Outer.KL_1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant2</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Outer.KR_1</td>
+<td style="text-align: left;">1.25</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant3</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Outer.KX_1</td>
+<td style="text-align: left;">2.75</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant4</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.Cont.Outer.KV_1</td>
+<td style="text-align: left;">2.75</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant5</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.mass_nominal</td>
+<td style="text-align: left;">1.9593</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">longseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedLong</td>
+<td style="text-align: left;">3366</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">latseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedLat</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">vertseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedVert</td>
+<td style="text-align: left;">1369</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">Mask: longseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedLong</td>
+<td style="text-align: left;">3366</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">Mask: latseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedLat</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">Mask: vertseed</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.RandomSeedVert</td>
+<td style="text-align: left;">1369</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Level</td>
+<td style="text-align: left;">Value</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.intensity</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/WindDir (True, deg)</td>
+<td style="text-align: left;">Value</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.WindDirectionAt5kft</td>
+<td style="text-align: left;">60</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/WindSpd (kts)</td>
+<td style="text-align: left;">Value</td>
+<td
+style="text-align: left;">SimPar.Environment.Turbulence.WindAt5kft</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/FCS Params/Constant4</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.prop.ParamsNom</td>
+<td style="text-align: left;">[45 0.25 -0.028 -1 1 0.01 0 -1.8248e-06 0
+0 0 10000 0 0 0 0.833333333333333 0;225 0.25 -0.028 -1 1 0.01 0
+-1.5221e-06 0 0 0 10000 0 0 0 0.833333333333333 0;315 0.25 -0.028 1 1
+0.01 0 -1.8699e-06 0 0 0 10000 0 0 0 0.833333333333333 0;135 0.25 -0.028
+1 1 0.01 0 -1.6581e-06 0 0 0 10000 0 0 0 0.833333333333333 0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 17]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/FCS Params/Constant5</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.CM_Nom</td>
+<td style="text-align: left;">[0;0;0.001]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/FCS Params/Constant6</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.mass_nominal</td>
+<td style="text-align: left;">1.9593</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/FCS Params/Constant7</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.FCS.J_nominal</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/OwnShip Traj/Reference
+Inputs/BEZIER/Constant3</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.RefInputs.trajectory.wptVect</td>
+<td
+style="text-align: left;">[0;120;240;3;3;0;0;0;0;0;0;0;0;0;0;0;0;0;0;-60;0;0;-3;3;0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[27 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/OwnShip Traj/Reference
+Inputs/BEZIER/Constant4</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.RefInputs.trajectory.timeVect</td>
+<td style="text-align: left;">[0;40;80;0;40;80;0;40;80]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[9 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/OwnShip Traj/Reference
+Inputs/BEZIER/Constant5</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.RefInputs.trajectory.parseVect</td>
+<td style="text-align: left;">[3;3;3;3;3;3;3]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[7 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Subsystem Reference/First Order Rate
+and Position Limited &amp; Time Delay</td>
+<td style="text-align: left;">Bias</td>
+<td style="text-align: left;">SimPar.IC.rpm_init</td>
+<td
+style="text-align: left;">[6907.25852698139;7848.37583483524;7213.7441106667;8204.77236112714]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Subsystem Reference/First Order Rate
+and Position Limited &amp; Time Delay</td>
+<td style="text-align: left;">Mask: Bias</td>
+<td style="text-align: left;">SimPar.IC.rpm_init</td>
+<td
+style="text-align: left;">[6907.25852698139;7848.37583483524;7213.7441106667;8204.77236112714]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.mass</td>
+<td style="text-align: left;">1.9593</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Create STARS Initial Conditions/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.Pos_bii</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Create STARS Initial Conditions/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.Vel_bIb</td>
+<td
+style="text-align: left;">[2.99846112989938;0.00143303980263507;-0.096066637702588]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Create STARS Initial Conditions/Constant2</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.Omega_BIb</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Create STARS Initial Conditions/Constant3</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.Q_i2b</td>
+<td
+style="text-align: left;">[0.996028827442064;0.00603286149235858;0.0166034758370229;0.0872611258048479]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">Accel_i_IC</td>
+<td style="text-align: left;">SimPar.EOM.Accel_bIi</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">ASensed_IC</td>
+<td style="text-align: left;">SimPar.EOM.Asensed_bIb</td>
+<td
+style="text-align: left;">[0.314030630875362;-0.146270930230427;-9.80052926123592]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">OmegaDot_IC</td>
+<td style="text-align: left;">SimPar.EOM.OmegDtI_BIb</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">Mask: Accel_i_IC</td>
+<td style="text-align: left;">SimPar.EOM.Accel_bIi</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">Mask: ASensed_IC</td>
+<td style="text-align: left;">SimPar.EOM.Asensed_bIb</td>
+<td
+style="text-align: left;">[0.314030630875362;-0.146270930230427;-9.80052926123592]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Rigid Body Dynamics</td>
+<td style="text-align: left;">Mask: OmegaDot_IC</td>
+<td style="text-align: left;">SimPar.EOM.OmegDtI_BIb</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/Simple/Gravity/mass</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.mass</td>
+<td style="text-align: left;">1.9593</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">[]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/Simple/inertia</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.I</td>
+<td style="text-align: left;">[0.029262 0 0;0 0.031578 0;0 0
+0.047887]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 3]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/Simple/mass</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.vehicle.mass.mass</td>
+<td style="text-align: left;">1.9593</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Constant3</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimPar.IC.GrndAltMSL</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Topodetic Position</td>
+<td style="text-align: left;">Pos_bee</td>
+<td style="text-align: left;">SimPar.EOM.Pos_bee</td>
+<td
+style="text-align: left;">[1198760.75527728;-4950035.93475557;3826495.56582697]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Topodetic Position</td>
+<td style="text-align: left;">Q_e2h</td>
+<td style="text-align: left;">SimPar.EOM.Q_e2h</td>
+<td style="text-align: left;">[1;0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Topodetic Position</td>
+<td style="text-align: left;">Mask: Pos_bee</td>
+<td style="text-align: left;">SimPar.EOM.Pos_bee</td>
+<td
+style="text-align: left;">[1198760.75527728;-4950035.93475557;3826495.56582697]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Topodetic Position</td>
+<td style="text-align: left;">Mask: Q_e2h</td>
+<td style="text-align: left;">SimPar.EOM.Q_e2h</td>
+<td style="text-align: left;">[1;0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="user-defined-output">User Defined Output</h1>
+<p>The upside of the BAM simulation is that it contains a wide array of
+signals/bus structures for most aerospace application needs. The
+downside is that recording all of these signals (for long simulations)
+results in massive data files. For this reason, we have included a
+simple method for users to easily specify what signals should be logged
+when running the simulation. More on this functionality to come.</p>
+<h2 id="background">Background</h2>
+<p>First, a brief overview of the BAM data structures is warranted. BAM
+uses the structure SimIn as the input structure to specify a wide array
+of aircraft and simulation setup constants. These SimIn variables are
+“fixed” during the simulation setup processing. Also during the setup
+process, a subset of SimIn signals are selected in <a
+href="/setup/setupParameters.m">setupParameters.m</a> and assigned to
+the MATLAB tunable parameter object SimPar. These SimPar fields are
+known to MATLAB to be tunable parameters and can therefore be easily
+modified during and between simulation runs. Additionally, they don’t
+get hardcoded as fixed values in any built code. The output data from
+the simulation makes use of the logging capabilities of MATLAB. There is
+one other data structure that is of interest to users which is named
+userStruct. As the name suggests, this structure allows the user to
+specify simulation options during the setup process (specifically
+userStruct options must be specified before running the main simulation
+<code>setup.m</code> file). This structure is used to do such things as
+specifying a desired variant for variant subsystems, specifying
+trajectory filenames, and (of interest for data logging) it is used for
+specifying a filename for a custom user output data function (see data
+logging below).</p>
+<h2 id="data-logging">Data Logging</h2>
+<p>BAM data logging is accomplished using MATLAB logging in a reference
+subsystem (see graphic below). This “User Signal Logging” subsystem
+(reference model named “SimOut”) is found at the top-level of the
+simulation. Inside this subsystem, the full SimOut bus is constructed
+and mapped into the MATLAB function block “UserSimOutput”. This full
+SimOut bus is formed as a bus of busses structure which contains most of
+the signals of interest in the simulation (i.e., it’s large). Note, this
+top-level bus object SimOut is constructed of bus objects all defined in
+<a href="/setup/Bus_Definitions">Bus_Definition</a> folder. Users can
+write a MATLAB function m-file to specify a new data structure
+UserSimOut that can be tailored in any fashion containing only the
+signals of interest to the user from the full SimOut bus (i.e., much
+smaller) It is the user specified User_SimOut bus that is logged (stored
+as the variable logsout) using the MATLAB logging functionality shown
+below.</p>
+<center>
+<img src="UserOut.jpg" width="700" height="300" />
+</center>
+<p>As shown in the exploded view figure above, the function
+mapToUserSimOut creates the desired output signal bus UserSimOut for use
+with the MATLAB signal logging. There is a default UserSimOut file which
+assigns to UserSimOut the entire SimOut structure (see code below).</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">UserSimOut</span>] <span class="op">=</span> <span class="va">userOutFull</span>(<span class="va">SimOut</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">Env</span>              <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Env</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">EOM</span>                <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EOM</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">FM</span>                 <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">FM</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">Traj_Iner</span>          <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Traj_Iner</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">RefInputs</span>          <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">RefInputs</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">Misc</span>.<span class="va">EngCmd</span>        <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EngBus</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">EOM_Sensed</span>         <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EOM_Sensed</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">Env_Sensed</span>         <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Env_Sensed</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>However, users can also write their own m-file function to tailor the
+desired output (see code below)</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> [<span class="va">UserSimOut</span>] <span class="op">=</span> <span class="va">userCoolFunc</span>(<span class="va">SimOut</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">t</span>                  <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Env_Sensed</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">h</span>                  <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EOM</span>.<span class="va">InertialData</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">i</span>                  <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EOM</span>.<span class="va">AirRelativeData</span>.<span class="va">Vel_bWb</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">s</span>                  <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Traj_Iner</span>.<span class="va">pos_i</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">null</span>.<span class="va">r</span>             <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">FM</span>.<span class="va">Total</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">null</span>.<span class="va">o</span>             <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">FM</span>.<span class="va">Propulsion</span>.<span class="va">Force_b</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">null</span>.<span class="va">c</span>             <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">EOM_Sensed</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">null</span>.<span class="va">k</span>             <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Env_Sensed</span>.<span class="va">Wind</span>.<span class="va">VelDtH_wHh</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="va">UserSimOut</span>.<span class="va">null</span>.<span class="va">s</span>             <span class="op">=</span> <span class="va">SimOut</span>.<span class="va">Env</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>Note a few important features of the tailored code above.
+Specifically, the format of the UserSimOut structure on the LHS of the
+assignment statements is completely arbitrary. Users can organize the
+UserSimOut structure fields (field names, subfields etc.) in any manner
+and can assign to it any individual fields from SimOut, a bus from
+SimOut or even a bus of buses from SimOut) Note, that while the BAM
+simulation comes with the predefined sub-bus objects necessary for the
+top-level bus SimOut, for a given user logging function, the top-level
+simulation script <a href="/setup.m">setup.m</a> automatically creates
+bus objects for the new user defined top-level bus (UserSimOut) and any
+sub-buses After the completion of the <code>setup.m</code> script, these
+user defined bus object will be found in the MATLAB base workspace.
+These new bus objects have the prefix “USER_” appended to them to
+differentiate them as user created bus objects.</p>
+<p>Astute readers may notice that the MATLAB function block from the
+exploded view above calls the mapToUserSimOut function and not (for
+instance) the example user function <code>userCoolFunc.m</code>. So how
+does a user denote to use a specific user output function? This is an
+example of where userStruct comes in. In the code snippet below, the
+user output file userCoolFunc is chosen as the output file.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">outputFunc</span> <span class="op">=</span> <span class="ss">&#39;userCoolFunc&#39;</span><span class="op">;</span> <span class="co">% denotes to use the user specific output mapping function</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">setup</span><span class="op">;</span> <span class="co">% Note setup must be run after designating the output function to create User bus objects etc.</span></span></code></pre></div>
+<p>In reality, what happens behind the scene is that the user function
+<code>userCoolFunc.m</code> gets copied and overwrites the
+<code>mapToUserSimOut.m</code> file in the <a
+href="/setup/User_Output">User_Output</a> folder. In this way, the user
+doesn’t modify the simulation block which would be an issue trying to
+use an autocoded executable with several different user output mapping
+functions.</p>
+</body>
+</html>

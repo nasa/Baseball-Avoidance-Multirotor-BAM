@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BAMSimIn_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<p><a href="../README.html###SimIn">Back..</a></p>
+<h1 id="simin-variable-usage-in-bam.slx">SimIn Variable Usage in
+BAM.slx</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 13%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Block Path</th>
+<th style="text-align: left;">Property Name</th>
+<th style="text-align: left;">Variable Name</th>
+<th style="text-align: left;">Property Value</th>
+<th style="text-align: left;">Value Type</th>
+<th style="text-align: left;">Value Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Control
+Allocation/Constant</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.UppThrustLimit</td>
+<td style="text-align: left;">143.735127271207</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Control
+Allocation/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.PseudoInv</td>
+<td style="text-align: left;">[-1.41421356237309 1.4142135623731
+16.6666666666667 0.25;1.41421356237309 -1.4142135623731 16.6666666666667
+0.25;1.4142135623731 1.41421356237309 -16.6666666666667
+0.25;-1.4142135623731 -1.41421356237309 -16.6666666666667 0.25]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 4]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Control
+Allocation/Constant2</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.LwrThrustLimit</td>
+<td style="text-align: left;">10.8187730204134</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Control Allocation/Rate
+Transition</td>
+<td style="text-align: left;">OutPortSampleTime</td>
+<td style="text-align: left;">SimIn.FCS.t_control</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Convert lbf</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.lbf</td>
+<td style="text-align: left;">4.4482216152605</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Convert to standard units</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ftlbf</td>
+<td style="text-align: left;">1.3558179483314</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Convert to standard units</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ftlbf</td>
+<td style="text-align: left;">1.3558179483314</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Convert to standard units</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ftlbf</td>
+<td style="text-align: left;">1.3558179483314</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Convert to standard units</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.lbf</td>
+<td style="text-align: left;">4.4482216152605</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Gain1</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ft</td>
+<td style="text-align: left;">0.3048</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Mapping thrust to rpm
+and saturation/Rate Transition</td>
+<td style="text-align: left;">OutPortSampleTime</td>
+<td style="text-align: left;">SimIn.FCS.t_control</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Discrete-Time Integrator</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.FCS.t_control</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Saturation</td>
+<td style="text-align: left;">UpperLimit</td>
+<td style="text-align: left;">SimIn.FCS.maxRateCmd</td>
+<td
+style="text-align: left;">[6.28318530717959;6.28318530717959;2.0943951023932]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/PI&amp;FF Rate
+Controller/Saturation</td>
+<td style="text-align: left;">LowerLimit</td>
+<td style="text-align: left;">SimIn.FCS.maxRateCmd</td>
+<td
+style="text-align: left;">[6.28318530717959;6.28318530717959;2.0943951023932]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant6</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.Units.g0</td>
+<td style="text-align: left;">9.80665</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Constant7</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.e3</td>
+<td style="text-align: left;">[0;0;1]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Desired Frame/Attitude Protection/Constant3</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.tan_angle_max</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/IC</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.IC.Q_i2b</td>
+<td
+style="text-align: left;">[0.999843945276841;-0.007456992901778;-0.0160144960744764;-0.000119438622514093]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[4 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/IC1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.IC.Omega_BIb</td>
+<td style="text-align: left;">[0;0;0]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Path/Heading Hold Logic prevents badness when trajectory is
+vertical/Constant1</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.FCS.e3</td>
+<td style="text-align: left;">[0;0;1]</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[3 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Scope</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/Scope1</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/pos</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/speed</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/BAM Controller/Path-following
+control/vel</td>
+<td style="text-align: left;">SampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">dt</td>
+<td style="text-align: left;">SimIn.Environment.Turbulence.dT</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/Turbulence Model/Dryden
+Model</td>
+<td style="text-align: left;">Mask: dt</td>
+<td style="text-align: left;">SimIn.Environment.Turbulence.dT</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Environment/m2ft 3</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.m</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/Subsystem/r2d</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/Subsystem/r2d1</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/Subsystem/r2d2</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/r2d</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/r2d1</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Plots/r2d2</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.deg</td>
+<td style="text-align: left;">0.0174532925199433</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Propulsion and Aerodynamic Forces and
+Moments/Convert to ft//sec</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ft</td>
+<td style="text-align: left;">0.3048</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Propulsion and Aerodynamic Forces and
+Moments/Convert to N</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.lbf</td>
+<td style="text-align: left;">4.4482216152605</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Propulsion and Aerodynamic Forces and
+Moments/Convert to N-m</td>
+<td style="text-align: left;">Gain</td>
+<td style="text-align: left;">SimIn.Units.ftlbf</td>
+<td style="text-align: left;">1.3558179483314</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Rate Transition2</td>
+<td style="text-align: left;">OutPortSampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Rate Transition3</td>
+<td style="text-align: left;">OutPortSampleTime</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Subsystem Reference2/Band-Limited
+White Noise</td>
+<td style="text-align: left;">Ts</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Subsystem Reference2/Band-Limited
+White Noise</td>
+<td style="text-align: left;">Mask: Ts</td>
+<td style="text-align: left;">SimIn.model_params.sim_rate</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/User Signal Logging/Data Output/Code
+Generation Output</td>
+<td style="text-align: left;">lengthUserOut</td>
+<td style="text-align: left;">SimIn.lengthUserOut</td>
+<td style="text-align: left;">336</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/User Signal Logging/Data Output/Code
+Generation Output</td>
+<td style="text-align: left;">Mask: lengthUserOut</td>
+<td style="text-align: left;">SimIn.lengthUserOut</td>
+<td style="text-align: left;">336</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/STARS/Constant2</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.Units.g0</td>
+<td style="text-align: left;">9.80665</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/Simple/Create Inertial Bus/acc due to gravity</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.Units.g0</td>
+<td style="text-align: left;">9.80665</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/Equations of
+Motion/Simple/Gravity/acc due to gravity</td>
+<td style="text-align: left;">Value</td>
+<td style="text-align: left;">SimIn.Units.g0</td>
+<td style="text-align: left;">9.80665</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Angular Rate of NED Frame</td>
+<td style="text-align: left;">a</td>
+<td style="text-align: left;">SimIn.Environment.Earth.RadiusEquator</td>
+<td style="text-align: left;">6378137</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Angular Rate of NED Frame</td>
+<td style="text-align: left;">e</td>
+<td style="text-align: left;">SimIn.Environment.Earth.Eccentricity</td>
+<td style="text-align: left;">0.0818191908426215</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Angular Rate of NED Frame</td>
+<td style="text-align: left;">Mask: a</td>
+<td style="text-align: left;">SimIn.Environment.Earth.RadiusEquator</td>
+<td style="text-align: left;">6378137</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Angular Rate of NED Frame</td>
+<td style="text-align: left;">Mask: e</td>
+<td style="text-align: left;">SimIn.Environment.Earth.Eccentricity</td>
+<td style="text-align: left;">0.0818191908426215</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">lat</td>
+<td style="text-align: left;">SimIn.IC.LatGeod</td>
+<td style="text-align: left;">0.647565480656884</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">lon</td>
+<td style="text-align: left;">SimIn.IC.Lon</td>
+<td style="text-align: left;">-1.33319852961523</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">a</td>
+<td style="text-align: left;">SimIn.Environment.Earth.RadiusEquator</td>
+<td style="text-align: left;">6378137</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">e</td>
+<td style="text-align: left;">SimIn.Environment.Earth.Eccentricity</td>
+<td style="text-align: left;">0.0818191908426215</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">Mask: lat</td>
+<td style="text-align: left;">SimIn.IC.LatGeod</td>
+<td style="text-align: left;">0.647565480656884</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">Mask: lon</td>
+<td style="text-align: left;">SimIn.IC.Lon</td>
+<td style="text-align: left;">-1.33319852961523</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">Mask: a</td>
+<td style="text-align: left;">SimIn.Environment.Earth.RadiusEquator</td>
+<td style="text-align: left;">6378137</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative Data/Local
+NED Flattened/Flat Earth to Geodetic</td>
+<td style="text-align: left;">Mask: e</td>
+<td style="text-align: left;">SimIn.Environment.Earth.Eccentricity</td>
+<td style="text-align: left;">0.0818191908426215</td>
+<td style="text-align: left;">double</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Pressure Altitude</td>
+<td style="text-align: left;">u</td>
+<td style="text-align: left;">SimIn.Units</td>
+<td style="text-align: left;"><non-displayable></td>
+<td style="text-align: left;">struct</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+<tr>
+<td style="text-align: left;">BAM/Vehicle EOM/World-Relative
+Data/Pressure Altitude</td>
+<td style="text-align: left;">Mask: u</td>
+<td style="text-align: left;">SimIn.Units</td>
+<td style="text-align: left;"><non-displayable></td>
+<td style="text-align: left;">struct</td>
+<td style="text-align: left;">[1 1]</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

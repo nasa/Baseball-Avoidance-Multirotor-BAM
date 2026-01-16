@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SETUP_temp</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+</head>
+<body>
+<h1 id="userstruct">userStruct</h1>
+<p><a href="./README.html#structure-details">Back to setup..</a></p>
+<h2
+id="baseball-avoidance-multirotor-bam-userstruct-setup-guide">Baseball
+Avoidance Multirotor (BAM) UserStruct Setup Guide</h2>
+<p>This document provides a comprehensive guide to configuring the BAM
+simulation by adjusting the <code>userStruct</code> variable. The BAM
+simulation allows for detailed configuration of multirotor dynamics,
+environmental conditions, control systems, and visualization
+options.</p>
+<h2 id="configuration-structure-overview">Configuration Structure
+Overview</h2>
+<p>The BAM simulation is configured through a hierarchical structure
+called <code>userStruct</code>. This setup guide documents all available
+parameters within this structure that can be modified to customize your
+simulation.</p>
+<h2 id="variant-configuration-options">Variant Configuration
+Options</h2>
+<p>These options control which implementation variants are used for
+different parts of the simulation.</p>
+<h3 id="publisher-variants">Publisher Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.pubType</code></td>
+<td>Specifies whether or not to turn on the vehicle transceiver, which
+will publish vehicle data to external sources (like ROS nodes) and
+receive data that can be used downstream.</td>
+<td><code>PubEnum.NONE (1)</code>: No data
+publishing<br><code>PubEnum.ROS2 (2)</code>: Publish and receive data
+using ROS2 messages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reference-input-variants">Reference Input Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.refInputType</code></td>
+<td>Specifies the reference trajectory input method</td>
+<td><code>RefInputEnum.BEZIER (1)</code>: Uses Bezier curves for
+trajectory definition<br><code>RefInputEnum.TIMESERIES (2)</code>: Uses
+time series data for trajectory definition</td>
+</tr>
+</tbody>
+</table>
+<h3 id="equations-of-motion-variants">Equations of Motion Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.eomType</code></td>
+<td>Specifies the equations of motion model to use</td>
+<td><code>EOMEnum.STARS</code>: Uses the STARS equations of motion
+model<br><code>EOMEnum.Simple</code>: Uses simplified equations of
+motion</td>
+</tr>
+</tbody>
+</table>
+<h3 id="atmosphere-model-variants">Atmosphere Model Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.atmosType</code></td>
+<td>Specifies the atmospheric model to use</td>
+<td><code>AtmosphereEnum.US_STD_ATMOS_76</code>: Uses the U.S. Standard
+Atmosphere 1976 model</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-output-variants">Data Output Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.dataOutType</code></td>
+<td>Specifies the data output format</td>
+<td><code>DataOutEnum.NORMAL</code>: Standard data output
+format<br><code>DataOutEnum.CODEGEN</code>: Code generation compatible
+data output format</td>
+</tr>
+</tbody>
+</table>
+<h3 id="turbulence-variants">Turbulence Variants</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 39%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.variants.turbulenceType</code></td>
+<td>Controls turbulence modeling in the simulation</td>
+<td><code>TurbulenceEnum.None (1)</code>: No turbulence
+effects<br><code>TurbulenceEnum.Enabled (2)</code>: Enables turbulence
+modeling</td>
+</tr>
+</tbody>
+</table>
+<h2 id="simulation-parameters">Simulation Parameters</h2>
+<h3 id="model-parameters">Model Parameters</h3>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Units</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.model_params.sim_rate</code></td>
+<td>The simulation time step rate</td>
+<td>Seconds</td>
+<td>Controls the temporal resolution of the simulation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="types-configuration">Types Configuration</h3>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.types.sensors.useNoise</code></td>
+<td>Flag to enable/disable sensor noise in the simulation</td>
+<td>0 (disabled), 1 (enabled)</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="simulation-defaults">Simulation Defaults</h2>
+<h3 id="trim-configuration-initial-conditions">Trim Configuration
+(Initial Conditions)</h3>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Units</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.simulation_defaults.trim.vel_bIi</code></td>
+<td>Initial velocity vector in body-to-inertial frame</td>
+<td>meters/second</td>
+<td>Sets the initial velocity state for the multirotor</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.trim.acc_i</code></td>
+<td>Initial acceleration vector in inertial frame</td>
+<td>meters/second²</td>
+<td>Sets the initial acceleration state for the multirotor</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.trim.psi</code></td>
+<td>Initial yaw angle</td>
+<td>radians</td>
+<td>Sets the initial heading direction of the multirotor</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.trim.pos_i</code></td>
+<td>Initial position vector in inertial frame</td>
+<td>meters</td>
+<td>Sets the starting position of the multirotor</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.trim.psi_d</code></td>
+<td>Initial yaw rate</td>
+<td>radians/second</td>
+<td>Sets the initial yaw rotational velocity</td>
+</tr>
+</tbody>
+</table>
+<h3 id="environment-configuration---turbulence">Environment
+Configuration - Turbulence</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 29%" />
+<col style="width: 29%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Values/Units</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.RandomSeedLong</code></td>
+<td>Random seed for longitudinal turbulence generation</td>
+<td>Integer (e.g., 3366+521)</td>
+<td>Ensures repeatable turbulence patterns for longitudinal axis</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.RandomSeedLat</code></td>
+<td>Random seed for lateral turbulence generation</td>
+<td>Integer (e.g., 23+521)</td>
+<td>Ensures repeatable turbulence patterns for lateral axis</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.RandomSeedVert</code></td>
+<td>Random seed for vertical turbulence generation</td>
+<td>Integer (e.g., 1369+521)</td>
+<td>Ensures repeatable turbulence patterns for vertical axis</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.intensity</code></td>
+<td>Turbulence intensity level</td>
+<td>1: None<br>2: Light<br>3: Moderate<br>4: Severe</td>
+<td>Controls the magnitude of atmospheric turbulence effects</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.WindAt5kft</code></td>
+<td>Wind speed at 5,000 feet altitude</td>
+<td>knots</td>
+<td>Sets the reference wind speed for the simulation</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Turbulence.WindDirectionAt5kft</code></td>
+<td>Wind direction at 5,000 feet altitude</td>
+<td>degrees from North</td>
+<td>Sets the reference wind direction for the simulation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="container-parameters">Container Parameters</h3>
+<p>These parameters serve as containers for more specific configuration
+parameters:</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 41%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Atmosphere</code></td>
+<td>Container for atmospheric model parameters</td>
+<td>Configure atmospheric conditions for the simulation</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Environment.Wind</code></td>
+<td>Container for wind model parameters</td>
+<td>Configure wind conditions for the simulation</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.Vehicle</code></td>
+<td>Container for vehicle configuration parameters</td>
+<td>Configure physical properties of the multirotor vehicle</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.FCS</code></td>
+<td>Container for flight control system parameters</td>
+<td>Configure controller gains, limits, and behavior</td>
+</tr>
+<tr>
+<td><code>userStruct.simulation_defaults.RefInputs</code></td>
+<td>Container for reference trajectory parameters</td>
+<td>Configure desired path parameters based on selected reference input
+type</td>
+</tr>
+</tbody>
+</table>
+<h2 id="output-configuration">Output Configuration</h2>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.outputFunc</code></td>
+<td>Specifies the output function to use for simulation data
+collection</td>
+<td>‘userOutFull’: Full simulation output<br>‘userOutFullwithTraffic’:
+Full simulation output with traffic data<br>Custom function name
+(user-defined)</td>
+<td>‘userOutFull’</td>
+</tr>
+</tbody>
+</table>
+<h2 id="information-structure">Information Structure</h2>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 32%" />
+<col style="width: 22%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userStruct.info.paths.model_name</code></td>
+<td>Name of the Simulink model</td>
+<td>Current model name</td>
+<td>Used for reference and documentation</td>
+</tr>
+<tr>
+<td><code>userStruct.info.date</code></td>
+<td>Timestamp of when the simulation was configured</td>
+<td>Current date and time</td>
+<td>Used for reference and documentation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usage-notes">Usage Notes</h2>
+<ol type="1">
+<li>Configure your simulation by modifying the <code>userStruct</code>
+variable before running the setup script.</li>
+<li>The setup script will process your configuration and initialize the
+simulation environment accordingly.</li>
+<li>For advanced usage, you can modify the relevant setup functions
+directly.</li>
+</ol>
+<h2 id="example-configuration">Example Configuration</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Basic configuration example</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span> <span class="op">=</span> <span class="va">struct</span>()<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Set model parameters</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">model_params</span>.<span class="va">sim_rate</span> <span class="op">=</span> <span class="fl">0.01</span><span class="op">;</span> <span class="co">% 100 Hz simulation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">% Configure variants</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">pubType</span> <span class="op">=</span> <span class="va">PubEnum</span>.<span class="va">ROS2</span><span class="op">;</span> <span class="co">% Use ROS2 for publishing</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">refInputType</span> <span class="op">=</span> <span class="va">RefInputEnum</span>.<span class="va">BEZIER</span><span class="op">;</span> <span class="co">% Use Bezier curves for trajectory</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">eomType</span> <span class="op">=</span> <span class="va">EOMEnum</span>.<span class="va">Simple</span><span class="op">;</span> <span class="co">% Use simplified equations of motion</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">atmosType</span> <span class="op">=</span> <span class="va">AtmosphereEnum</span>.<span class="va">US_STD_ATMOS_76</span><span class="op">;</span> <span class="co">% Use standard atmosphere</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">dataOutType</span> <span class="op">=</span> <span class="va">DataOutEnum</span>.<span class="va">NORMAL</span><span class="op">;</span> <span class="co">% Use normal data output format</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">variants</span>.<span class="va">turbulenceType</span> <span class="op">=</span> <span class="va">TurbulenceEnum</span>.<span class="va">None</span><span class="op">;</span> <span class="co">% No turbulence modeling</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">% Configure sensor settings</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">types</span>.<span class="va">sensors</span>.<span class="va">useNoise</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span> <span class="co">% Disable sensor noise</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">% Set initial conditions</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">trim</span>.<span class="va">vel_bIi</span> <span class="op">=</span> [<span class="fl">0</span><span class="op">;</span> <span class="fl">0</span><span class="op">;</span> <span class="fl">0</span>]<span class="op">;</span> <span class="co">% Zero initial velocity</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">trim</span>.<span class="va">acc_i</span> <span class="op">=</span> [<span class="fl">0</span><span class="op">;</span> <span class="fl">0</span><span class="op">;</span> <span class="fl">0</span>]<span class="op">;</span> <span class="co">% Zero initial acceleration</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">trim</span>.<span class="va">psi</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span> <span class="co">% Zero initial yaw</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">trim</span>.<span class="va">pos_i</span> <span class="op">=</span> [<span class="fl">0</span><span class="op">;</span> <span class="fl">0</span><span class="op">;</span> <span class="fl">100</span>]<span class="op">;</span> <span class="co">% Start at 100m altitude</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">trim</span>.<span class="va">psi_d</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span> <span class="co">% No initial yaw rate</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">% Configure environment</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">intensity</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span> <span class="co">% No turbulence</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">WindAt5kft</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span> <span class="co">% No wind</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">WindDirectionAt5kft</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">RandomSeedLong</span> <span class="op">=</span> <span class="fl">3366</span><span class="op">+</span><span class="fl">521</span><span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">RandomSeedLat</span> <span class="op">=</span> <span class="fl">23</span><span class="op">+</span><span class="fl">521</span><span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="va">userStruct</span>.<span class="va">simulation_defaults</span>.<span class="va">Environment</span>.<span class="va">Turbulence</span>.<span class="va">RandomSeedVert</span> <span class="op">=</span> <span class="fl">1369</span><span class="op">+</span><span class="fl">521</span><span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">% Run the setup script</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="va">setup</span><span class="op">;</span></span></code></pre></div>
+<p><a href="./README.html#structure-details">Back to setup..</a></p>
+</body>
+</html>
